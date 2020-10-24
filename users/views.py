@@ -63,14 +63,7 @@ def registerUser(request):
             if serializer.is_valid():
                 serializer.save()
                 return JsonResponse(serializer.data, status=HTTP_201_CREATED) 
-            # errors = []
-
-            # for error in serializer.errors:
-            #     errors.append(serializer.errors)
-
-            # error = {
-            #     "error": errors
-            # }
+            
             User.objects.get(username=username).delete()
             return JsonResponse(serializer.errors, status=HTTP_400_BAD_REQUEST, safe=False)
     

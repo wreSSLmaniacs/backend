@@ -10,7 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 
-import django_heroku
+# import django_heroku
 
 
 import os
@@ -31,10 +31,7 @@ SECRET_KEY = '$qul1#7)k7m6tez%1p)6y^p##4*qfuo1!tey)_hj2bn39glvz8'
 DEBUG = True
 
 ALLOWED_HOSTS = [
-    '127.0.0.1',
-    '.herokuapp.com',
-    'ocde-backend.herokuapp.com',
-    '.pythonanywhere.com'
+    '127.0.0.1'
 ]
 
 
@@ -52,7 +49,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
-	'whitenoise.middleware.WhiteNoiseMiddleware',
+	# 'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -137,25 +134,25 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
-PROJECT_ROOT = os.path.join(os.path.abspath(__file__))
-STATIC_ROOT = os.path.join(PROJECT_ROOT, 'staticfiles')
-STATIC_URL = '/static/'
+# PROJECT_ROOT = os.path.join(os.path.abspath(__file__))
+# STATIC_ROOT = os.path.join(PROJECT_ROOT, 'staticfiles')
 
-STATICFILES_DIRS = (
-	os.path.join(PROJECT_ROOT, 'static'),
-)
+# STATICFILES_DIRS = (
+# 	os.path.join(PROJECT_ROOT, 'static'),
+# )
 
-STATICFILE_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
+# STATICFILE_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
 
 
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
+STATIC_URL = '/static/'
 
 
 
 
-django_heroku.settings(locals())
+# django_heroku.settings(locals())
 
 # import dj_database_url
 # prod_db = dj_database_url.config(conn_max_age=500)
