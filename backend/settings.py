@@ -10,10 +10,9 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 
-# import django_heroku
+import django_herokuDATABASES['default']
 
-
-import os
+# impor6 o, ssl_require=Trues
 from pathlib import Path
 import psycopg2.extensions
 
@@ -153,10 +152,12 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 
 
+DATABASE_URL = os.environ['DATABASE_URL']
+conn = psycopg2.connect(DATABASE_URL, sslmode='require')
 
 
 # django_heroku.settings(locals())
 
-# import dj_database_url
-# prod_db = dj_database_url.config(conn_max_age=500)
+import dj_database_url
+DATABASES['default'] = dj_database_url.config(conn_max_age=600, ssl_require=True)
 # DATABASES['default'].update(prod_db)
