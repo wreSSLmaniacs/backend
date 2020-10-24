@@ -1,4 +1,4 @@
-api/profile GET
+http://ocde-backend.herokuapp.com/api/profile GET: 
 	Output:  List of JSON objects
 		[
 		    {
@@ -22,7 +22,7 @@ api/profile GET
 
 
 
-api/profile/add  POST
+http://ocde-backend.herokuapp.com/api/profile/add  POST
 	Input:
 		{
 		    "username": "testuser2",
@@ -39,7 +39,7 @@ api/profile/add  POST
 
 
 
-api/login 	POST
+http://ocde-backend.herokuapp.com/api/login 	POST
 	Input: 
 		{
 		    "username": "testuser",
@@ -53,7 +53,7 @@ api/login 	POST
 
 
 
-api/profile/<pk> 	GET
+http://ocde-backend.herokuapp.com/api/profile/<pk> 	GET
 	Output: Single JSON object
 		{
 		    "id": 1,
@@ -74,7 +74,7 @@ api/profile/<pk> 	GET
 
 
 
-api/image 	POST
+http://ocde-backend.herokuapp.com/api/image 	POST
 	Input:
 		Parser: Multipart formdata 
 		image: <image file>
