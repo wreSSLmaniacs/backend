@@ -96,7 +96,7 @@ class image(APIView):
                 fs = FileSystemStorage(location='media/profileImage/')
                 myfile.name = "image.png"
                 filename = fs.save(myfile.name, myfile)
-                url = ('ec2-54-152-40-168.compute-1.amazonaws.com'+'/media/patient/'+str(filename))
+                url = ('127.0.0.1:8000'+'/media/patient/'+str(filename))
             except:
                 return JsonResponse({'error': ['Invalid file reqeust']}, status=HTTP_400_BAD_REQUEST)
                 
