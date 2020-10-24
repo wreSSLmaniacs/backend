@@ -1,0 +1,85 @@
+api/profile GET
+	Output:  List of JSON objects
+		[
+		    {
+		        "id": 1,
+		        "user_fk": {
+		            "id": 9,
+		            "password": "pbkdf2_sha256$216000$qlPG0NvoLEzb$UB11a04KlO0Jgsn5E8SuLRwCnCoOWcF9wDdH6VPVjwU=",
+		            "last_login": null,
+		            "is_superuser": false,
+		            "username": "test2",
+		            "first_name": "",
+		            "last_name": "",
+		            "email": "",
+		            "is_staff": false,
+		            "is_active": true,
+		            "date_joined": "2020-10-21T16:57:14.008936Z"
+		        }
+		    }
+		]
+
+
+
+
+api/profile/add  POST
+	Input:
+		{
+		    "username": "testuser2",
+		    "password": "testpassword",
+		    "email": "test@email",
+		    "image": "ec2-54-152-40-168.compute-1.amazonaws.com/media/patient/image_7hEBopw.png"
+		}
+	Output:
+		{
+		    "id": 2,
+		    "image": "ec2-54-152-40-168.compute-1.amazonaws.com/media/patient/image_7hEBopw.png",
+		    "user_fk": 2
+		}
+
+
+
+api/login 	POST
+	Input: 
+		{
+		    "username": "testuser",
+		    "password": "testpassword"
+		}
+	Output:
+		{
+		    "token": "Logged in succesfully"
+		}
+
+
+
+
+api/profile/<pk> 	GET
+	Output: Single JSON object
+		{
+		    "id": 1,
+		    "user_fk": {
+		        "id": 9,
+		        "password": "pbkdf2_sha256$216000$qlPG0NvoLEzb$UB11a04KlO0Jgsn5E8SuLRwCnCoOWcF9wDdH6VPVjwU=",
+		        "last_login": null,
+		        "is_superuser": false,
+		        "username": "test2",
+		        "first_name": "",
+		        "last_name": "",
+		        "email": "",
+		        "is_staff": false,
+		        "is_active": true,
+		        "date_joined": "2020-10-21T16:57:14.008936Z"
+		    }
+		}
+
+
+
+api/image 	POST
+	Input:
+		Parser: Multipart formdata 
+		image: <image file>
+	Output:
+		{
+		    "url": "<hosturl>/media/patient/image_QdRkz0m.png"
+		}
+
