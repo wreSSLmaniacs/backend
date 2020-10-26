@@ -12,6 +12,7 @@ from django.contrib.auth.models import User, Group
 from django.core.files.storage import FileSystemStorage
 from rest_framework.parsers import JSONParser, FileUploadParser, MultiPartParser, DjangoMultiPartParser, FormParser
 from users.serializers import *
+import os
 
 # Create your views here.
 @api_view(['GET', 'PUT'])
@@ -78,18 +79,40 @@ def login_user(request):
         return JsonResponse({'token':'Logged in succesfully'}, status=HTTP_200_OK)
     return JsonResponse({'error': ['Invalid User']}, status=HTTP_404_NOT_FOUND)
 
+@api_view(['POST'])
+def compile(request):
+    filename = request.data.get("filename")
+    language = request.data.get("language")
+    if os.path.exists('codes/'+filename):
+        if language == 'cpp':
+            cmd = ' g++ codes/{0} -o codes/a.out'.format(filename)
+            os.system(cmd)
+            os.system('./codes/a.out > ./codes/out.txt')
+        if language == 'python':
+            cmd = ' python3 codes/{0} > ./codes/out.txt'.format(filename)
+            os.system(cmd)
+
+        f = open('./codes/out.txt','r')
+        output = f.read()
+        f.close()
+        data = {
+            "output": output
+        }
+        os.system('rm -f codes/out.txt codes/a.out')
+        return JsonResponse(data, status=HTTP_200_OK)
+    return JsonResponse({'error': ['File does not exist']})
+
 
 class image(APIView):
     parser_class = [FileUploadParser, DjangoMultiPartParser, MultiPartParser]
     
     def post(self, request, format=None):
-        if request.method == 'POST' and request.FILES['image']:
+        if request.method == 'POST' and request.FILES['code']:
             try:
-                myfile = request.FILES['image']
-                fs = FileSystemStorage(location='media/profileImage/')
-                myfile.name = "image.png"
+                myfile = request.FILES['code']
+                fs = FileSystemStorage(location='codes/')
                 filename = fs.save(myfile.name, myfile)
-                url = ('http://127.0.0.1:8000'+'/media/profileImage/'+str(filename))
+                url = ('http://127.0.0.1:8000'+'/codes/'+str(filename))
             except:
                 return JsonResponse({'error': ['Invalid file reqeust']}, status=HTTP_400_BAD_REQUEST)
                 
