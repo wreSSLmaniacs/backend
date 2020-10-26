@@ -83,13 +83,19 @@ def login_user(request):
 def compile(request):
     filename = request.data.get("filename")
     language = request.data.get("language")
+    inp = request.data.get("input")
+
     if os.path.exists('codes/'+filename):
+        f = open('./codes/in.txt','w')
+        f.write(inp)
+        f.close()
+
         if language == 'cpp':
             cmd = ' g++ codes/{0} -o codes/a.out'.format(filename)
             os.system(cmd)
-            os.system('./codes/a.out > ./codes/out.txt')
+            os.system('./codes/a.out < ./codes/in.txt > ./codes/out.txt')
         if language == 'python':
-            cmd = ' python3 codes/{0} > ./codes/out.txt'.format(filename)
+            cmd = ' python3 codes/{0} < ./codes/in.txt > ./codes/out.txt'.format(filename)
             os.system(cmd)
 
         f = open('./codes/out.txt','r')
@@ -98,10 +104,19 @@ def compile(request):
         data = {
             "output": output
         }
-        os.system('rm -f codes/out.txt codes/a.out')
+        os.system('rm -f codes/*.txt codes/a.out ')
         return JsonResponse(data, status=HTTP_200_OK)
     return JsonResponse({'error': ['File does not exist']})
 
+@api_view(['POST'])
+def display(request):
+    filename = request.data.get("filename")
+    f = open('./codes/{0}'.format(filename),'r')
+    script = f.read()
+    data = {
+        "script": script
+    }
+    return JsonResponse(data, status=HTTP_200_OK)
 
 class image(APIView):
     parser_class = [FileUploadParser, DjangoMultiPartParser, MultiPartParser]

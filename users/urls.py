@@ -9,7 +9,8 @@ urlpatterns = [
     url(r'^api/login$', views.login_user),
     url(r'^api/profile/(?P<pk>[0-9]+)$', views.userDetail),
     url(r'api/image', views.image.as_view()),
-    url(r'api/run', views.compile),
+    url(r'api/compile', views.compile),
+    url(r'api/display', views.display),
 ]
 
 
