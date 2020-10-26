@@ -10,3 +10,7 @@ urlpatterns = [
     url(r'^api/profile/(?P<pk>[0-9]+)$', views.userDetail),
     url(r'api/image', views.image.as_view()),
 ]
+
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
