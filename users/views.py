@@ -92,17 +92,17 @@ def compile(request):
     f.write(inp)
     f.close()
 
-    if language == 'cpp':
+    if language == 'c_cpp':
         g = open('./codes/temp.cpp','w')
         g.write(script)
         g.close()
         cmd = ' g++ codes/temp.cpp -o codes/a.out'
         val = os.system(cmd)
-        if val == "256":
-            return JsonResponse({'success': False, 'error': ['Compilation Error']})
+        if val == 256:
+            return JsonResponse({'success': False, 'output': ['Compilation Error']})
         val = os.system('./codes/a.out < ./codes/in.txt > ./codes/out.txt')
-        if val == "6":
-            return JsonResponse({'success': False, 'error': ['Runtime Error']})
+        if val == 6:
+            return JsonResponse({'success': False, 'output': ['Runtime Error']})
 
     if language == 'python':
         g = open('./codes/temp.py','w')
@@ -110,8 +110,8 @@ def compile(request):
         g.close()
         cmd = ' python3 codes/temp.py < ./codes/in.txt > ./codes/out.txt'
         val = os.system(cmd)
-        if val == "256":
-            return JsonResponse({'success': False, 'error': ['Compilation Error']})
+        if val == 256:
+            return JsonResponse({'success': False, 'output': ['Compilation Error']})
 
     f = open('./codes/out.txt','r')
     output = f.read()
