@@ -133,44 +133,33 @@ def display(request):
     data = { "script": script }
     return JsonResponse(data, status=HTTP_200_OK)
 
-@api_view(['POST'])
+@api_view(['GET','POST'])
 def file(request):
-    script = request.data.get("script")
-    filename = request.data.get("filename")
-    # user = request.data.get("username")
-    try:
-        if script is not None:
-            if not os.path.isdir('./codes'):
-                os.mkdir('./codes')
-            # if not os.path.isdir('./codes/{0}'.format(str(user))):
-            #     path = './codes/{0}'.format(str(user))
-            #     os.mkdir(path)
-            f = open('./codes/{0}'.format(str(filename)), 'w')
-            f.write(script)
-            f.close()
-            url = ('http://127.0.0.1:8000'+'/codes/'+str(filename))
-    except:
-        return JsonResponse({'error': ['Invalid file reqeust']}, status=HTTP_400_BAD_REQUEST)
-    data = {"url": url }
-    return JsonResponse(data, status=HTTP_200_OK)
-
-# class image(APIView):
-#     parser_class = [FileUploadParser, DjangoMultiPartParser, MultiPartParser]
-    
-#     def post(self, request, format=None):
-#         if request.method == 'POST' and request.FILES['code']:
-#             try:
-#                 myfile = request.FILES['code']
-#                 fs = FileSystemStorage(location='codes/')
-#                 filename = fs.save(myfile.name, myfile)
-#                 url = ('http://127.0.0.1:8000'+'/codes/'+str(filename))
-#             except:
-#                 return JsonResponse({'error': ['Invalid file reqeust']}, status=HTTP_400_BAD_REQUEST)
-                
-#             data = {
-#                 "url": url
-#             }
-#             return JsonResponse(data, status=HTTP_200_OK)
-#         return JsonResponse({'error': ['Invalid Request']})
+    if request.method == 'POST':
+        script = request.data.get("script")
+        filename = request.data.get("filename")
+        # user = request.data.get("username")
+        try:
+            if script is not None:
+                if not os.path.isdir('./codes'):
+                    os.mkdir('./codes')
+                # if not os.path.isdir('./codes/{0}'.format(str(user))):
+                #     path = './codes/{0}'.format(str(user))
+                #     os.mkdir(path)
+                f = open('./codes/{0}'.format(str(filename)), 'w')
+                f.write(script)
+                f.close()
+                # url = ('http://127.0.0.1:8000'+'/codes/'+str(filename))
+        except:
+            return JsonResponse({'error': ['Invalid file reqeust']}, status=HTTP_400_BAD_REQUEST)
+        data = {"filename":filename, "script": script }
+        return JsonResponse(data, status=HTTP_200_OK)
+    # else:  
+    #     data = []
+    #     for filename in os.listdir('./codes'):
+    #         f = open('./codes/{0}'.format(filename), 'r')
+    #         script = f.read()
+    #         data.append({"filename": filename, "script": script})
+    #     return JsonResponse(data, status=HTTP_200_OK)
     
 
