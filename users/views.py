@@ -83,20 +83,28 @@ def login_user(request):
 def compile(request):
     filename = request.data.get("filename")
     language = request.data.get("language")
+    # user = request.data.get("username")
     inp = request.data.get("input")
 
-    if os.path.exists('codes/'+filename):
+    if os.path.exists('codes/{0}'.format(filename)):
         f = open('./codes/in.txt','w')
         f.write(inp)
         f.close()
 
         if language == 'cpp':
             cmd = ' g++ codes/{0} -o codes/a.out'.format(filename)
-            os.system(cmd)
-            os.system('./codes/a.out < ./codes/in.txt > ./codes/out.txt')
+            val = os.system(cmd)
+            if val == "256":
+                return JsonResponse({'error': ['Compilation Error']})
+            val = os.system('./codes/a.out < ./codes/in.txt > ./codes/out.txt')
+            if val == "6":
+                return JsonResponse({'error': ['Runtime Error']})
+
         if language == 'python':
             cmd = ' python3 codes/{0} < ./codes/in.txt > ./codes/out.txt'.format(filename)
-            os.system(cmd)
+            val = os.system(cmd)
+            if val == "256":
+                return JsonResponse({'error': ['Compilation Error']})
 
         f = open('./codes/out.txt','r')
         output = f.read()
@@ -106,35 +114,55 @@ def compile(request):
         }
         os.system('rm -f codes/*.txt codes/a.out ')
         return JsonResponse(data, status=HTTP_200_OK)
-    return JsonResponse({'error': ['File does not exist']})
+    return JsonResponse({'error': ['File does not exist']}, status=HTTP_400_BAD_REQUEST)
 
 @api_view(['POST'])
 def display(request):
     filename = request.data.get("filename")
-    f = open('./codes/{0}'.format(filename),'r')
+    # user = request.data.get("username")
+    f = open('./codes/{0}'.format(str(filename)),'r')
     script = f.read()
-    data = {
-        "script": script
-    }
+    data = { "script": script }
     return JsonResponse(data, status=HTTP_200_OK)
 
-class image(APIView):
-    parser_class = [FileUploadParser, DjangoMultiPartParser, MultiPartParser]
+@api_view(['POST'])
+def file(request):
+    script = request.data.get("script")
+    filename = request.data.get("filename")
+    # user = request.data.get("username")
+    try:
+        if script is not None:
+            if not os.path.isdir('./codes'):
+                os.mkdir('./codes')
+            # if not os.path.isdir('./codes/{0}'.format(str(user))):
+            #     path = './codes/{0}'.format(str(user))
+            #     os.mkdir(path)
+            f = open('./codes/{0}'.format(str(filename)), 'w')
+            f.write(script)
+            f.close()
+            url = ('http://127.0.0.1:8000'+'/codes/'+str(filename))
+    except:
+        return JsonResponse({'error': ['Invalid file reqeust']}, status=HTTP_400_BAD_REQUEST)
+    data = {"url": url }
+    return JsonResponse(data, status=HTTP_200_OK)
+
+# class image(APIView):
+#     parser_class = [FileUploadParser, DjangoMultiPartParser, MultiPartParser]
     
-    def post(self, request, format=None):
-        if request.method == 'POST' and request.FILES['code']:
-            try:
-                myfile = request.FILES['code']
-                fs = FileSystemStorage(location='codes/')
-                filename = fs.save(myfile.name, myfile)
-                url = ('http://127.0.0.1:8000'+'/codes/'+str(filename))
-            except:
-                return JsonResponse({'error': ['Invalid file reqeust']}, status=HTTP_400_BAD_REQUEST)
+#     def post(self, request, format=None):
+#         if request.method == 'POST' and request.FILES['code']:
+#             try:
+#                 myfile = request.FILES['code']
+#                 fs = FileSystemStorage(location='codes/')
+#                 filename = fs.save(myfile.name, myfile)
+#                 url = ('http://127.0.0.1:8000'+'/codes/'+str(filename))
+#             except:
+#                 return JsonResponse({'error': ['Invalid file reqeust']}, status=HTTP_400_BAD_REQUEST)
                 
-            data = {
-                "url": url
-            }
-            return JsonResponse(data, status=HTTP_200_OK)
-        return JsonResponse({'error': ['Invalid Request']})
+#             data = {
+#                 "url": url
+#             }
+#             return JsonResponse(data, status=HTTP_200_OK)
+#         return JsonResponse({'error': ['Invalid Request']})
     
 
