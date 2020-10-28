@@ -81,40 +81,48 @@ def login_user(request):
 
 @api_view(['POST'])
 def compile(request):
-    filename = request.data.get("filename")
+    # filename = request.data.get("filename")
+    script = request.data.get("script")
     language = request.data.get("language")
     # user = request.data.get("username")
     inp = request.data.get("input")
 
-    if os.path.exists('codes/{0}'.format(filename)):
-        f = open('./codes/in.txt','w')
-        f.write(inp)
-        f.close()
+    # if os.path.exists('codes/{0}'.format(filename)):
+    f = open('./codes/in.txt','w')
+    f.write(inp)
+    f.close()
 
-        if language == 'cpp':
-            cmd = ' g++ codes/{0} -o codes/a.out'.format(filename)
-            val = os.system(cmd)
-            if val == "256":
-                return JsonResponse({'error': ['Compilation Error']})
-            val = os.system('./codes/a.out < ./codes/in.txt > ./codes/out.txt')
-            if val == "6":
-                return JsonResponse({'error': ['Runtime Error']})
+    if language == 'cpp':
+        g = open('./codes/temp.cpp','w')
+        g.write(script)
+        g.close()
+        cmd = ' g++ codes/temp.cpp -o codes/a.out'
+        val = os.system(cmd)
+        if val == "256":
+            return JsonResponse({'success': False, 'error': ['Compilation Error']})
+        val = os.system('./codes/a.out < ./codes/in.txt > ./codes/out.txt')
+        if val == "6":
+            return JsonResponse({'success': False, 'error': ['Runtime Error']})
 
-        if language == 'python':
-            cmd = ' python3 codes/{0} < ./codes/in.txt > ./codes/out.txt'.format(filename)
-            val = os.system(cmd)
-            if val == "256":
-                return JsonResponse({'error': ['Compilation Error']})
+    if language == 'python':
+        g = open('./codes/temp.py','w')
+        g.write(script)
+        g.close()
+        cmd = ' python3 codes/temp.py < ./codes/in.txt > ./codes/out.txt'
+        val = os.system(cmd)
+        if val == "256":
+            return JsonResponse({'success': False, 'error': ['Compilation Error']})
 
-        f = open('./codes/out.txt','r')
-        output = f.read()
-        f.close()
-        data = {
-            "output": output
-        }
-        os.system('rm -f codes/*.txt codes/a.out ')
-        return JsonResponse(data, status=HTTP_200_OK)
-    return JsonResponse({'error': ['File does not exist']}, status=HTTP_400_BAD_REQUEST)
+    f = open('./codes/out.txt','r')
+    output = f.read()
+    f.close()
+    data = {
+        "success": True,
+        "output": output
+    }
+    os.system('rm -f codes/*.txt codes/a.out ')
+    return JsonResponse(data, status=HTTP_200_OK)
+    # return JsonResponse({'error': ['File does not exist']}, status=HTTP_400_BAD_REQUEST)
 
 @api_view(['POST'])
 def display(request):
