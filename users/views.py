@@ -54,6 +54,7 @@ def registerUser(request):
             )
             user.set_password(password)
             user.save()
+            
             userId = User.objects.get(username=username).pk
             
             serializer = profileSerializer(data={
@@ -125,9 +126,9 @@ class image(APIView):
         if request.method == 'POST' and request.FILES['code']:
             try:
                 myfile = request.FILES['code']
-                fs = FileSystemStorage(location='codes/')
+                fs = FileSystemStorage(location='media/codes/')
                 filename = fs.save(myfile.name, myfile)
-                url = ('http://127.0.0.1:8000'+'/codes/'+str(filename))
+                url = ('http://127.0.0.1:8000'+'/media/codes/'+str(filename))
             except:
                 return JsonResponse({'error': ['Invalid file reqeust']}, status=HTTP_400_BAD_REQUEST)
                 

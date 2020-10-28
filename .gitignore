@@ -1,7 +1,4 @@
-<<<<<<< HEAD
-node_modules
-=======
 #dependencies
 node_modules
 codes/
->>>>>>> bf910320acdac6dafe7f18d9a69f2e2ae7eb5792
+__pycache__
