@@ -15,8 +15,8 @@ urlpatterns = [
     url(r'api/file', views.file),
     url(r'api/display', views.display),
     
-    path(r'api-token-auth/', obtain_jwt_token),
-    path(r'api-token-refresh/', refresh_jwt_token),
+    # path(r'api-token-auth/', obtain_jwt_token),
+    # path(r'api-token-refresh/', refresh_jwt_token),
 ]
 
 
