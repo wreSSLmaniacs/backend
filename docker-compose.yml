@@ -1,0 +1,14 @@
+version: '3'
+services:
+  cpp:
+    build: ./docker/cpp/Dockerfile
+    ports:
+      - "5000:5000"
+    volumes:
+      - .:/code
+  python:
+    build: ./docker/python/Dockerfile
+    ports:
+      - "5050:5050"
+    volumes:
+      - .:/code

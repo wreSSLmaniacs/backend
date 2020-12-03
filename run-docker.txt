@@ -1,0 +1,20 @@
+# For cpp
+
+docker build -t cppenv docker/cpp
+docker run --name cppbox --rm -t -d cppenv
+docker exec -it cppbox /bin/bash
+
+docker stop cppbox
+
+
+
+
+
+
+# For python
+
+docker build -t pyenv docker/python
+docker run --name pybox --rm -t -d pyenv
+docker exec -it pybox /bin/bash
+
+docker stop pybox
