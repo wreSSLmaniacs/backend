@@ -195,6 +195,16 @@ class Submissions(models.Model):
         db_table = 'submissions'
 
 
+class UserFiles(models.Model):
+    user = models.ForeignKey(AuthUser, models.DO_NOTHING, db_column='user', blank=True, null=True)
+    filename = models.TextField(blank=True, null=True)
+    filepath = models.TextField(blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'user_files'
+
+
 class Users(models.Model):
     user_fk = models.ForeignKey(AuthUser, models.DO_NOTHING, db_column='user_fk', blank=True, null=True)
     image = models.TextField(blank=True, null=True)
