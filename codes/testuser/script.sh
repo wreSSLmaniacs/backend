@@ -1,0 +1,1 @@
+python3 temp.py < in.txt > out.txt

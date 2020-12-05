@@ -84,43 +84,70 @@ def compile(request):
     # filename = request.data.get("filename")
     script = request.data.get("script")
     language = request.data.get("language")
-    # user = request.data.get("username")
     inp = request.data.get("input")
 
-    # if os.path.exists('codes/{0}'.format(filename)):
-    f = open('./codes/in.txt','w')
+    # user = request.data.get("username")  # Check this
+    user = "testuser" # check this
+
+    if not os.path.exists('codes/{}'.format(user)):
+        os.system('mkdir ./codes/{}'.format(user))
+        
+    os.system('touch ./codes/{}/in.txt'.format(user))
+    os.system('touch ./codes/{}/out.txt'.format(user))
+    os.system('touch ./codes/{}/temp.cpp'.format(user))
+    os.system('touch ./codes/{}/temp.py'.format(user))
+    os.system('touch ./codes/{}/script.sh'.format(user))
+    
+    f = open('./codes/{}/in.txt'.format(user),'w')
     f.write(inp)
     f.close()
 
     if language == 'c_cpp':
-        g = open('./codes/temp.cpp','w')
+        os.system('chmod +x ./codes/{}/script.sh'.format(user, user, user))
+        cpp_script = 'g++ temp.cpp -o a.out && ./a.out < in.txt > out.txt;'
+        
+        g = open('./codes/{}/temp.cpp'.format(user),'w')
+        s = open('./codes/{}/script.sh'.format(user),'w')
         g.write(script)
+        s.write(cpp_script)
         g.close()
-        cmd = ' g++ codes/temp.cpp -o codes/a.out'
-        val = os.system(cmd)
+        s.close()
+        
+        os.system('docker run --name cppbox -v "$(pwd)"/codes/{}/:/code --rm -t -d cppenv'.format(user))    # This will start a container
+        val = os.system('docker exec -d cppbox bash ./script.sh')       # This will execute our commands (inside container)
+        
+        os.system('docker stop cppbox')
         if val == 256:
             return JsonResponse({'success': False, 'output': ['Compilation Error']})
-        val = os.system('./codes/a.out < ./codes/in.txt > ./codes/out.txt')
         if val == 6:
             return JsonResponse({'success': False, 'output': ['Runtime Error']})
 
     if language == 'python':
-        g = open('./codes/temp.py','w')
+        os.system('chmod +x ./codes/{}/script.sh'.format(user, user, user))
+        cpp_script = 'python3 temp.py < in.txt > out.txt'
+        
+        g = open('./codes/{}/temp.py'.format(user),'w')
+        s = open('./codes/{}/script.sh'.format(user),'w')
         g.write(script)
+        s.write(cpp_script)
         g.close()
-        cmd = ' python3 codes/temp.py < ./codes/in.txt > ./codes/out.txt'
-        val = os.system(cmd)
+        s.close()
+        
+        os.system('docker run --name pybox -v "$(pwd)"/codes/{}/:/code --rm -t -d pyenv'.format(user))    # This will start a container
+        val = os.system('docker exec -d pybox bash ./script.sh')       # This will execute our commands (inside container)
+        
+        os.system('docker stop pybox')
         if val == 256:
             return JsonResponse({'success': False, 'output': ['Compilation Error']})
 
-    f = open('./codes/out.txt','r')
+    f = open('./codes/{}/out.txt'.format(user),'r')
     output = f.read()
     f.close()
     data = {
         "success": True,
         "output": output
     }
-    os.system('rm -f codes/*.txt codes/a.out ')
+    os.system('rm -f codes/{}/*.txt codes/{}/a.out'.format(user, user, user))
     return JsonResponse(data, status=HTTP_200_OK)
     # return JsonResponse({'error': ['File does not exist']}, status=HTTP_400_BAD_REQUEST)
 

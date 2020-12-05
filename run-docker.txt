@@ -1,7 +1,7 @@
 # For cpp
 
-docker build -t cppenv docker/cpp
-docker run --name cppbox --rm -t -d cppenv
+docker build -t cppenv -f docker/Dockerfile.cplusplus .
+docker run --name cppbox -v "$(pwd)"/codes/:/code --rm -t -d cppenv
 docker exec -it cppbox /bin/bash
 
 docker stop cppbox
@@ -9,12 +9,10 @@ docker stop cppbox
 
 
 
-
-
 # For python
 
-docker build -t pyenv docker/python
-docker run --name pybox --rm -t -d pyenv
+docker build -t pyenv -f docker/Dockerfile.python .
+docker run --name pybox -v "$(pwd)"/codes/:/code --rm -t -d pyenv
 docker exec -it pybox /bin/bash
 
 docker stop pybox
