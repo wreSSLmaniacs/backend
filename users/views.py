@@ -103,9 +103,10 @@ def compile(request):
     f.write(inp)
     f.close()
 
+    # Bug her, "g++ temp.cpp" not working inside container
     if language == 'c_cpp':
         os.system('chmod +x ./codes/{}/script.sh'.format(user, user, user))
-        cpp_script = 'g++ temp.cpp -o a.out; ./a.out < in.txt > out.txt;'
+        cpp_script = 'echo start > log; g++ temp.cpp; echo compiled >> log; ./a.out < in.txt > out.txt; ls >> log; echo executed >> log;'
         
         g = open('./codes/{}/temp.cpp'.format(user),'w')
         s = open('./codes/{}/script.sh'.format(user),'w')
@@ -114,12 +115,9 @@ def compile(request):
         g.close()
         s.close()
         
-        os.system('ls codes/testuser')
-        
         os.system('docker run --name cppbox -v "$(pwd)"/codes/{}/:/code --rm -t -d cppenv'.format(user))    # This will start a container
         val = os.system('docker exec -d cppbox bash ./script.sh')       # This will execute our commands (inside container)
-        
-        os.system('echo test; cat codes/testuser/out.txt')
+        os.system('pwd')
         
         os.system('docker stop cppbox')
         if val == 256:
@@ -129,7 +127,7 @@ def compile(request):
 
     elif language == 'python':
         os.system('chmod +x ./codes/{}/script.sh'.format(user, user, user))
-        py_script = '$(python3 temp.py < in.txt > out.txt) > log 2>&1'
+        py_script = 'python3 temp.py < in.txt > out.txt'
         
         g = open('./codes/{}/temp.py'.format(user),'w')
         s = open('./codes/{}/script.sh'.format(user),'w')
@@ -152,7 +150,7 @@ def compile(request):
         "success": True,
         "output": output
     }
-    os.system('rm -f codes/{}/*.txt codes/{}/a.out'.format(user, user, user))
+    # os.system('rm -f codes/{}/*.txt codes/{}/a.out'.format(user, user, user))
     return JsonResponse(data, status=HTTP_200_OK)
     # return JsonResponse({'error': ['File does not exist']}, status=HTTP_400_BAD_REQUEST)
 
@@ -223,7 +221,7 @@ def file(request):
 
                     if serializer.is_valid():
                         serializer.save()
-                        return JsonResponse(serializer.data, status=HTTP_201_NEW)
+                        return JsonResponse(serializer.data, status=HTTP_200_OK)
                     return JsonResponse(serializer.errors, status=HTTP_400_BAD_REQUEST, safe=False)
                 data = {"filename": filename, "filepath": './codes/{}/{}'.format(username,filename)}
                 return JsonResponse(data, status=HTTP_200_OK)

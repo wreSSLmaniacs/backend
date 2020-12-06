@@ -1,1 +1,1 @@
-print(235)
+print(5)

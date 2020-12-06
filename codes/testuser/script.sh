@@ -1,1 +1,1 @@
-g++ temp.cpp -o a.out; ./a.out < in.txt > out.txt;
+echo start > log; echo compiled >> log; ./a.out < in.txt > out.txt; ls >> log; echo executed >> log;
