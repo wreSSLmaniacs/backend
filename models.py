@@ -198,6 +198,7 @@ class Submissions(models.Model):
 
 
 class UserFiles(models.Model):
+    id = models.IntegerField(primary_key=True)
     user = models.ForeignKey(AuthUser, models.DO_NOTHING, db_column='user', blank=True, null=True)
     filename = models.TextField(blank=True, null=True)
     filepath = models.TextField(blank=True, null=True)

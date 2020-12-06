@@ -12,15 +12,17 @@ docker stop cppbox
 # For python
 
 docker build -t pyenv -f docker/Dockerfile.python .
-docker run --name pybox -v "$(pwd)"/codes/:/code --rm -t -d pyenv
-docker exec -it pybox /bin/bash
+docker run --name pybox -v "$(pwd)"/codes/{}/:/code --rm -t -d pyenv
+docker exec -d cppbox bash ./script.sh
 
 docker stop pybox
 
-# For r
 
-docker build -t renv -f docker/Dockerfile.Rfile .
-docker run --name rbox -v "$(pwd)"/codes/:/code --rm -t -d pyenv
-docker exec -it rbox /bin/bash
+g++ temp.cpp; ./a.out < in > out
 
-docker stop rbox
+docker run --name cppbox -v "$(pwd)"/codes/testuser/:/code --rm -t -d cppenv
+
+docker stop cppbox
+
+ls codes/testuser
+cat codes/testuser/out.txt

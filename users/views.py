@@ -106,6 +106,14 @@ def compile(request):
 
     # Bug her, "g++ temp.cpp" not working inside container
     if language == 'c_cpp':
+<<<<<<< HEAD
+=======
+        os.system('chmod +x ./codes/{}/script.sh'.format(user, user, user))
+        py_script = 'g++ temp.cpp -o my.out && ./my.out < in.txt > out.txt && echo done > log'
+        # py_script = 'g++ temp.cpp; ./a.out < in.txt > out.txt; echo done > log'
+
+        
+>>>>>>> 4f5048adc89918be9afe52cbaa097b424252a614
         g = open('./codes/{}/temp.cpp'.format(user),'w')
         g.write(script)
         g.close()
@@ -120,6 +128,12 @@ def compile(request):
             return JsonResponse({'success': False, 'output': ['Runtime Error']})
 
     elif language == 'python':
+<<<<<<< HEAD
+=======
+        os.system('chmod +x ./codes/{}/script.sh'.format(user))
+        py_script = 'python3 temp.py < in.txt > out.txt'
+        
+>>>>>>> 4f5048adc89918be9afe52cbaa097b424252a614
         g = open('./codes/{}/temp.py'.format(user),'w')
         g.write(script)
         g.close()
@@ -157,61 +171,82 @@ def compile(request):
     # return JsonResponse({'error': ['File does not exist']}, status=HTTP_400_BAD_REQUEST)
 
 @api_view(['GET', 'DELETE'])
-def display(request, username, file):
-    print(55)
+def display(request, dirk, username, file):
+    if dirk == "":
+        dirk = "."
     userId = User.objects.get(username=username).pk
-    obj = UserFiles.objects.get(user=userId, filename=file)
+    filepath = username + "/" + dirk
+    obj = UserFiles.objects.get(user=userId, filepath=filepath, filename=file)
     serializer = userFilesSerializer(obj)
-    f = open(serializer.data['filepath'], 'r')
+
+    fileloc = "./codes/{}/{}".format(filepath, file)
+    f = open(fileloc, 'r')
     script = f.read()
     data = {'filename': file, 'script': script}
     try:
         if request.method == 'DELETE':
-            os.remove(serializer.data['filepath'])
+            os.remove(fileloc)
             obj.delete()
         return JsonResponse(data, status=HTTP_200_OK)
     except:
         return JsonResponse({'error': ['Invalid file reqeust']}, status=HTTP_400_BAD_REQUEST)
 
-@api_view(['GET', 'POST'])
-def displayAll(request, username):
+@api_view(['GET', 'POST', 'DELETE'])
+def displayAll(request, dirk, username):
+    if dirk == "":
+        dirk = "."
     if request.method == 'GET':
-        print(username)
         userId = User.objects.get(username=username).pk
-        obj = UserFiles.objects.filter(user=userId)
+        filepath = username + "/" + dirk
+        obj = UserFiles.objects.filter(user=userId,filepath=filepath)
         serializer = userFilesSerializer(obj, many=True)
         data = []
         for file in serializer.data:
-            f = open(file['filepath'], 'r')
+            f = open("./codes/{}/{}".format(filepath, file['filename']), 'r')
             script = f.read()
             data.append({'filename': file['filename'], 'script': script})
+
+        first = True
+        for x in os.walk("./codes/{}".format(filepath)):
+            if first:
+                first = False;
+                continue
+            fol_name = x[0].split('/')[-1]
+            data.append({'filename': 'trash.trash', 'script': fol_name})
         return JsonResponse(data, status=HTTP_200_OK, safe=False)
 
     elif request.method == 'POST':
         script = request.data.get("script")
         filename = request.data.get("filename")
         try:
+            data = {"filename": filename, "script": script}
             if not os.path.isdir('./codes'):
                 os.mkdir('./codes')
             if not os.path.isdir('./codes/{}'.format(str(username))):
                 path = './codes/{}'.format(str(username))
                 os.mkdir(path)
+            if not os.path.isdir('./codes/{0}/{1}'.format(str(username), str(dirk))):
+                path = './codes/{0}/{1}'.format(str(username), str(dirk))
+                os.mkdir(path)
+                return JsonResponse(data, status=HTTP_200_OK)
+            if filename == 'trash.trash':
+                return JsonResponse({'error': ['Directory name already exists']}, status=HTTP_400_BAD_REQUEST)
+
             flag = False
-            if not os.path.exists('./codes/{0}/{1}'.format(username,filename)):
+            if not os.path.exists('./codes/{}/{}/{}'.format(username,dirk,filename)):
                 flag = True
-            f = open('./codes/{0}/{1}'.format(username,filename), 'w')
+            f = open('./codes/{}/{}/{}'.format(username,dirk,filename), 'w')
             if script is not None:
                 f.write(script)
             
             f.close()
             # url = ('http://127.0.0.1:8000'+'/codes/'+str(filename))
-            data = {"filename": filename, "script": script}
             if flag:
                 userId = User.objects.get(username=username).pk
                 serializer = userFilesSerializer(data={
                         'user': userId,
                         'filename': filename,
-                        'filepath': './codes/{0}/{1}'.format(username,filename)
+                        'filepath': '{}/{}'.format(username,dirk)
                 })
 
                 if serializer.is_valid():
@@ -222,6 +257,16 @@ def displayAll(request, username):
 
         except:
             return JsonResponse({'error': ['Invalid file reqeust']}, status=HTTP_400_BAD_REQUEST)
+
+    elif request.method == 'DELETE':
+        userId = User.objects.get(username=username).pk
+        filepath = username + "/" + dirk
+        obj = UserFiles.objects.filter(user=userId, filepath=filepath)
+        serializer = userFilesSerializer(obj, many=True)
+        os.rmdir("./codes/{}".format(filepath))
+        obj.delete()
+        return JsonResponse({'Sucess': "True"}, status=HTTP_200_OK)
+
 
 class image(APIView):
     parser_class = [FileUploadParser, DjangoMultiPartParser, MultiPartParser]
