@@ -1,1 +1,0 @@
-g++ /code/temp.cpp -o my.out && ./my.out < in.txt > out.txt && echo done > log

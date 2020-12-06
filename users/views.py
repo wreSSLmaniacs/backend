@@ -106,20 +106,12 @@ def compile(request):
 
     # Bug her, "g++ temp.cpp" not working inside container
     if language == 'c_cpp':
-        os.system('chmod +x ./codes/{}/script.sh'.format(user, user, user))
-        py_script = 'g++ /code/temp.cpp -o my.out && ./my.out < in.txt > out.txt && echo done > log'
-        # py_script = 'g++ temp.cpp; ./a.out < in.txt > out.txt; echo done > log'
-
-        
         g = open('./codes/{}/temp.cpp'.format(user),'w')
-        s = open('./codes/{}/script.sh'.format(user),'w')
         g.write(script)
-        s.write(py_script)
         g.close()
-        s.close()
-        
+
         os.system('docker run --name cppbox -v "$(pwd)"/codes/{}/:/code --rm -t -d cppenv'.format(user))    # This will start a container
-        val = os.system('docker exec -d cppbox bash ./script.sh')       # This will execute our commands (inside container)
+        val = os.system('docker exec cppbox /bin/sh -c "g++ temp.cpp; ./a.out < in.txt > out.txt"')       # This will execute our commands (inside container)
         
         os.system('docker stop cppbox')
         if val == 256:
@@ -128,36 +120,24 @@ def compile(request):
             return JsonResponse({'success': False, 'output': ['Runtime Error']})
 
     elif language == 'python':
-        os.system('chmod +x ./codes/{}/script.sh'.format(user, user, user))
-        py_script = 'python3 temp.py < in.txt > out.txt'
-        
         g = open('./codes/{}/temp.py'.format(user),'w')
-        s = open('./codes/{}/script.sh'.format(user),'w')
         g.write(script)
-        s.write(py_script)
         g.close()
-        s.close()
         
         os.system('docker run --name pybox -v "$(pwd)"/codes/{}/:/code --rm -t -d pyenv'.format(user))    # This will start a container
-        val = os.system('docker exec -d pybox bash ./script.sh')       # This will execute our commands (inside container)
+        val = os.system('docker exec pybox /bin/sh -c "python3 temp.py < in.txt > out.txt"')       # This will execute our commands (inside container)
         
         os.system('docker stop pybox')
         if val == 256:
             return JsonResponse({'success': False, 'output': ['Compilation Error']})
 
     elif language == 'r':
-        os.system('chmod +x ./codes/{}/script.sh'.format(user, user, user))
-        py_script = 'r temp.r < in.txt > out.txt'
-        
         g = open('./codes/{}/temp.r'.format(user),'w')
-        s = open('./codes/{}/script.sh'.format(user),'w')
         g.write(script)
-        s.write(py_script)
         g.close()
-        s.close()
         
         os.system('docker run --name rbox -v "$(pwd)"/codes/{}/:/code --rm -t -d renv'.format(user))    # This will start a container
-        val = os.system('docker exec -d rbox bash ./script.sh')       # This will execute our commands (inside container)
+        val = os.system('docker exec pybox /bin/sh -c "r temp.r < in.txt > out.txt"')       # This will execute our commands (inside container)
         
         os.system('docker stop rbox')
         if val == 256:
