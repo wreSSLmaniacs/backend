@@ -104,7 +104,7 @@ def compile(request):
 
     if language == 'c_cpp':
         os.system('chmod +x ./codes/{}/script.sh'.format(user, user, user))
-        cpp_script = 'g++ temp.cpp -o a.out && ./a.out < in.txt > out.txt;'
+        cpp_script = 'g++ temp.cpp -o a.out; ./a.out < in.txt > out.txt;'
         
         g = open('./codes/{}/temp.cpp'.format(user),'w')
         s = open('./codes/{}/script.sh'.format(user),'w')
@@ -113,8 +113,12 @@ def compile(request):
         g.close()
         s.close()
         
+        os.system('ls codes/testuser')
+        
         os.system('docker run --name cppbox -v "$(pwd)"/codes/{}/:/code --rm -t -d cppenv'.format(user))    # This will start a container
         val = os.system('docker exec -d cppbox bash ./script.sh')       # This will execute our commands (inside container)
+        
+        os.system('echo test; cat codes/testuser/out.txt')
         
         os.system('docker stop cppbox')
         if val == 256:
@@ -122,14 +126,14 @@ def compile(request):
         if val == 6:
             return JsonResponse({'success': False, 'output': ['Runtime Error']})
 
-    if language == 'python':
+    elif language == 'python':
         os.system('chmod +x ./codes/{}/script.sh'.format(user, user, user))
-        cpp_script = 'python3 temp.py < in.txt > out.txt'
+        py_script = '$(python3 temp.py < in.txt > out.txt) > log 2>&1'
         
         g = open('./codes/{}/temp.py'.format(user),'w')
         s = open('./codes/{}/script.sh'.format(user),'w')
         g.write(script)
-        s.write(cpp_script)
+        s.write(py_script)
         g.close()
         s.close()
         

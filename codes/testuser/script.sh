@@ -1,1 +1,1 @@
-python3 temp.py < in.txt > out.txt
+g++ temp.cpp -o a.out; ./a.out < in.txt > out.txt;
