@@ -106,18 +106,19 @@ def compile(request):
     # Bug her, "g++ temp.cpp" not working inside container
     if language == 'c_cpp':
         os.system('chmod +x ./codes/{}/script.sh'.format(user, user, user))
-        cpp_script = 'echo start > log; g++ temp.cpp; echo compiled >> log; ./a.out < in.txt > out.txt; ls >> log; echo executed >> log;'
+        py_script = 'g++ /code/temp.cpp -o my.out && ./my.out < in.txt > out.txt && echo done > log'
+        # py_script = 'g++ temp.cpp; ./a.out < in.txt > out.txt; echo done > log'
+
         
         g = open('./codes/{}/temp.cpp'.format(user),'w')
         s = open('./codes/{}/script.sh'.format(user),'w')
         g.write(script)
-        s.write(cpp_script)
+        s.write(py_script)
         g.close()
         s.close()
         
         os.system('docker run --name cppbox -v "$(pwd)"/codes/{}/:/code --rm -t -d cppenv'.format(user))    # This will start a container
         val = os.system('docker exec -d cppbox bash ./script.sh')       # This will execute our commands (inside container)
-        os.system('pwd')
         
         os.system('docker stop cppbox')
         if val == 256:
@@ -143,6 +144,25 @@ def compile(request):
         if val == 256:
             return JsonResponse({'success': False, 'output': ['Compilation Error']})
 
+    elif language == 'java':
+        os.system('chmod +x ./codes/{}/script.sh'.format(user, user, user))
+        py_script = 'python3 temp.py < in.txt > out.txt'
+        
+        g = open('./codes/{}/temp.py'.format(user),'w')
+        s = open('./codes/{}/script.sh'.format(user),'w')
+        g.write(script)
+        s.write(py_script)
+        g.close()
+        s.close()
+        
+        os.system('docker run --name pybox -v "$(pwd)"/codes/{}/:/code --rm -t -d pyenv'.format(user))    # This will start a container
+        val = os.system('docker exec -d pybox bash ./script.sh')       # This will execute our commands (inside container)
+        
+        os.system('docker stop pybox')
+        if val == 256:
+            return JsonResponse({'success': False, 'output': ['Compilation Error']})
+
+
     f = open('./codes/{}/out.txt'.format(user),'r')
     output = f.read()
     f.close()
@@ -150,7 +170,7 @@ def compile(request):
         "success": True,
         "output": output
     }
-    # os.system('rm -f codes/{}/*.txt codes/{}/a.out'.format(user, user, user))
+    os.system('rm -f codes/{}/*.txt codes/{}/a.out'.format(user, user, user))
     return JsonResponse(data, status=HTTP_200_OK)
     # return JsonResponse({'error': ['File does not exist']}, status=HTTP_400_BAD_REQUEST)
 

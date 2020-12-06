@@ -1,1 +1,5 @@
-echo start > log; echo compiled >> log; ./a.out < in.txt > out.txt; ls >> log; echo executed >> log;
+echo started > log;
+g++ temp.cpp;
+echo compiled > log;
+./a.out < in.txt > out.txt;
+echo done > log;
