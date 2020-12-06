@@ -178,6 +178,8 @@ def compile(request):
 
 @api_view(['GET', 'DELETE'])
 def display(request, dirk, username, file):
+    if dirk == "":
+        dirk = "."
     userId = User.objects.get(username=username).pk
     filepath = username + "/" + dirk
     obj = UserFiles.objects.get(user=userId, filepath=filepath, filename=file)
@@ -197,6 +199,8 @@ def display(request, dirk, username, file):
 
 @api_view(['GET', 'POST', 'DELETE'])
 def displayAll(request, dirk, username):
+    if dirk == "":
+        dirk = "."
     if request.method == 'GET':
         userId = User.objects.get(username=username).pk
         filepath = username + "/" + dirk
@@ -207,7 +211,12 @@ def displayAll(request, dirk, username):
             f = open("./codes/{}/{}".format(filepath, file['filename']), 'r')
             script = f.read()
             data.append({'filename': file['filename'], 'script': script})
-        for x in os.walk("./codes/{}".format(filepath))[1:]:
+
+        first = True
+        for x in os.walk("./codes/{}".format(filepath)):
+            if first:
+                first = False;
+                continue
             fol_name = x[0].split('/')[-1]
             data.append({'filename': 'trash.trash', 'script': fol_name})
         return JsonResponse(data, status=HTTP_200_OK, safe=False)
