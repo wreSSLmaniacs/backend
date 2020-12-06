@@ -220,7 +220,7 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='UserFiles',
             fields=[
-                ('id', models.IntegerField(primary_key=True, serialize=False)),
+                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('filename', models.TextField(blank=True, null=True)),
                 ('filepath', models.TextField(blank=True, null=True)),
             ],
