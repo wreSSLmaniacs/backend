@@ -90,9 +90,11 @@ class Contest(models.Model):
     title = models.CharField(max_length=128)
     blog = models.ForeignKey(Blog, models.DO_NOTHING, blank=True, null=True)
     patricipant_count = models.BigIntegerField(blank=True, null=True)
+    desc = models.TextField(null=True, blank=True)
+    isRunning = models.BooleanField(null=False,blank=False,default=True)
 
     class Meta:
-        managed = False
+        managed = True
         db_table = 'contest'
 
 
