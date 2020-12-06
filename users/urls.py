@@ -12,10 +12,8 @@ urlpatterns = [
     url(r'^api/login$', views.login_user),
     url(r'^api/profile/(?P<pk>[0-9]+)$', views.userDetail),
     url(r'api/compile', views.compile),
-    url(r'api/file', views.file),
-    url(r'api/displaylist', views.displayAll),
-    url(r'api/display', views.display),
-    url(r'api/deleteFile', views.deleteFile)
+    url(r'api/display/(?P<username>[a-zA-Z0-9]+)$', views.displayAll),
+    url(r'api/display/(?P<username>[a-zA-Z0-9]+)/(?P<file>[a-zA-Z0-9\.\_]+)$', views.display)
     
     # path(r'api-token-auth/', obtain_jwt_token),
     # path(r'api-token-refresh/', refresh_jwt_token),

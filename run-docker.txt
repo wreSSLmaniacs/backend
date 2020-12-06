@@ -18,8 +18,6 @@ docker exec -d cppbox bash ./script.sh
 docker stop pybox
 
 
-
-
 g++ temp.cpp; ./a.out < in > out
 
 docker run --name cppbox -v "$(pwd)"/codes/testuser/:/code --rm -t -d cppenv

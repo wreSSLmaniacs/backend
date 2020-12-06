@@ -97,6 +97,7 @@ def compile(request):
     os.system('touch ./codes/{}/out.txt'.format(user))
     os.system('touch ./codes/{}/temp.cpp'.format(user))
     os.system('touch ./codes/{}/temp.py'.format(user))
+    os.system('touch ./codes/{}/temp.r'.format(user))
     os.system('touch ./codes/{}/script.sh'.format(user))
     
     f = open('./codes/{}/in.txt'.format(user),'w')
@@ -144,27 +145,28 @@ def compile(request):
         if val == 256:
             return JsonResponse({'success': False, 'output': ['Compilation Error']})
 
-    elif language == 'java':
+    elif language == 'r':
         os.system('chmod +x ./codes/{}/script.sh'.format(user, user, user))
-        py_script = 'python3 temp.py < in.txt > out.txt'
+        py_script = 'r temp.r < in.txt > out.txt'
         
-        g = open('./codes/{}/temp.py'.format(user),'w')
+        g = open('./codes/{}/temp.r'.format(user),'w')
         s = open('./codes/{}/script.sh'.format(user),'w')
         g.write(script)
         s.write(py_script)
         g.close()
         s.close()
         
-        os.system('docker run --name pybox -v "$(pwd)"/codes/{}/:/code --rm -t -d pyenv'.format(user))    # This will start a container
-        val = os.system('docker exec -d pybox bash ./script.sh')       # This will execute our commands (inside container)
+        os.system('docker run --name rbox -v "$(pwd)"/codes/{}/:/code --rm -t -d renv'.format(user))    # This will start a container
+        val = os.system('docker exec -d rbox bash ./script.sh')       # This will execute our commands (inside container)
         
-        os.system('docker stop pybox')
+        os.system('docker stop rbox')
         if val == 256:
             return JsonResponse({'success': False, 'output': ['Compilation Error']})
 
 
     f = open('./codes/{}/out.txt'.format(user),'r')
     output = f.read()
+    print(output)
     f.close()
     data = {
         "success": True,
@@ -174,90 +176,72 @@ def compile(request):
     return JsonResponse(data, status=HTTP_200_OK)
     # return JsonResponse({'error': ['File does not exist']}, status=HTTP_400_BAD_REQUEST)
 
-@api_view(['GET'])
-def display(request):
-    username = request.data.get("username")
-    filename = request.data.get("filename")
+@api_view(['GET', 'DELETE'])
+def display(request, username, file):
+    print(55)
     userId = User.objects.get(username=username).pk
-    obj = UserFiles.objects.get(user=userId, filename=filename)
+    obj = UserFiles.objects.get(user=userId, filename=file)
     serializer = userFilesSerializer(obj)
     f = open(serializer.data['filepath'], 'r')
     script = f.read()
-    data = {'filename': filename, 'script': script}
-    print(data)
-    return JsonResponse(data, status=HTTP_200_OK)
+    data = {'filename': file, 'script': script}
+    try:
+        if request.method == 'DELETE':
+            os.remove(serializer.data['filepath'])
+            obj.delete()
+        return JsonResponse(data, status=HTTP_200_OK)
+    except:
+        return JsonResponse({'error': ['Invalid file reqeust']}, status=HTTP_400_BAD_REQUEST)
 
-@api_view(['GET'])
-def displayAll(request):
-    username = request.data.get("username")
-    userId = User.objects.get(username=username).pk
-    obj = UserFiles.objects.filter(user=userId)
-    serializer = userFilesSerializer(obj, many=True)
-    return JsonResponse(serializer.data, safe=False)
+@api_view(['GET', 'POST'])
+def displayAll(request, username):
+    if request.method == 'GET':
+        print(username)
+        userId = User.objects.get(username=username).pk
+        obj = UserFiles.objects.filter(user=userId)
+        serializer = userFilesSerializer(obj, many=True)
+        data = []
+        for file in serializer.data:
+            f = open(file['filepath'], 'r')
+            script = f.read()
+            data.append({'filename': file['filename'], 'script': script})
+        return JsonResponse(data, status=HTTP_200_OK, safe=False)
 
-@api_view(['POST'])
-def deleteFile(request):
-    username = request.data.get("username")
-    filename = request.data.get("filename")
-
-    userId = User.objects.get(username=username).pk
-    obj = UserFiles.objects.get(user=userId, filename=filename)
-    serializer = userFilesSerializer(obj)
-    print(serializer.data['filepath'])
-    os.remove(serializer.data['filepath'])
-    obj.delete()
-    return JsonResponse({"Success":"True"}, status=HTTP_200_OK)
-
-
-
-@api_view(['GET','POST'])
-def file(request):
-    if request.method == 'POST':
+    elif request.method == 'POST':
         script = request.data.get("script")
         filename = request.data.get("filename")
-        username = request.data.get("username")
-
         try:
+            if not os.path.isdir('./codes'):
+                os.mkdir('./codes')
+            if not os.path.isdir('./codes/{}'.format(str(username))):
+                path = './codes/{}'.format(str(username))
+                os.mkdir(path)
+            flag = False
+            if not os.path.exists('./codes/{0}/{1}'.format(username,filename)):
+                flag = True
+            f = open('./codes/{0}/{1}'.format(username,filename), 'w')
             if script is not None:
-                if not os.path.isdir('./codes'):
-                    os.mkdir('./codes')
-                if not os.path.isdir('./codes/{}'.format(str(username))):
-                    path = './codes/{}'.format(str(username))
-                    os.mkdir(path)
-                flag = False
-                if not os.path.exists('./codes/{0}/{1}'.format(username,filename)):
-                    flag = True
-                f = open('./codes/{0}/{1}'.format(username,filename), 'w')
                 f.write(script)
-                f.close()
-                # url = ('http://127.0.0.1:8000'+'/codes/'+str(filename))
-                if flag:
-                    userId = User.objects.get(username=username).pk
-                    serializer = userFilesSerializer(data={
-                            'user': userId,
-                            'filename': filename,
-                            'filepath': './codes/{0}/{1}'.format(username,filename)
-                    })
+            
+            f.close()
+            # url = ('http://127.0.0.1:8000'+'/codes/'+str(filename))
+            data = {"filename": filename, "script": script}
+            if flag:
+                userId = User.objects.get(username=username).pk
+                serializer = userFilesSerializer(data={
+                        'user': userId,
+                        'filename': filename,
+                        'filepath': './codes/{0}/{1}'.format(username,filename)
+                })
 
-                    if serializer.is_valid():
-                        serializer.save()
-                        return JsonResponse(serializer.data, status=HTTP_200_OK)
-                    return JsonResponse(serializer.errors, status=HTTP_400_BAD_REQUEST, safe=False)
-                data = {"filename": filename, "filepath": './codes/{}/{}'.format(username,filename)}
-                return JsonResponse(data, status=HTTP_200_OK)
+                if serializer.is_valid():
+                    serializer.save()
+                    return JsonResponse(data, status=HTTP_200_OK)
+                return JsonResponse(serializer.errors, status=HTTP_400_BAD_REQUEST, safe=False)
+            return JsonResponse(data, status=HTTP_200_OK)
 
         except:
             return JsonResponse({'error': ['Invalid file reqeust']}, status=HTTP_400_BAD_REQUEST)
-
-        data = {"filename":filename, "script": script }
-        return JsonResponse(data, status=HTTP_200_OK)
-    # else:  
-    #     data = []
-    #     for filename in os.listdir('./codes'):
-    #         f = open('./codes/{0}'.format(filename), 'r')
-    #         script = f.read()
-    #         data.append({"filename": filename, "script": script})
-    #     return JsonResponse(data, status=HTTP_200_OK)
 
 class image(APIView):
     parser_class = [FileUploadParser, DjangoMultiPartParser, MultiPartParser]
@@ -277,5 +261,3 @@ class image(APIView):
             }
             return JsonResponse(data, status=HTTP_200_OK)
         return JsonResponse({'error': ['Invalid Request']})
-    
-
