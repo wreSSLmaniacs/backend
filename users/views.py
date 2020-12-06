@@ -54,6 +54,7 @@ def registerUser(request):
             )
             user.set_password(password)
             user.save()
+            
             userId = User.objects.get(username=username).pk
             
             serializer = profileSerializer(data={
@@ -192,5 +193,24 @@ def file(request):
     #         script = f.read()
     #         data.append({"filename": filename, "script": script})
     #     return JsonResponse(data, status=HTTP_200_OK)
+
+class image(APIView):
+    parser_class = [FileUploadParser, DjangoMultiPartParser, MultiPartParser]
+    
+    def post(self, request, format=None):
+        if request.method == 'POST' and request.FILES['code']:
+            try:
+                myfile = request.FILES['code']
+                fs = FileSystemStorage(location='media/codes/')
+                filename = fs.save(myfile.name, myfile)
+                url = ('http://127.0.0.1:8000'+'/media/codes/'+str(filename))
+            except:
+                return JsonResponse({'error': ['Invalid file reqeust']}, status=HTTP_400_BAD_REQUEST)
+                
+            data = {
+                "url": url
+            }
+            return JsonResponse(data, status=HTTP_200_OK)
+        return JsonResponse({'error': ['Invalid Request']})
     
 
