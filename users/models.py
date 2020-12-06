@@ -74,43 +74,6 @@ class AuthUserUserPermissions(models.Model):
         unique_together = (('user', 'permission'),)
 
 
-class Blog(models.Model):
-    blog_id = models.BigIntegerField(primary_key=True)
-    title = models.CharField(max_length=128)
-    content = models.TextField()
-    author = models.ForeignKey('RatedUsers', models.DO_NOTHING, db_column='author')
-
-    class Meta:
-        managed = False
-        db_table = 'blog'
-
-
-class Contest(models.Model):
-    contest_id = models.BigIntegerField(primary_key=True)
-    title = models.CharField(max_length=128)
-    blog = models.ForeignKey(Blog, models.DO_NOTHING, blank=True, null=True)
-    patricipant_count = models.BigIntegerField(blank=True, null=True)
-    desc = models.TextField(null=True, blank=True)
-    isRunning = models.BooleanField(null=False,blank=False,default=True)
-
-    class Meta:
-        managed = True
-        db_table = 'contest'
-
-
-class ContestUser(models.Model):
-    perf_id = models.BigIntegerField(primary_key=True)
-    contest = models.ForeignKey(Contest, models.DO_NOTHING)
-    user = models.ForeignKey('RatedUsers', models.DO_NOTHING, blank=True, null=True)
-    ranking = models.IntegerField(blank=True, null=True)
-    net_score = models.IntegerField(blank=True, null=True)
-    del_rating = models.IntegerField(blank=True, null=True)
-
-    class Meta:
-        managed = False
-        db_table = 'contest_user'
-
-
 class DjangoAdminLog(models.Model):
     action_time = models.DateTimeField()
     object_id = models.TextField(blank=True, null=True)
@@ -153,49 +116,6 @@ class DjangoSession(models.Model):
     class Meta:
         managed = False
         db_table = 'django_session'
-
-
-class Problems(models.Model):
-    problem_id = models.BigIntegerField(primary_key=True)
-    title = models.CharField(max_length=128, blank=True, null=True)
-    statement = models.TextField(blank=True, null=True)
-    testcases = models.TextField(blank=True, null=True)  # This field type is a guess.
-    no_subs = models.BigIntegerField(blank=True, null=True)
-    author = models.ForeignKey('RatedUsers', models.DO_NOTHING, db_column='author')
-    ref_blog = models.ForeignKey(Blog, models.DO_NOTHING, db_column='ref_blog', blank=True, null=True)
-    feat_contest = models.ForeignKey(Contest, models.DO_NOTHING, db_column='feat_contest', blank=True, null=True)
-
-    class Meta:
-        managed = False
-        db_table = 'problems'
-
-
-class RatedUsers(models.Model):
-    username = models.CharField(primary_key=True, max_length=64)
-    rating = models.IntegerField(blank=True, null=True)
-    pdirec = models.TextField(blank=True, null=True)  # This field type is a guess.
-
-    class Meta:
-        managed = False
-        db_table = 'rated_users'
-
-
-class Submissions(models.Model):
-    submission_id = models.BigIntegerField(primary_key=True)
-    problem = models.ForeignKey(Problems, models.DO_NOTHING)
-    user = models.ForeignKey(RatedUsers, models.DO_NOTHING)
-    code = models.TextField()  # This field type is a guess.
-    language = models.CharField(max_length=16)
-    verdict = models.CharField(max_length=16)
-    score = models.IntegerField()
-    time_of_submission = models.DateTimeField()
-    contest_submission = models.BooleanField()
-    contest = models.ForeignKey(ContestUser, models.DO_NOTHING, blank=True, null=True)
-
-    class Meta:
-        managed = False
-        db_table = 'submissions'
-
 
 class UserFiles(models.Model):
     user = models.ForeignKey(AuthUser, models.DO_NOTHING, db_column='user', blank=True, null=True)

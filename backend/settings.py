@@ -49,7 +49,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'users',
-    'corsheaders'
+    'corsheaders',
+    'compe',
 ]
 
 # REST_FRAMEWORK = {
