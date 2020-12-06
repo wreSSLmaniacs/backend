@@ -106,7 +106,7 @@ def compile(request):
     # Bug her, "g++ temp.cpp" not working inside container
     if language == 'c_cpp':
         os.system('chmod +x ./codes/{}/script.sh'.format(user, user, user))
-        py_script = 'g++ /code/temp.cpp -o my.out && ./my.out < in.txt > out.txt && echo done > log'
+        py_script = 'g++ temp.cpp -o my.out && ./my.out < in.txt > out.txt && echo done > log'
         # py_script = 'g++ temp.cpp; ./a.out < in.txt > out.txt; echo done > log'
 
         
@@ -127,7 +127,7 @@ def compile(request):
             return JsonResponse({'success': False, 'output': ['Runtime Error']})
 
     elif language == 'python':
-        os.system('chmod +x ./codes/{}/script.sh'.format(user, user, user))
+        os.system('chmod +x ./codes/{}/script.sh'.format(user))
         py_script = 'python3 temp.py < in.txt > out.txt'
         
         g = open('./codes/{}/temp.py'.format(user),'w')
