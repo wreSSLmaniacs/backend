@@ -1,12 +1,14 @@
+from django.db import models
 from rest_framework import serializers
-from .models import Contest, TestCases
+from .models import Contest
+
+class InfoSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Contest
+        fields = ('title','problem')
+
 
 class ContestSerializer(serializers.ModelSerializer):
     class Meta:
         model = Contest
-        fields = '__all__'
-
-class TestCaseSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = TestCases
         fields = '__all__'
