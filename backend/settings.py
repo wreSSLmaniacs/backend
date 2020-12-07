@@ -47,14 +47,15 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'django.contrib.sites',
-    'rest_auth.registration',
-    'allauth.account',
     'rest_framework',
-    'corsheaders'
-    'rest_auth',
-    'allauth',
+    'rest_framework.authtoken',
+    'corsheaders',
     'users',
+    'django.contrib.sites',
+    'allauth',
+    'allauth.account',
+    'rest_auth',
+    'rest_auth.registration',
 ]
 
 REST_FRAMEWORK = {

@@ -73,9 +73,7 @@ def registerUser(request):
     
         return JsonResponse({"error":["This username already taken"]}, status=HTTP_404_NOT_FOUND, safe=False)
 
-# @authentication_classes([TokenAuthentication])
 @api_view(['POST'])
-@permission_classes([IsAuthenticated])
 def login_user(request):
     username = request.data.get("username")
     password = request.data.get("password")
