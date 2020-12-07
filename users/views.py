@@ -80,8 +80,14 @@ def login_user(request):
     username = request.data.get("username")
     password = request.data.get("password")
     user = authenticate(username=username, password=password)
+    user2 = Users.objects.get(user_fk=user.pk)
     if user is not None:
-        return JsonResponse({'token':'Logged in succesfully'}, status=HTTP_200_OK)
+        data = {
+            'token':'Logged in succesfully',
+            'username':username,
+            'image':user2.image
+        }
+        return JsonResponse(data, status=HTTP_200_OK)
     return JsonResponse({'error': ['Invalid User']}, status=HTTP_404_NOT_FOUND)
 
 @api_view(['POST'])
