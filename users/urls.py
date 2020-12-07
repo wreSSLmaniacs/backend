@@ -5,7 +5,7 @@ from django.urls import path
 from django.conf.urls.static import static
 from users import views
 
-# from rest_framework.authtoken.views import ObtainAuthToken
+from rest_framework.authtoken.views import ObtainAuthToken
 
 urlpatterns = [ 
     url(r'^api/profile$', views.userList),
@@ -15,7 +15,9 @@ urlpatterns = [
     url(r'api/image', views.image.as_view()),
     url(r'^api/profile/(?P<pk>[0-9]+)$', views.userDetail),
     url(r'api/display/(?P<username>[a-zA-Z0-9]+)/(?P<dirk>[a-zA-Z0-9\/\_]*)$', views.displayAll),
-    url(r'api/display/(?P<username>[a-zA-Z0-9]+)/(?P<dirk>[a-zA-Z0-9\/\_]*)/(?P<file>[a-zA-Z0-9\_]+\.[a-zA-Z0-9\_]+)$', views.display)
+    url(r'api/display/(?P<username>[a-zA-Z0-9]+)/(?P<dirk>[a-zA-Z0-9\/\_]*)/(?P<file>[a-zA-Z0-9\_]+\.[a-zA-Z0-9\_]+)$', views.display),
+
+    url(r'^auth/',ObtainAuthToken.as_view())
 ]
 
 
