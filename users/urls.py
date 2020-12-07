@@ -11,8 +11,9 @@ urlpatterns = [
     url(r'^api/profile$', views.userList),
     url(r'^api/profile/add$', views.registerUser),
     url(r'^api/login$', views.login_user),
-    url(r'^api/profile/(?P<pk>[0-9]+)$', views.userDetail),
     url(r'api/compile', views.compile),
+    url(r'api/image', views.image.as_view()),
+    url(r'^api/profile/(?P<pk>[0-9]+)$', views.userDetail),
     url(r'api/display/(?P<username>[a-zA-Z0-9]+)/(?P<dirk>[a-zA-Z0-9\/\_]*)$', views.displayAll),
     url(r'api/display/(?P<username>[a-zA-Z0-9]+)/(?P<dirk>[a-zA-Z0-9\/\_]*)/(?P<file>[a-zA-Z0-9\_]+\.[a-zA-Z0-9\_]+)$', views.display)
 ]
@@ -20,3 +21,4 @@ urlpatterns = [
 
 if settings.DEBUG:
     urlpatterns += static(settings.CODES_URL, document_root=settings.CODES_ROOT)
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

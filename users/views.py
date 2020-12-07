@@ -33,10 +33,10 @@ def userDetail(request, pk):
         try:
             obj = Users.objects.get(pk=pk)
         except:
-            return JsonResponse("error", status=HTTP_404_NOT_FOUND)
+            return JsonResponse("error", status=HTTP_404_NOT_FOUND, safe=False)
         
         serializer = profileDetailSerializer(obj)
-        return JsonResponse(serializer.data)
+        return JsonResponse(serializer.data, safe=False)
     
 @api_view(['POST'])
 def registerUser(request):
@@ -75,7 +75,7 @@ def registerUser(request):
 
 # @authentication_classes([TokenAuthentication])
 @api_view(['POST'])
-@permission_classes([IsAuthenticated])
+# @permission_classes([IsAuthenticated])
 def login_user(request):
     username = request.data.get("username")
     password = request.data.get("password")
@@ -265,12 +265,13 @@ class image(APIView):
     parser_class = [FileUploadParser, DjangoMultiPartParser, MultiPartParser]
     
     def post(self, request, format=None):
-        if request.method == 'POST' and request.FILES['code']:
+        if request.method == 'POST' and request.FILES['image']:
             try:
-                myfile = request.FILES['code']
-                fs = FileSystemStorage(location='media/codes/')
+                myfile = request.FILES['image']
+                fs = FileSystemStorage(location='media/')
+                myfile.name = "profile.png"
                 filename = fs.save(myfile.name, myfile)
-                url = ('http://127.0.0.1:8000'+'/media/codes/'+str(filename))
+                url = ('http://127.0.0.1:8000'+'/media/'+str(filename))
             except:
                 return JsonResponse({'error': ['Invalid file reqeust']}, status=HTTP_400_BAD_REQUEST)
                 
