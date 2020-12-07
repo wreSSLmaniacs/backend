@@ -14,6 +14,7 @@ from rest_framework.parsers import JSONParser, FileUploadParser, MultiPartParser
 from users.serializers import *
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
+
 import os
 
 # Create your views here.
@@ -41,6 +42,7 @@ def userDetail(request, pk):
         return JsonResponse(serializer.data, safe=False)
     
 @api_view(['POST'])
+@authentication_classes([TokenAuthentication])
 def registerUser(request):
     if request.method == 'POST':
         username = request.data.get('username')
@@ -75,9 +77,9 @@ def registerUser(request):
     
         return JsonResponse({"error":["This username already taken"]}, status=HTTP_404_NOT_FOUND, safe=False)
 
-# @authentication_classes([TokenAuthentication])
-@api_view(['POST'])
 # @permission_classes([IsAuthenticated])
+@api_view(['POST'])
+@authentication_classes([TokenAuthentication])
 def login_user(request):
     username = request.data.get("username")
     password = request.data.get("password")
@@ -100,32 +102,29 @@ def compile(request):
     script = request.data.get("script")
     language = request.data.get("language")
     inp = request.data.get("input")
-
-    # user = request.data.get("username")  # Check this
-    user = "testuser" # check this
+    user = request.data.get("username")  # Check this
 
     if not os.path.exists('codes/{}'.format(user)):
         os.system('mkdir ./codes/{}'.format(user))
         
     os.system('touch ./codes/{}/in.txt'.format(user))
     os.system('touch ./codes/{}/out.txt'.format(user))
-    os.system('touch ./codes/{}/temp.cpp'.format(user))
-    os.system('touch ./codes/{}/temp.py'.format(user))
-    os.system('touch ./codes/{}/temp.r'.format(user))
+    os.system('touch ./codes/{}/asdfghjkl.cpp'.format(user))
+    os.system('touch ./codes/{}/asdfghjkl.py'.format(user))
+    os.system('touch ./codes/{}/asdfghjkl.r'.format(user))
     os.system('touch ./codes/{}/script.sh'.format(user))
     
     f = open('./codes/{}/in.txt'.format(user),'w')
     f.write(inp)
     f.close()
 
-    # Bug here, "g++ temp.cpp" not working inside container
     if language == 'c_cpp':
-        g = open('./codes/{}/temp.cpp'.format(user),'w')
+        g = open('./codes/{}/asdfghjkl.cpp'.format(user),'w')
         g.write(script)
         g.close()
 
         os.system('docker run --name cppbox -v "$(pwd)"/codes/{}/:/code --rm -t -d cppenv'.format(user))    # This will start a container
-        val = os.system('docker exec cppbox /bin/sh -c "g++ temp.cpp; ./a.out < in.txt > out.txt"')       # This will execute our commands (inside container)
+        val = os.system('docker exec cppbox /bin/sh -c "g++ asdfghjkl.cpp; ./a.out < in.txt > out.txt"')       # This will execute our commands (inside container)
         
         os.system('docker stop cppbox')
         
@@ -135,12 +134,12 @@ def compile(request):
             return JsonResponse({'success': False, 'output': ['Runtime Error']})
 
     elif language == 'python':
-        g = open('./codes/{}/temp.py'.format(user),'w')
+        g = open('./codes/{}/asdfghjkl.py'.format(user),'w')
         g.write(script)
         g.close()
         
         os.system('docker run --name pybox -v "$(pwd)"/codes/{}/:/code --rm -t -d pyenv'.format(user))    # This will start a container
-        val = os.system('docker exec pybox /bin/sh -c "python3 temp.py < in.txt > out.txt"')       # This will execute our commands (inside container)
+        val = os.system('docker exec pybox /bin/sh -c "python3 asdfghjkl.py < in.txt > out.txt"')       # This will execute our commands (inside container)
         
         os.system('docker stop pybox')
         
@@ -148,12 +147,12 @@ def compile(request):
             return JsonResponse({'success': False, 'output': ['Compilation Error']})
 
     elif language == 'r':
-        g = open('./codes/{}/temp.r'.format(user),'w')
+        g = open('./codes/{}/asdfghjkl.r'.format(user),'w')
         g.write(script)
         g.close()
         
         os.system('docker run --name rbox -v "$(pwd)"/codes/{}/:/code --rm -t -d renv'.format(user))    # This will start a container
-        val = os.system('docker exec pybox /bin/sh -c "r temp.r < in.txt > out.txt"')       # This will execute our commands (inside container)
+        val = os.system('docker exec pybox /bin/sh -c "r asdfghjkl.r < in.txt > out.txt"')       # This will execute our commands (inside container)
         
         os.system('docker stop rbox')
         
@@ -176,7 +175,7 @@ def compile(request):
 @api_view(['GET', 'DELETE'])
 @authentication_classes([TokenAuthentication])
 def display(request, dirk, username, file):
-    if dirk == "":
+    if dirk == "" or dirk is None:
         dirk = "."
     userId = User.objects.get(username=username).pk
     filepath = username + "/" + dirk
@@ -195,11 +194,25 @@ def display(request, dirk, username, file):
     except:
         return JsonResponse({'error': ['Invalid file reqeust']}, status=HTTP_400_BAD_REQUEST)
 
+def delDir(userId, filepath):
+    obj = UserFiles.objects.filter(user=userId, filepath=filepath)
+    serializer = userFilesSerializer(obj, many=True)
+    directory_content = os.listdir("./codes/{}".format(filepath))
+    for x in directory_content:
+        if os.path.isdir("./codes/{0}/{1}".format(filepath,x)):
+            delDir(userId, filepath + "/" + x)
+            os.rmdir("./codes/{0}/{1}".format(filepath, x))
+        else:
+            fileloc = "./codes/{0}/{1}".format(filepath, x)
+            os.remove(fileloc)
+    obj.delete()
+
 @api_view(['GET', 'POST', 'DELETE'])
 @authentication_classes([TokenAuthentication])
 def displayAll(request, dirk, username):
     if dirk == "":
         dirk = "."
+
     if request.method == 'GET':
         userId = User.objects.get(username=username).pk
         filepath = username + "/" + dirk
@@ -211,13 +224,11 @@ def displayAll(request, dirk, username):
             script = f.read()
             data.append({'filename': file['filename'], 'script': script})
 
-        first = True
-        for x in os.walk("./codes/{}".format(filepath)):
-            if first:
-                first = False;
-                continue
-            fol_name = x[0].split('/')[-1]
-            data.append({'filename': 'trash.trash', 'script': fol_name})
+        directory_content = os.listdir("./codes/{}".format(filepath))
+        for x in directory_content:
+            if os.path.isdir("./codes/{0}/{1}".format(filepath,x)):
+                fol_name = x
+                data.append({'filename': 'trash.trash', 'script': fol_name})
         return JsonResponse(data, status=HTTP_200_OK, safe=False)
 
     elif request.method == 'POST':
@@ -266,11 +277,9 @@ def displayAll(request, dirk, username):
     elif request.method == 'DELETE':
         userId = User.objects.get(username=username).pk
         filepath = username + "/" + dirk
-        obj = UserFiles.objects.filter(user=userId, filepath=filepath)
-        serializer = userFilesSerializer(obj, many=True)
+        delDir(userId, filepath)
         os.rmdir("./codes/{}".format(filepath))
-        obj.delete()
-        return JsonResponse({'Sucess': "True"}, status=HTTP_200_OK)
+        return JsonResponse({'filename': "success", "script": "success"}, status=HTTP_200_OK)
 
 
 class image(APIView):
