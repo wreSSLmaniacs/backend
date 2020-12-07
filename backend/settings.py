@@ -14,7 +14,7 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 
 
 import os
-import datetime
+from datetime import timedelta
 from pathlib import Path
 import psycopg2.extensions
 
@@ -47,25 +47,22 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    # 'rest_framework.authtoken',
     'rest_framework',
+    'corsheaders',
     'users',
-    'corsheaders'
+    'rest_framework.authtoken'
 ]
 
-# REST_FRAMEWORK = {
-#     'DEFAULT_PERMISSION_CLASSES': (
-#         'rest_framework.permissions.IsAuthenticated',
-#     ),
-#     'DEFAULT_AUTHENTICATION_CLASSES': (
-#         'rest_framework.authentication.TokenAuthentication',        
-#     ),
-# }
 
-# JWT_AUTH = {
-#     'JWT_ALLOW_REFRESH': True,
-#     'JWT_EXPIRATION_DELTA': datetime.timedelta(seconds=3600),
-# }
+
+# allauth
+
+SITE_ID = 1
+ACCOUNT_EMAIL_VERIFICATION = 'none'
+
+
+
+
 
 MIDDLEWARE = [
 	# 'whitenoise.middleware.WhiteNoiseMiddleware',

@@ -14,6 +14,7 @@ from rest_framework.parsers import JSONParser, FileUploadParser, MultiPartParser
 from users.serializers import *
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
+
 import os
 
 # Create your views here.
@@ -39,6 +40,7 @@ def userDetail(request, pk):
         return JsonResponse(serializer.data, safe=False)
     
 @api_view(['POST'])
+@authentication_classes([TokenAuthentication])
 def registerUser(request):
     if request.method == 'POST':
         username = request.data.get('username')
@@ -73,9 +75,9 @@ def registerUser(request):
     
         return JsonResponse({"error":["This username already taken"]}, status=HTTP_404_NOT_FOUND, safe=False)
 
-# @authentication_classes([TokenAuthentication])
-@api_view(['POST'])
 # @permission_classes([IsAuthenticated])
+@api_view(['POST'])
+@authentication_classes([TokenAuthentication])
 def login_user(request):
     username = request.data.get("username")
     password = request.data.get("password")
@@ -97,32 +99,29 @@ def compile(request):
     script = request.data.get("script")
     language = request.data.get("language")
     inp = request.data.get("input")
-
-    # user = request.data.get("username")  # Check this
-    user = "testuser" # check this
+    user = request.data.get("username")  # Check this
 
     if not os.path.exists('codes/{}'.format(user)):
         os.system('mkdir ./codes/{}'.format(user))
         
     os.system('touch ./codes/{}/in.txt'.format(user))
     os.system('touch ./codes/{}/out.txt'.format(user))
-    os.system('touch ./codes/{}/temp.cpp'.format(user))
-    os.system('touch ./codes/{}/temp.py'.format(user))
-    os.system('touch ./codes/{}/temp.r'.format(user))
+    os.system('touch ./codes/{}/asdfghjkl.cpp'.format(user))
+    os.system('touch ./codes/{}/asdfghjkl.py'.format(user))
+    os.system('touch ./codes/{}/asdfghjkl.r'.format(user))
     os.system('touch ./codes/{}/script.sh'.format(user))
     
     f = open('./codes/{}/in.txt'.format(user),'w')
     f.write(inp)
     f.close()
 
-    # Bug here, "g++ temp.cpp" not working inside container
     if language == 'c_cpp':
-        g = open('./codes/{}/temp.cpp'.format(user),'w')
+        g = open('./codes/{}/asdfghjkl.cpp'.format(user),'w')
         g.write(script)
         g.close()
 
         os.system('docker run --name cppbox -v "$(pwd)"/codes/{}/:/code --rm -t -d cppenv'.format(user))    # This will start a container
-        val = os.system('docker exec cppbox /bin/sh -c "g++ temp.cpp; ./a.out < in.txt > out.txt"')       # This will execute our commands (inside container)
+        val = os.system('docker exec cppbox /bin/sh -c "g++ asdfghjkl.cpp; ./a.out < in.txt > out.txt"')       # This will execute our commands (inside container)
         
         os.system('docker stop cppbox')
         
@@ -132,12 +131,12 @@ def compile(request):
             return JsonResponse({'success': False, 'output': ['Runtime Error']})
 
     elif language == 'python':
-        g = open('./codes/{}/temp.py'.format(user),'w')
+        g = open('./codes/{}/asdfghjkl.py'.format(user),'w')
         g.write(script)
         g.close()
         
         os.system('docker run --name pybox -v "$(pwd)"/codes/{}/:/code --rm -t -d pyenv'.format(user))    # This will start a container
-        val = os.system('docker exec pybox /bin/sh -c "python3 temp.py < in.txt > out.txt"')       # This will execute our commands (inside container)
+        val = os.system('docker exec pybox /bin/sh -c "python3 asdfghjkl.py < in.txt > out.txt"')       # This will execute our commands (inside container)
         
         os.system('docker stop pybox')
         
@@ -145,12 +144,12 @@ def compile(request):
             return JsonResponse({'success': False, 'output': ['Compilation Error']})
 
     elif language == 'r':
-        g = open('./codes/{}/temp.r'.format(user),'w')
+        g = open('./codes/{}/asdfghjkl.r'.format(user),'w')
         g.write(script)
         g.close()
         
         os.system('docker run --name rbox -v "$(pwd)"/codes/{}/:/code --rm -t -d renv'.format(user))    # This will start a container
-        val = os.system('docker exec pybox /bin/sh -c "r temp.r < in.txt > out.txt"')       # This will execute our commands (inside container)
+        val = os.system('docker exec pybox /bin/sh -c "r asdfghjkl.r < in.txt > out.txt"')       # This will execute our commands (inside container)
         
         os.system('docker stop rbox')
         

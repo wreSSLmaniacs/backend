@@ -1,11 +1,10 @@
 
-from django.conf.urls import url
+from django.conf.urls import url, include
 from django.conf import settings
 from django.urls import path
 from django.conf.urls.static import static
 from users import views
-
-# from rest_framework.authtoken.views import ObtainAuthToken
+from rest_framework.authtoken.views import ObtainAuthToken
 
 urlpatterns = [ 
     url(r'^api/profile$', views.userList),
@@ -14,6 +13,11 @@ urlpatterns = [
     url(r'api/compile', views.compile),
     url(r'api/image', views.image.as_view()),
     url(r'^api/profile/(?P<pk>[0-9]+)$', views.userDetail),
+    
+    # JWT
+    url(r'^api/auth/', ObtainAuthToken.as_view()),
+    
+    
     url(r'api/display/(?P<username>[a-zA-Z0-9]+)/(?P<dirk>[a-zA-Z0-9\/\_]*)$', views.displayAll),
     url(r'api/display/(?P<username>[a-zA-Z0-9]+)/(?P<dirk>[a-zA-Z0-9\/\_]*)/(?P<file>[a-zA-Z0-9\_]+\.[a-zA-Z0-9\_]+)$', views.display),
     url(r'api/display/(?P<username>[a-zA-Z0-9]+)/(?P<dirk>)(?P<file>[a-zA-Z0-9\_]+\.[a-zA-Z0-9\_]+)', views.display)
