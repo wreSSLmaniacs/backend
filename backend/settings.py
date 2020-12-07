@@ -14,6 +14,7 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 
 
 import os
+import datetime
 from pathlib import Path
 import psycopg2.extensions
 
@@ -46,10 +47,25 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    # 'rest_framework.authtoken',
     'rest_framework',
     'users',
     'corsheaders'
 ]
+
+# REST_FRAMEWORK = {
+#     'DEFAULT_PERMISSION_CLASSES': (
+#         'rest_framework.permissions.IsAuthenticated',
+#     ),
+#     'DEFAULT_AUTHENTICATION_CLASSES': (
+#         'rest_framework.authentication.TokenAuthentication',        
+#     ),
+# }
+
+# JWT_AUTH = {
+#     'JWT_ALLOW_REFRESH': True,
+#     'JWT_EXPIRATION_DELTA': datetime.timedelta(seconds=3600),
+# }
 
 MIDDLEWARE = [
 	# 'whitenoise.middleware.WhiteNoiseMiddleware',
@@ -149,10 +165,12 @@ USE_TZ = True
 
 
 
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-MEDIA_URL = '/media/'
+CODES_ROOT = os.path.join(BASE_DIR, 'codes')
+CODES_URL = '/codes/'
 STATIC_URL = '/static/'
 
+MEDIA_ROOT =  os.path.join(BASE_DIR, 'media') 
+MEDIA_URL = '/media/'
 
 
 
