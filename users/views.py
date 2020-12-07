@@ -6,12 +6,14 @@ from django.shortcuts import render
 from rest_framework import exceptions
 from django.contrib.auth import authenticate
 from django.http import HttpResponse
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, permission_classes, authentication_classes
 from users.models import *
 from django.contrib.auth.models import User, Group
 from django.core.files.storage import FileSystemStorage
 from rest_framework.parsers import JSONParser, FileUploadParser, MultiPartParser, DjangoMultiPartParser, FormParser
 from users.serializers import *
+from rest_framework.authentication import TokenAuthentication
+from rest_framework.permissions import IsAuthenticated
 import os
 
 # Create your views here.
@@ -71,7 +73,9 @@ def registerUser(request):
     
         return JsonResponse({"error":["This username already taken"]}, status=HTTP_404_NOT_FOUND, safe=False)
 
+# @authentication_classes([TokenAuthentication])
 @api_view(['POST'])
+@permission_classes([IsAuthenticated])
 def login_user(request):
     username = request.data.get("username")
     password = request.data.get("password")
