@@ -19,6 +19,7 @@ import os
 
 # Create your views here.
 @api_view(['GET', 'PUT'])
+@authentication_classes([TokenAuthentication])
 def userList(request):
     if request.method == 'GET':
         obj = Users.objects.all()
@@ -29,6 +30,7 @@ def userList(request):
         return JsonResponse(serializer.data, safe=False)
     
 @api_view(['GET', 'PUT'])
+@authentication_classes([TokenAuthentication])
 def userDetail(request, pk):
     if request.method == 'GET':
         try:
@@ -94,6 +96,7 @@ def login_user(request):
     return JsonResponse({'error': ['Invalid User']}, status=HTTP_404_NOT_FOUND)
 
 @api_view(['POST'])
+@authentication_classes([TokenAuthentication])
 def compile(request):
     # filename = request.data.get("filename")
     script = request.data.get("script")
@@ -170,6 +173,7 @@ def compile(request):
     # return JsonResponse({'error': ['File does not exist']}, status=HTTP_400_BAD_REQUEST)
 
 @api_view(['GET', 'DELETE'])
+@authentication_classes([TokenAuthentication])
 def display(request, dirk, username, file):
     if dirk == "" or dirk is None:
         dirk = "."
@@ -204,6 +208,7 @@ def delDir(userId, filepath):
     obj.delete()
 
 @api_view(['GET', 'POST', 'DELETE'])
+@authentication_classes([TokenAuthentication])
 def displayAll(request, dirk, username):
     if dirk == "":
         dirk = "."
