@@ -53,16 +53,24 @@ INSTALLED_APPS = [
     'rest_framework.authtoken'
 ]
 
-
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',
+    ),
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.TokenAuthentication',        
+    ),
+}
 
 # allauth
 
 SITE_ID = 1
 ACCOUNT_EMAIL_VERIFICATION = 'none'
 
-
-
-
+# JWT_AUTH = {
+#     'JWT_ALLOW_REFRESH': True,
+#     'JWT_EXPIRATION_DELTA': datetime.timedelta(seconds=3600),
+# }
 
 MIDDLEWARE = [
 	# 'whitenoise.middleware.WhiteNoiseMiddleware',
