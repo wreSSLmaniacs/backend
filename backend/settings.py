@@ -50,7 +50,8 @@ INSTALLED_APPS = [
     'rest_framework',
     'corsheaders',
     'users',
-    'rest_framework.authtoken'
+    'corsheaders',
+    'compe',
 ]
 
 # REST_FRAMEWORK = {
