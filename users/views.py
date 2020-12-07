@@ -85,7 +85,8 @@ def login_user(request):
         data = {
             'token':'Logged in succesfully',
             'username':username,
-            'image':user2.image
+            'image':user2.image,
+            'userid':user2.pk
         }
         return JsonResponse(data, status=HTTP_200_OK)
     return JsonResponse({'error': ['Invalid User']}, status=HTTP_404_NOT_FOUND)
