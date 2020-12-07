@@ -1,8 +1,5 @@
 #dependencies
 node_modules
-codes/
-__pycache__
 *__pycache__*
-*/__pycache__/*
 .DS_Store
 urls.cpython-38.pyc
