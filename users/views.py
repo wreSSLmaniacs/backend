@@ -172,7 +172,7 @@ def compile(request):
 
 @api_view(['GET', 'DELETE'])
 def display(request, dirk, username, file):
-    if dirk == "":
+    if dirk == "" or dirk is None:
         dirk = "."
     userId = User.objects.get(username=username).pk
     filepath = username + "/" + dirk
@@ -191,10 +191,24 @@ def display(request, dirk, username, file):
     except:
         return JsonResponse({'error': ['Invalid file reqeust']}, status=HTTP_400_BAD_REQUEST)
 
+def delDir(userId, filepath):
+    obj = UserFiles.objects.filter(user=userId, filepath=filepath)
+    serializer = userFilesSerializer(obj, many=True)
+    directory_content = os.listdir("./codes/{}".format(filepath))
+    for x in directory_content:
+        if os.path.isdir("./codes/{0}/{1}".format(filepath,x)):
+            delDir(userId, filepath + "/" + x)
+            os.rmdir("./codes/{0}/{1}".format(filepath, x))
+        else:
+            fileloc = "./codes/{0}/{1}".format(filepath, x)
+            os.remove(fileloc)
+    obj.delete()
+
 @api_view(['GET', 'POST', 'DELETE'])
 def displayAll(request, dirk, username):
     if dirk == "":
         dirk = "."
+
     if request.method == 'GET':
         userId = User.objects.get(username=username).pk
         filepath = username + "/" + dirk
@@ -206,13 +220,11 @@ def displayAll(request, dirk, username):
             script = f.read()
             data.append({'filename': file['filename'], 'script': script})
 
-        first = True
-        for x in os.walk("./codes/{}".format(filepath)):
-            if first:
-                first = False;
-                continue
-            fol_name = x[0].split('/')[-1]
-            data.append({'filename': 'trash.trash', 'script': fol_name})
+        directory_content = os.listdir("./codes/{}".format(filepath))
+        for x in directory_content:
+            if os.path.isdir("./codes/{0}/{1}".format(filepath,x)):
+                fol_name = x
+                data.append({'filename': 'trash.trash', 'script': fol_name})
         return JsonResponse(data, status=HTTP_200_OK, safe=False)
 
     elif request.method == 'POST':
@@ -261,11 +273,9 @@ def displayAll(request, dirk, username):
     elif request.method == 'DELETE':
         userId = User.objects.get(username=username).pk
         filepath = username + "/" + dirk
-        obj = UserFiles.objects.filter(user=userId, filepath=filepath)
-        serializer = userFilesSerializer(obj, many=True)
+        delDir(userId, filepath)
         os.rmdir("./codes/{}".format(filepath))
-        obj.delete()
-        return JsonResponse({'Sucess': "True"}, status=HTTP_200_OK)
+        return JsonResponse({'filename': "success", "script": "success"}, status=HTTP_200_OK)
 
 
 class image(APIView):
