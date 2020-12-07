@@ -12,15 +12,9 @@ urlpatterns = [
     url(r'^api/login$', views.login_user),
     url(r'api/compile', views.compile),
     url(r'api/image', views.image.as_view()),
-    url(r'^api/profile/(?P<pk>[0-9]+)$', views.userDetail),
-    
-    # JWT
-    url(r'^api/auth/', ObtainAuthToken.as_view()),
-    
-    
+    url(r'^api/profile/(?P<pk>[0-9]+)$', views.userDetail),    
     url(r'api/display/(?P<username>[a-zA-Z0-9]+)/(?P<dirk>[a-zA-Z0-9\/\_]*)$', views.displayAll),
     url(r'api/display/(?P<username>[a-zA-Z0-9]+)/(?P<dirk>[a-zA-Z0-9\/\_]*)/(?P<file>[a-zA-Z0-9\_]+\.[a-zA-Z0-9\_]+)$', views.display),
-
     url(r'^auth/',ObtainAuthToken.as_view())
 ]
 
