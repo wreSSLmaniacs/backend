@@ -14,6 +14,7 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 
 
 import os
+from datetime import timedelta
 from pathlib import Path
 import psycopg2.extensions
 
@@ -47,9 +48,21 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'corsheaders',
     'users',
-    'corsheaders'
+    'rest_framework.authtoken'
 ]
+
+
+
+# allauth
+
+SITE_ID = 1
+ACCOUNT_EMAIL_VERIFICATION = 'none'
+
+
+
+
 
 MIDDLEWARE = [
 	# 'whitenoise.middleware.WhiteNoiseMiddleware',
@@ -149,8 +162,8 @@ USE_TZ = True
 
 
 
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-MEDIA_URL = '/media/'
+CODES_ROOT = os.path.join(BASE_DIR, 'codes')
+CODES_URL = '/codes/'
 STATIC_URL = '/static/'
 
 

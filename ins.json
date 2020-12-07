@@ -1,0 +1,207 @@
+[
+    {
+        "Id": "2780228bf976857b65f9d68d15dea40dce06c303b363e050b7e9e5498185e9af",
+        "Created": "2020-12-06T09:36:10.530122907Z",
+        "Path": "/bin/bash",
+        "Args": [],
+        "State": {
+            "Status": "running",
+            "Running": true,
+            "Paused": false,
+            "Restarting": false,
+            "OOMKilled": false,
+            "Dead": false,
+            "Pid": 3171,
+            "ExitCode": 0,
+            "Error": "",
+            "StartedAt": "2020-12-06T09:36:10.767310436Z",
+            "FinishedAt": "0001-01-01T00:00:00Z"
+        },
+        "Image": "sha256:9bb570478275c781a5d8126cf041ea04191367b3ae5be43498c0f5f77f0e8f4d",
+        "ResolvConfPath": "/var/lib/docker/containers/2780228bf976857b65f9d68d15dea40dce06c303b363e050b7e9e5498185e9af/resolv.conf",
+        "HostnamePath": "/var/lib/docker/containers/2780228bf976857b65f9d68d15dea40dce06c303b363e050b7e9e5498185e9af/hostname",
+        "HostsPath": "/var/lib/docker/containers/2780228bf976857b65f9d68d15dea40dce06c303b363e050b7e9e5498185e9af/hosts",
+        "LogPath": "/var/lib/docker/containers/2780228bf976857b65f9d68d15dea40dce06c303b363e050b7e9e5498185e9af/2780228bf976857b65f9d68d15dea40dce06c303b363e050b7e9e5498185e9af-json.log",
+        "Name": "/cppbox",
+        "RestartCount": 0,
+        "Driver": "overlay2",
+        "Platform": "linux",
+        "MountLabel": "",
+        "ProcessLabel": "",
+        "AppArmorProfile": "",
+        "ExecIDs": null,
+        "HostConfig": {
+            "Binds": [
+                "/Users/sahasraranjan/Documents/iitb/3rd-sem/ssl-outlab/project-OCDE/backend/codes/testuser/:/code"
+            ],
+            "ContainerIDFile": "",
+            "LogConfig": {
+                "Type": "json-file",
+                "Config": {}
+            },
+            "NetworkMode": "default",
+            "PortBindings": {},
+            "RestartPolicy": {
+                "Name": "no",
+                "MaximumRetryCount": 0
+            },
+            "AutoRemove": true,
+            "VolumeDriver": "",
+            "VolumesFrom": null,
+            "CapAdd": null,
+            "CapDrop": null,
+            "Capabilities": null,
+            "Dns": [],
+            "DnsOptions": [],
+            "DnsSearch": [],
+            "ExtraHosts": null,
+            "GroupAdd": null,
+            "IpcMode": "private",
+            "Cgroup": "",
+            "Links": null,
+            "OomScoreAdj": 0,
+            "PidMode": "",
+            "Privileged": false,
+            "PublishAllPorts": false,
+            "ReadonlyRootfs": false,
+            "SecurityOpt": null,
+            "UTSMode": "",
+            "UsernsMode": "",
+            "ShmSize": 67108864,
+            "Runtime": "runc",
+            "ConsoleSize": [
+                0,
+                0
+            ],
+            "Isolation": "",
+            "CpuShares": 0,
+            "Memory": 0,
+            "NanoCpus": 0,
+            "CgroupParent": "",
+            "BlkioWeight": 0,
+            "BlkioWeightDevice": [],
+            "BlkioDeviceReadBps": null,
+            "BlkioDeviceWriteBps": null,
+            "BlkioDeviceReadIOps": null,
+            "BlkioDeviceWriteIOps": null,
+            "CpuPeriod": 0,
+            "CpuQuota": 0,
+            "CpuRealtimePeriod": 0,
+            "CpuRealtimeRuntime": 0,
+            "CpusetCpus": "",
+            "CpusetMems": "",
+            "Devices": [],
+            "DeviceCgroupRules": null,
+            "DeviceRequests": null,
+            "KernelMemory": 0,
+            "KernelMemoryTCP": 0,
+            "MemoryReservation": 0,
+            "MemorySwap": 0,
+            "MemorySwappiness": null,
+            "OomKillDisable": false,
+            "PidsLimit": null,
+            "Ulimits": null,
+            "CpuCount": 0,
+            "CpuPercent": 0,
+            "IOMaximumIOps": 0,
+            "IOMaximumBandwidth": 0,
+            "MaskedPaths": [
+                "/proc/asound",
+                "/proc/acpi",
+                "/proc/kcore",
+                "/proc/keys",
+                "/proc/latency_stats",
+                "/proc/timer_list",
+                "/proc/timer_stats",
+                "/proc/sched_debug",
+                "/proc/scsi",
+                "/sys/firmware"
+            ],
+            "ReadonlyPaths": [
+                "/proc/bus",
+                "/proc/fs",
+                "/proc/irq",
+                "/proc/sys",
+                "/proc/sysrq-trigger"
+            ]
+        },
+        "GraphDriver": {
+            "Data": {
+                "LowerDir": "/var/lib/docker/overlay2/93b6e9f1745d71936cc06d396782de5b936cebb99cdf5191304fd3da2fbbaf8c-init/diff:/var/lib/docker/overlay2/1a57b8475f5bde880027916f578bfb5772a7a0778956cc9e550405911a242c63/diff:/var/lib/docker/overlay2/ef424b514336381ac1f9dec871059d7f9ec1a9122897c12675ac1e3ef8f7ee2f/diff:/var/lib/docker/overlay2/0b57d74e3de46a9a5fada602fde12902d2eb5217a29320728d281c73d1554840/diff:/var/lib/docker/overlay2/5c4bde289079a0919df3c429e731deb261e1631d6ceb54be56272b057bdb65d1/diff:/var/lib/docker/overlay2/7e3e0d1a7e28f0d6a1398ca650d09bc008422ae1392f124bd90a709630a37d03/diff",
+                "MergedDir": "/var/lib/docker/overlay2/93b6e9f1745d71936cc06d396782de5b936cebb99cdf5191304fd3da2fbbaf8c/merged",
+                "UpperDir": "/var/lib/docker/overlay2/93b6e9f1745d71936cc06d396782de5b936cebb99cdf5191304fd3da2fbbaf8c/diff",
+                "WorkDir": "/var/lib/docker/overlay2/93b6e9f1745d71936cc06d396782de5b936cebb99cdf5191304fd3da2fbbaf8c/work"
+            },
+            "Name": "overlay2"
+        },
+        "Mounts": [
+            {
+                "Type": "bind",
+                "Source": "/Users/sahasraranjan/Documents/iitb/3rd-sem/ssl-outlab/project-OCDE/backend/codes/testuser/",
+                "Destination": "/code",
+                "Mode": "",
+                "RW": true,
+                "Propagation": "rprivate"
+            }
+        ],
+        "Config": {
+            "Hostname": "2780228bf976",
+            "Domainname": "",
+            "User": "",
+            "AttachStdin": false,
+            "AttachStdout": false,
+            "AttachStderr": false,
+            "Tty": true,
+            "OpenStdin": false,
+            "StdinOnce": false,
+            "Env": [
+                "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+            ],
+            "Cmd": [
+                "/bin/bash"
+            ],
+            "Image": "cppenv",
+            "Volumes": null,
+            "WorkingDir": "/code",
+            "Entrypoint": null,
+            "OnBuild": null,
+            "Labels": {}
+        },
+        "NetworkSettings": {
+            "Bridge": "",
+            "SandboxID": "cc4602671d480bb7edac11b0ab3dc743bb7460153f28ff040b06a7e7c1f1d435",
+            "HairpinMode": false,
+            "LinkLocalIPv6Address": "",
+            "LinkLocalIPv6PrefixLen": 0,
+            "Ports": {},
+            "SandboxKey": "/var/run/docker/netns/cc4602671d48",
+            "SecondaryIPAddresses": null,
+            "SecondaryIPv6Addresses": null,
+            "EndpointID": "02c97868750f979f9e665c0330f0a37564f54cc22c4bb9971b059cf50b1950e6",
+            "Gateway": "172.17.0.1",
+            "GlobalIPv6Address": "",
+            "GlobalIPv6PrefixLen": 0,
+            "IPAddress": "172.17.0.2",
+            "IPPrefixLen": 16,
+            "IPv6Gateway": "",
+            "MacAddress": "02:42:ac:11:00:02",
+            "Networks": {
+                "bridge": {
+                    "IPAMConfig": null,
+                    "Links": null,
+                    "Aliases": null,
+                    "NetworkID": "488bead3a8310ab7ac21b936fa71b22a4d571c484143bf2a8122b536636af923",
+                    "EndpointID": "02c97868750f979f9e665c0330f0a37564f54cc22c4bb9971b059cf50b1950e6",
+                    "Gateway": "172.17.0.1",
+                    "IPAddress": "172.17.0.2",
+                    "IPPrefixLen": 16,
+                    "IPv6Gateway": "",
+                    "GlobalIPv6Address": "",
+                    "GlobalIPv6PrefixLen": 0,
+                    "MacAddress": "02:42:ac:11:00:02",
+                    "DriverOpts": null
+                }
+            }
+        }
+    }
+]
