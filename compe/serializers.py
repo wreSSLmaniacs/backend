@@ -5,7 +5,7 @@ from .models import Contest
 class InfoSerializer(serializers.ModelSerializer):
     class Meta:
         model = Contest
-        fields = ('title','problem')
+        fields = ('id','title','problem')
 
 
 class ContestSerializer(serializers.ModelSerializer):

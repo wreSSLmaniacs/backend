@@ -16,11 +16,12 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from django.conf.urls import include, url
-from compe.views import dashboard, newcontest
+from compe.views import dashboard, newcontest, getcontest
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     url(r'api/contest/getall', dashboard),
     url(r'api/contest/postcontest', newcontest),
+    url(r'api/competition/(?P<id>[0-9]+)$', getcontest),
     url(r'^', include('users.urls')),
 ]

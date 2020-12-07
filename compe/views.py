@@ -33,3 +33,14 @@ def newcontest(request):
         except:
             return JsonResponse("error", status=HTTP_400_BAD_REQUEST)
         return JsonResponse("success", safe=False)
+
+@api_view(['GET'])
+def getcontest(request,id):
+    if request.method=='GET':
+        print(id)
+        try:
+            contest = Contest.objects.get(id=id)
+        except:
+            return JsonResponse("error", status=HTTP_404_NOT_FOUND)
+        serializer = InfoSerializer(contest)
+        return JsonResponse(serializer.data, safe=False)
