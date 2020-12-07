@@ -48,41 +48,17 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
-    'rest_framework.authtoken',
     'corsheaders',
     'users',
-    'django.contrib.sites',
-    'allauth',
-    'allauth.account',
-    'rest_auth',
-    'rest_auth.registration',
+    'rest_framework.authtoken'
 ]
 
-REST_FRAMEWORK = {
-    'DEFAULT_PERMISSION_CLASSES': (
-        'rest_framework.permissions.IsAuthenticated',
-    ),
-    'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
-        'rest_framework.authentication.SessionAuthentication',
-        'rest_framework.authentication.BasicAuthentication',
-    ),
-    'NON_FIELD_ERRORS_KEY': 'global',
-}
+
 
 # allauth
 
 SITE_ID = 1
 ACCOUNT_EMAIL_VERIFICATION = 'none'
-
-# JWT settings
-
-JWT_AUTH = {
-    'JWT_ALLOW_REFRESH': True,
-    'JWT_EXPIRATION_DELTA': timedelta(minutes=10),
-}
-REST_USE_JWT = True
-
 
 
 

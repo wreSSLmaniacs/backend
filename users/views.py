@@ -14,6 +14,7 @@ from rest_framework.parsers import JSONParser, FileUploadParser, MultiPartParser
 from users.serializers import *
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
+
 import os
 
 # Create your views here.
@@ -39,6 +40,7 @@ def userDetail(request, pk):
         return JsonResponse(serializer.data)
     
 @api_view(['POST'])
+@authentication_classes([TokenAuthentication])
 def registerUser(request):
     if request.method == 'POST':
         username = request.data.get('username')
@@ -73,7 +75,9 @@ def registerUser(request):
     
         return JsonResponse({"error":["This username already taken"]}, status=HTTP_404_NOT_FOUND, safe=False)
 
+# @permission_classes([IsAuthenticated])
 @api_view(['POST'])
+@authentication_classes([TokenAuthentication])
 def login_user(request):
     username = request.data.get("username")
     password = request.data.get("password")
