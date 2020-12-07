@@ -22,7 +22,6 @@ urlpatterns = [
     url(r'api/display/(?P<username>[a-zA-Z0-9]+)/(?P<dirk>[a-zA-Z0-9\/\_]*)/(?P<file>[a-zA-Z0-9\_]+\.[a-zA-Z0-9\_]+)$', views.display),
 
     url(r'^auth/',ObtainAuthToken.as_view())
-    url(r'api/display/(?P<username>[a-zA-Z0-9]+)/(?P<dirk>)(?P<file>[a-zA-Z0-9\_]+\.[a-zA-Z0-9\_]+)', views.display)
 ]
 
 
