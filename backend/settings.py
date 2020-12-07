@@ -14,7 +14,7 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 
 
 import os
-import datetime
+from datetime import timedelta
 from pathlib import Path
 import psycopg2.extensions
 
@@ -47,25 +47,45 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    # 'rest_framework.authtoken',
+    'django.contrib.sites',
+    'rest_auth.registration',
+    'allauth.account',
     'rest_framework',
-    'users',
     'corsheaders'
+    'rest_auth',
+    'allauth',
+    'users',
 ]
 
-# REST_FRAMEWORK = {
-#     'DEFAULT_PERMISSION_CLASSES': (
-#         'rest_framework.permissions.IsAuthenticated',
-#     ),
-#     'DEFAULT_AUTHENTICATION_CLASSES': (
-#         'rest_framework.authentication.TokenAuthentication',        
-#     ),
-# }
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',
+    ),
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.BasicAuthentication',
+    ),
+    'NON_FIELD_ERRORS_KEY': 'global',
+}
 
-# JWT_AUTH = {
-#     'JWT_ALLOW_REFRESH': True,
-#     'JWT_EXPIRATION_DELTA': datetime.timedelta(seconds=3600),
-# }
+# allauth
+
+SITE_ID = 1
+ACCOUNT_EMAIL_VERIFICATION = 'none'
+
+# JWT settings
+
+JWT_AUTH = {
+    'JWT_ALLOW_REFRESH': True,
+    'JWT_EXPIRATION_DELTA': timedelta(minutes=10),
+}
+REST_USE_JWT = True
+
+
+
+
+
 
 MIDDLEWARE = [
 	# 'whitenoise.middleware.WhiteNoiseMiddleware',
