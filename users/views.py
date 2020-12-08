@@ -62,6 +62,8 @@ def registerUser(request):
         password = request.data.get('password')
         email = request.data.get('email')
         image = request.data.get('image')
+        first_name = request.data.get('first_name')
+        last_name = request.data.get('last_name')
         
         try:
             User.objects.get(username=username)
@@ -69,7 +71,9 @@ def registerUser(request):
             user = User.objects.create_user(
                 username=username,
                 email=email,
-                password=password
+                password=password,
+                first_name=first_name,
+                last_name=last_name
             )
             user.set_password(password)
             user.save()
