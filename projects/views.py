@@ -39,95 +39,101 @@ def renameDir(userId, filepath, newPath):
 
 @api_view(['POST'])
 @authentication_classes([TokenAuthentication])
-def compile(request):
-    # filename = request.data.get("filename")
-    script = request.data.get("script")
-    language = request.data.get("language")
-    inp = request.data.get("input")
-    user = request.data.get("username")  # Check this
+def compile(request, username, dirk):
+	if dirk=="":
+		dirk="."
+	# filename = request.data.get("filename")
+	script = request.data.get("script")
+	language = request.data.get("language")
+	inp = request.data.get("input")
+	user = request.data.get("username")  # Check this
 
-    if not os.path.exists('codes/{}'.format(user)):
-        os.system('mkdir ./codes/{}'.format(user))
-        
-    os.system('touch ./codes/{}/in.txt'.format(user))
-    os.system('touch ./codes/{}/out.txt'.format(user))
-    os.system('touch ./codes/{}/code_temp.cpp'.format(user))
-    os.system('touch ./codes/{}/code_temp.py'.format(user))
-    os.system('touch ./codes/{}/code_temp.rb'.format(user))
-    os.system('touch ./codes/{}/script.sh'.format(user))
-    
-    f = open('./codes/{}/in.txt'.format(user),'w')
-    f.write(inp)
-    f.close()
+	if not os.path.exists('codes/{}'.format(user)):
+	    os.system('mkdir ./codes/{}'.format(user))
 
-    if language == 'c_cpp':
-        g = open('./codes/{}/code_temp.cpp'.format(user),'w')
-        g.write(script)
-        g.close()
+	if not os.path.exists('codes/{}/{}'.format(user,dirk)):
+	    os.system('mkdir ./codes/{}/{}'.format(user,dirk))
+	    
+	filepath = user + "/" + dirk
+	os.system('touch ./codes/{}/in.txt'.format(filepath))
+	os.system('touch ./codes/{}/out.txt'.format(filepath))
+	os.system('touch ./codes/{}/code_temp.cpp'.format(filepath))
+	os.system('touch ./codes/{}/code_temp.py'.format(filepath))
+	os.system('touch ./codes/{}/code_temp.rb'.format(filepath))
+	os.system('touch ./codes/{}/script.sh'.format(filepath))
 
-        os.system('docker run --name cppbox -v "$(pwd)"/codes/{}/:/code --rm -t -d cppenv'.format(user))    # This will start a container
-        val = os.system('docker exec cppbox /bin/sh -c "g++ -std=c++14 code_temp.cpp > log 2>&1; ./a.out < in.txt > out.txt 2>&1"')       # This will execute our commands (inside container)
-        
-        os.system('docker stop cppbox')
-        f = open("./codes/{}/log".format(user), "r")
-        f2 = open("./codes/{}/out.txt".format(user), "r")
-        log = f.read()
-        log += f2.read()
-        f.close()
-        f2.close()
-        
-        # if val == 256:
-        if val == 32512:
-            return JsonResponse({'success': False, 'output': ['Compilation Error:\n {}'.format(log)]})
-        if val == 34816:
-            return JsonResponse({'success': False, 'output': ['Runtime Error: \n'.format(log)]})
-        if val != 0:
-            return JsonResponse({'success': False, 'output': ['Unexpected Error: \n'.format(log)]})
+	f = open('./codes/{}/in.txt'.format(filepath),'w')
+	f.write(inp)
+	f.close()
 
-    elif language == 'python':
-        g = open('./codes/{}/code_temp.py'.format(user),'w')
-        g.write(script)
-        g.close()
-        
-        os.system('docker run --name pybox -v "$(pwd)"/codes/{}/:/code --rm -t -d pyenv'.format(user))    # This will start a container
-        val = os.system('docker exec pybox /bin/sh -c "python3 code_temp.py < in.txt > out.txt 2>&1"')       # This will execute our commands (inside container)
-        
-        os.system('docker stop pybox')
-        f = open("./codes/{}/out.txt".format(user), "r")
-        log = f.read();
-        f.close();
-        
-        if val == 256:
-            return JsonResponse({'success': False, 'output': ['Compilation Error:\n {}'.format(log)]})
+	if language == 'c_cpp':
+	    g = open('./codes/{}/code_temp.cpp'.format(filepath),'w')
+	    g.write(script)
+	    g.close()
 
-    elif language == 'ruby':
-        g = open('./codes/{}/code_temp.rb'.format(user),'w')
-        g.write(script)
-        g.close()
-        
-        os.system('docker run --name rubybox -v "$(pwd)"/codes/{}/:/code --rm -t -d rubyenv'.format(user))    # This will start a container
-        val = os.system('docker exec rubybox /bin/sh -c "ruby code_temp.rb < in.txt > out.txt 2>&1"')       # This will execute our commands (inside container)
-        
-        os.system('docker stop rubybox')
-        f = open("./codes/{}/out.txt".format(user), "r")
-        log = f.read();
-        f.close();
-        
-        if val == 256:
-            return JsonResponse({'success': False, 'output': ['Compilation Error: \n {}'.format(log)]})
+	    os.system('docker run --name cppbox -v "$(pwd)"/codes/{}/:/code --rm -t -d cppenv'.format(filepath))    # This will start a container
+	    val = os.system('docker exec cppbox /bin/sh -c "g++ -std=c++14 code_temp.cpp > log 2>&1; ./a.out < in.txt > out.txt 2>&1"')       # This will execute our commands (inside container)
+	    
+	    os.system('docker stop cppbox')
+	    f = open("./codes/{}/log".format(filepath), "r")
+	    f2 = open("./codes/{}/out.txt".format(filepath), "r")
+	    log = f.read()
+	    log += f2.read()
+	    f.close()
+	    f2.close()
+	    
+	    # if val == 256:
+	    if val == 32512:
+	        return JsonResponse({'success': False, 'output': ['Compilation Error:\n {}'.format(log)]})
+	    if val == 34816:
+	        return JsonResponse({'success': False, 'output': ['Runtime Error: \n'.format(log)]})
+	    if val != 0:
+	        return JsonResponse({'success': False, 'output': ['Unexpected Error: \n'.format(log)]})
+
+	elif language == 'python':
+	    g = open('./codes/{}/code_temp.py'.format(filepath),'w')
+	    g.write(script)
+	    g.close()
+	    
+	    os.system('docker run --name pybox -v "$(pwd)"/codes/{}/:/code --rm -t -d pyenv'.format(filepath))    # This will start a container
+	    val = os.system('docker exec pybox /bin/sh -c "python3 code_temp.py < in.txt > out.txt 2>&1"')       # This will execute our commands (inside container)
+	    
+	    os.system('docker stop pybox')
+	    f = open("./codes/{}/out.txt".format(filepath), "r")
+	    log = f.read();
+	    f.close();
+	    
+	    if val == 256:
+	        return JsonResponse({'success': False, 'output': ['Compilation Error:\n {}'.format(log)]})
+
+	elif language == 'ruby':
+	    g = open('./codes/{}/code_temp.rb'.format(filepath),'w')
+	    g.write(script)
+	    g.close()
+	    
+	    os.system('docker run --name rubybox -v "$(pwd)"/codes/{}/:/code --rm -t -d rubyenv'.format(filepath))    # This will start a container
+	    val = os.system('docker exec rubybox /bin/sh -c "ruby code_temp.rb < in.txt > out.txt 2>&1"')       # This will execute our commands (inside container)
+	    
+	    os.system('docker stop rubybox')
+	    f = open("./codes/{}/out.txt".format(filepath), "r")
+	    log = f.read();
+	    f.close();
+	    
+	    if val == 256:
+	        return JsonResponse({'success': False, 'output': ['Compilation Error: \n {}'.format(log)]})
 
 
-    f = open('./codes/{}/out.txt'.format(user),'r')
-    output = f.read()
-    # print(output)
-    f.close()
-    data = {
-        "success": True,
-        "output": output
-    }
-    os.system('rm -f codes/{}/*.txt codes/{}/a.out'.format(user, user, user))
-    return JsonResponse(data, status=HTTP_200_OK)
-    # return JsonResponse({'error': ['File does not exist']}, status=HTTP_400_BAD_REQUEST)
+	f = open('./codes/{}/out.txt'.format(filepath),'r')
+	output = f.read()
+	# print(output)
+	f.close()
+	data = {
+	    "success": True,
+	    "output": output
+	}
+	os.system('rm -f codes/{}/*.txt codes/{}/a.out'.format(user, user, user))
+	return JsonResponse(data, status=HTTP_200_OK)
+	# return JsonResponse({'error': ['File does not exist']}, status=HTTP_400_BAD_REQUEST)
 
 @api_view(['POST'])
 @authentication_classes([TokenAuthentication])
