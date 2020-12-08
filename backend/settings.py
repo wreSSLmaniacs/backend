@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     'users',
     'corsheaders',
     'compe',
+    'projects',
 ]
 
 # REST_FRAMEWORK = {

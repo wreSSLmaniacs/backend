@@ -1,5 +1,4 @@
-from users.models import Users, UserFiles
-from users.models import AuthUser
+from users.models import Users, AuthUser
 from rest_framework import serializers
 
 class UserSerializer(serializers.ModelSerializer):
@@ -19,8 +18,3 @@ class profileDetailSerializer(serializers.ModelSerializer):
         model = Users
         fields = '__all__'
         depth = 1
-
-class userFilesSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = UserFiles
-        fields = '__all__'
