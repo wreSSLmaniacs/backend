@@ -8,13 +8,36 @@ from django.core.files.storage import FileSystemStorage
 from .models import *
 from .serializers import InfoSerializer
 
+from django.utils.dateparse import parse_datetime
+from datetime import datetime, timezone
+
 # Create your views here.
 
 @api_view(['GET'])
-def dashboard(request):
+def runboard(request):
     if request.method=='GET':
         try:
-            contests = Contest.objects.all()
+            contests = Contest.objects.filter(starttime__lte = datetime.now(timezone.utc),endtime__gte = datetime.now(timezone.utc))
+        except:
+            return JsonResponse("error", status=HTTP_404_NOT_FOUND)
+        serializer = InfoSerializer(contests, many=True)
+        return JsonResponse(serializer.data, safe=False)
+
+@api_view(['GET'])
+def upboard(request):
+    if request.method=='GET':
+        try:
+            contests = Contest.objects.filter(starttime__gte = datetime.now(timezone.utc))
+        except:
+            return JsonResponse("error", status=HTTP_404_NOT_FOUND)
+        serializer = InfoSerializer(contests, many=True)
+        return JsonResponse(serializer.data, safe=False)
+
+@api_view(['GET'])
+def pastboard(request):
+    if request.method=='GET':
+        try:
+            contests = Contest.objects.filter(endtime__lte = datetime.now(timezone.utc))
         except:
             return JsonResponse("error", status=HTTP_404_NOT_FOUND)
         serializer = InfoSerializer(contests, many=True)
@@ -27,8 +50,10 @@ def newcontest(request):
         problem = request.data.get('problem_st')
         input = request.FILES['infile']
         output = request.FILES['outfile']
+        start = parse_datetime(request.data.get('start'))
+        end = parse_datetime(request.data.get('end'))
         try:
-            contest = Contest.objects.create(title=title,problem=problem)
+            contest = Contest.objects.create(title=title,problem=problem,starttime=start,endtime=end)
             contest.input.save(input.name, input)
             contest.output.save(output.name, output)
         except:
@@ -42,6 +67,10 @@ def getcontest(request,id):
             contest = Contest.objects.get(id=id)
         except:
             return JsonResponse("error", status=HTTP_404_NOT_FOUND)
+        if contest.endtime<datetime.now(timezone.utc):
+            return JsonResponse({"title":"This Contest Has Expired!"})
+        if contest.starttime>datetime.now(timezone.utc):
+            return JsonResponse({"title":"This Contest Hasn't Begun yet!"})
         serializer = InfoSerializer(contest)
         return JsonResponse(serializer.data, safe=False)
 
