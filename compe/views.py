@@ -1,9 +1,11 @@
 import os
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, authentication_classes
 from django.http.response import JsonResponse
 from rest_framework.status import HTTP_400_BAD_REQUEST
 from rest_framework.status import HTTP_404_NOT_FOUND
 from django.core.files.storage import FileSystemStorage
+from rest_framework.authentication import TokenAuthentication
+from rest_framework.permissions import IsAuthenticated
 
 from .models import *
 from .serializers import InfoSerializer
@@ -21,6 +23,7 @@ def pointsfromtime(t1,t2,t3):
 # Create your views here.
 
 @api_view(['GET'])
+@authentication_classes([TokenAuthentication])
 def runboard(request):
     if request.method=='GET':
         try:
@@ -31,6 +34,7 @@ def runboard(request):
         return JsonResponse(serializer.data, safe=False)
 
 @api_view(['GET'])
+@authentication_classes([TokenAuthentication])
 def upboard(request):
     if request.method=='GET':
         try:
@@ -41,6 +45,7 @@ def upboard(request):
         return JsonResponse(serializer.data, safe=False)
 
 @api_view(['GET'])
+@authentication_classes([TokenAuthentication])
 def pastboard(request):
     if request.method=='GET':
         try:
@@ -51,6 +56,7 @@ def pastboard(request):
         return JsonResponse(serializer.data, safe=False)
 
 @api_view(['POST'])
+@authentication_classes([TokenAuthentication])
 def newcontest(request):
     if request.method=='POST':
         title = request.data.get('title')
@@ -68,6 +74,7 @@ def newcontest(request):
         return JsonResponse("Contest created succesfully!", safe=False)
 
 @api_view(['GET'])
+@authentication_classes([TokenAuthentication])
 def getcontest(request,id):
     if request.method=='GET':
         try:
@@ -82,6 +89,7 @@ def getcontest(request,id):
         return JsonResponse(serializer.data, safe=False)
 
 @api_view(['POST'])
+@authentication_classes([TokenAuthentication])
 def runcode(request,id):
     if request.method=='POST':
         
@@ -161,6 +169,7 @@ def runcode(request,id):
             return JsonResponse("Incorrect! Try again (:",safe=False)
 
 @api_view(['POST'])
+@authentication_classes([TokenAuthentication])
 def runfile(request,id):
     if request.method=='POST':
         
@@ -236,6 +245,7 @@ def runfile(request,id):
             return JsonResponse("Incorrect! Try again (:",safe=False)
 
 @api_view(['GET'])
+@authentication_classes([TokenAuthentication])
 def getpoints(request,user):
     if request.method=='GET':
         try:
