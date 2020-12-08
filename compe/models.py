@@ -16,8 +16,8 @@ class Contest(models.Model):
     problem = models.TextField(blank=False,null=False)
     input = models.FileField(upload_to = inuplocate, blank=True,null=True)
     output = models.FileField(upload_to = outuplocate, blank=True,null=True)
-    starttime = models.DateTimeField(default=datetime.now, blank=True)
-    endtime = models.DateTimeField(default=datetime.now, blank=True)
+    starttime = models.DateTimeField(default=datetime.now, blank=False,null=False)
+    endtime = models.DateTimeField(default=datetime.now, blank=False,null=False)
 
 class PointsTable(models.Model):
 	id = models.AutoField(primary_key=True)
@@ -28,5 +28,5 @@ class ContestUser(models.Model):
 	id = models.AutoField(primary_key=True)
 	username = models.CharField(max_length=64,blank=False,null=False)
 	compe = models.ForeignKey('Contest', models.DO_NOTHING)
-	submittime = models.DateTimeField(default=datetime.now, blank=True)
+	submittime = models.DateTimeField(default=datetime.now, blank=False)
 	points = models.IntegerField(blank=False, null=False)

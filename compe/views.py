@@ -4,31 +4,47 @@ from django.http.response import JsonResponse
 from rest_framework.status import HTTP_400_BAD_REQUEST
 from rest_framework.status import HTTP_404_NOT_FOUND
 from django.core.files.storage import FileSystemStorage
-from datetime import datetime, timedelta
 
 from .models import *
-from .serializers import InfoSerializer, ContestSerializer
+from .serializers import InfoSerializer
+
+from django.utils.dateparse import parse_datetime
+from datetime import datetime, timezone
+
+# Point Evaluator
+
+def pointsfromtime(t1,t2,t3):
+    total = t3 - t1
+    elapsed = t2-t1
+    return int(500*total.total_seconds()/elapsed.total_seconds())
 
 # Create your views here.
 
 @api_view(['GET'])
-def dashboard(request):
+def runboard(request):
     if request.method=='GET':
         try:
-            cur_time = datetime.now()
-            contests = Contest.objects.filter(starttime_lte=cur_time, endtime_gte=cur_time)
+            contests = Contest.objects.filter(starttime__lte = datetime.now(timezone.utc),endtime__gte = datetime.now(timezone.utc))
         except:
             return JsonResponse("error", status=HTTP_404_NOT_FOUND)
         serializer = InfoSerializer(contests, many=True)
         return JsonResponse(serializer.data, safe=False)
 
 @api_view(['GET'])
-def upcoming(request):
+def upboard(request):
     if request.method=='GET':
         try:
-            ed_time = datetime.now()
-            st_time = ed_time + timedelta(minutes=30)
-            contests = Contest.objects.filter(starttime_lte=st_time, endtime_gte=ed_time)
+            contests = Contest.objects.filter(starttime__gte = datetime.now(timezone.utc))
+        except:
+            return JsonResponse("error", status=HTTP_404_NOT_FOUND)
+        serializer = InfoSerializer(contests, many=True)
+        return JsonResponse(serializer.data, safe=False)
+
+@api_view(['GET'])
+def pastboard(request):
+    if request.method=='GET':
+        try:
+            contests = Contest.objects.filter(endtime__lte = datetime.now(timezone.utc))
         except:
             return JsonResponse("error", status=HTTP_404_NOT_FOUND)
         serializer = InfoSerializer(contests, many=True)
@@ -39,12 +55,12 @@ def newcontest(request):
     if request.method=='POST':
         title = request.data.get('title')
         problem = request.data.get('problem_st')
-        starttime = request.data.get('starttime')
-        endtime = request.data.get('endtime')
         input = request.FILES['infile']
         output = request.FILES['outfile']
+        start = parse_datetime(request.data.get('start'))
+        end = parse_datetime(request.data.get('end'))
         try:
-            contest = Contest.objects.create(title=title,problem=problem, starttime = starttime, endtime=endtime)
+            contest = Contest.objects.create(title=title,problem=problem,starttime=start,endtime=end)
             contest.input.save(input.name, input)
             contest.output.save(output.name, output)
         except:
@@ -58,65 +74,12 @@ def getcontest(request,id):
             contest = Contest.objects.get(id=id)
         except:
             return JsonResponse("error", status=HTTP_404_NOT_FOUND)
+        if contest.endtime<datetime.now(timezone.utc):
+            return JsonResponse({"title":"This Contest Has Expired!"})
+        if contest.starttime>datetime.now(timezone.utc):
+            return JsonResponse({"title":"This Contest Hasn't Begun yet!"})
         serializer = InfoSerializer(contest)
         return JsonResponse(serializer.data, safe=False)
-
-def run(user,code,lang,id):
-    try:
-        contest = Contest.objects.get(id=id)
-    except:
-        return JsonResponse("error", status=HTTP_404_NOT_FOUND)
-    
-    os.system('mkdir ./codes/temp/{}'.format(user))
-    check = True
-
-    if lang=='c_cpp':
-        fs = FileSystemStorage(location='./codes/temp/{}'.format(user))  
-        fs.save("code.cpp", code)
-        os.system('cp {} ./codes/temp/{}/in.txt'.format(contest.input.path,user))
-        os.system('cp {} ./codes/temp/{}/out.txt'.format(contest.output.path,user))
-        if os.system('g++ -std=c++17 ./codes/temp/{}/code.cpp -o ./codes/temp/{}/exec'.format(user,user)):
-            os.system('rm -rf ./codes/temp/{}'.format(user))
-            return JsonResponse("Compilation Error", safe=False)
-        os.system('./codes/temp/{}/exec < ./codes/temp/{}/in.txt > ./codes/temp/{}/myout.txt'.format(user,user,user))
-        if os.system('cmp ./codes/temp/{}/out.txt ./codes/temp/{}/myout.txt'.format(user,user)):
-            check=False
-
-    if lang=='python':
-        fs = FileSystemStorage(location='./codes/temp/{}'.format(user))  
-        fs.save("code.py", code)
-        os.system('cp {} ./codes/temp/{}/in.txt'.format(contest.input.path,user))
-        os.system('cp {} ./codes/temp/{}/out.txt'.format(contest.output.path,user))
-        if os.system('python3 ./codes/temp/{}/code.py < ./codes/temp/{}/in.txt > ./codes/temp/{}/myout.txt'.format(user,user,user)):
-            os.system('rm -rf ./codes/temp/{}'.format(user))
-            return JsonResponse("Compilation Error", safe=False)
-        if os.system('cmp ./codes/temp/{}/out.txt ./codes/temp/{}/myout.txt'.format(user,user)):
-            check=False
-    
-    os.system('rm -rf ./codes/temp/{}'.format(user))
-    if check:
-        if ContestUser.objects.filter(username=user, compe=id).exists():
-            return JsonResponse("Your points don't get doubled (:", safe=False)
-        else:
-            try:
-                contest = Contest.objects.get(id=id)
-            except:
-                return JsonResponse("error", status=HTTP_404_NOT_FOUND)
-            tot_timediff = (contest.endtime - contest.starttime).total_seconds()
-            submittime = datetime.now()
-            timediff = (submittime - contest.starttime).total_seconds()
-            points = 10 * tot_timediff/(tot_timediff + 4*timediff)
-            ContestUser.objects.create(username=user,compe=id, submittime=submittime,points=points)
-
-            if PointsTable.objects.filter(username=user).exists():
-                player = PointsTable.objects.get(username=user)
-                player.points = player.points + points
-                player.save()
-            else:
-                PointsTable.objects.create(username=user,points=points)
-            return JsonResponse("Your Code Worked!",safe=False)
-    else:
-        return JsonResponse("Incorrect! Try again (:",safe=False)
 
 @api_view(['POST'])
 def runcode(request,id):
@@ -125,7 +88,64 @@ def runcode(request,id):
         user = request.data.get('username')
         code = request.data.get('script')
         lang = request.data.get('language')
-        run(user,lang,code,id)
+        
+        try:
+            contest = Contest.objects.get(id=id)
+        except:
+            return JsonResponse("error", status=HTTP_404_NOT_FOUND)
+        
+        sub = datetime.now(timezone.utc)
+        if contest.starttime>sub or contest.endtime<sub:
+            return JsonResponse("Submission made to depricated contest, discarded!",safe=False)
+
+        os.system('mkdir ./codes/temp/{}'.format(user))
+        check = True
+
+        if lang=='c_cpp':
+            os.system('touch ./codes/temp/{}/code.cpp'.format(user))
+            c = open('./codes/temp/{}/code.cpp'.format(user),'w')
+            c.write(code)
+            c.close()
+            os.system('cp {} ./codes/temp/{}/in.txt'.format(contest.input.path,user))
+            os.system('cp {} ./codes/temp/{}/out.txt'.format(contest.output.path,user))
+            if os.system('g++ -std=c++17 ./codes/temp/{}/code.cpp -o ./codes/temp/{}/exec'.format(user,user)):
+                os.system('rm -rf ./codes/temp/{}'.format(user))
+                return JsonResponse("Compilation Error", safe=False)
+            os.system('./codes/temp/{}/exec < ./codes/temp/{}/in.txt > ./codes/temp/{}/myout.txt'.format(user,user,user))
+            if os.system('cmp ./codes/temp/{}/out.txt ./codes/temp/{}/myout.txt'.format(user,user)):
+                check=False
+
+        if lang=='python':
+            os.system('touch ./codes/temp/{}/code.py'.format(user))
+            c = open('./codes/temp/{}/code.py'.format(user),'w')
+            c.write(code)
+            c.close()
+            os.system('cp {} ./codes/temp/{}/in.txt'.format(contest.input.path,user))
+            os.system('cp {} ./codes/temp/{}/out.txt'.format(contest.output.path,user))
+            if os.system('python3 ./codes/temp/{}/code.py < ./codes/temp/{}/in.txt > ./codes/temp/{}/myout.txt'.format(user,user,user)):
+                os.system('rm -rf ./codes/temp/{}'.format(user))
+                return JsonResponse("Compilation Error", safe=False)
+            if os.system('cmp ./codes/temp/{}/out.txt ./codes/temp/{}/myout.txt'.format(user,user)):
+                check=False
+        
+        os.system('rm -rf ./codes/temp/{}'.format(user))
+        
+        if check:
+            try:
+                ContestUser.objects.get(username=user,compe=contest)
+                return JsonResponse("You have already passed this contest! Anyway, your Code Works!",safe=False)
+            except:
+                pts = pointsfromtime(contest.starttime,sub,contest.endtime)
+                ContestUser.objects.create(username=user,compe=contest,submittime=sub,points=pts)
+                try:
+                    ptable = PointsTable.objects.get(username=user)
+                except:
+                    ptable = PointsTable.objects.create(username=user,points=0)
+                ptable.points = ptable.points + pts
+                ptable.save()
+                return JsonResponse("Your Code Worked! Your points are updated!",safe=False)
+        else:
+            return JsonResponse("Incorrect! Try again (:",safe=False)
 
 @api_view(['POST'])
 def runfile(request,id):
@@ -135,5 +155,57 @@ def runfile(request,id):
         lang = request.data.get('language')
         code = request.FILES['script']
 
-        print(lang)
-        run(user,lang,code,id)
+        try:
+            contest = Contest.objects.get(id=id)
+        except:
+            return JsonResponse("error", status=HTTP_404_NOT_FOUND)
+
+        sub = datetime.now(timezone.utc)
+        if contest.starttime>sub or contest.endtime<sub:
+            return JsonResponse("Submission made to depricated contest, discarded!",safe=False)
+
+
+        os.system('mkdir ./codes/temp/{}'.format(user))
+        check = True
+
+        if lang=='c_cpp':
+            fs = FileSystemStorage(location='./codes/temp/{}'.format(user))  
+            fs.save("code.cpp", code)
+            os.system('cp {} ./codes/temp/{}/in.txt'.format(contest.input.path,user))
+            os.system('cp {} ./codes/temp/{}/out.txt'.format(contest.output.path,user))
+            if os.system('g++ -std=c++17 ./codes/temp/{}/code.cpp -o ./codes/temp/{}/exec'.format(user,user)):
+                os.system('rm -rf ./codes/temp/{}'.format(user))
+                return JsonResponse("Compilation Error", safe=False)
+            os.system('./codes/temp/{}/exec < ./codes/temp/{}/in.txt > ./codes/temp/{}/myout.txt'.format(user,user,user))
+            if os.system('cmp ./codes/temp/{}/out.txt ./codes/temp/{}/myout.txt'.format(user,user)):
+                check=False
+
+        if lang=='python':
+            fs = FileSystemStorage(location='./codes/temp/{}'.format(user))  
+            fs.save("code.py", code)
+            os.system('cp {} ./codes/temp/{}/in.txt'.format(contest.input.path,user))
+            os.system('cp {} ./codes/temp/{}/out.txt'.format(contest.output.path,user))
+            if os.system('python3 ./codes/temp/{}/code.py < ./codes/temp/{}/in.txt > ./codes/temp/{}/myout.txt'.format(user,user,user)):
+                os.system('rm -rf ./codes/temp/{}'.format(user))
+                return JsonResponse("Compilation Error", safe=False)
+            if os.system('cmp ./codes/temp/{}/out.txt ./codes/temp/{}/myout.txt'.format(user,user)):
+                check=False
+        
+        os.system('rm -rf ./codes/temp/{}'.format(user))
+
+        if check:
+            try:
+                ContestUser.objects.get(username=user,compe=contest)
+                return JsonResponse("You have already passed this contest! Anyway, your Code Works!",safe=False)
+            except:
+                pts = pointsfromtime(contest.starttime,sub,contest.endtime)
+                ContestUser.objects.create(username=user,compe=contest,submittime=sub,points=pts)
+                try:
+                    ptable = PointsTable.objects.get(username=user)
+                except:
+                    ptable = PointsTable.objects.create(username=user,points=0)
+                ptable.points = ptable.points + pts
+                ptable.save()
+                return JsonResponse("Your Code Worked! Your points are updated!",safe=False)
+        else:
+            return JsonResponse("Incorrect! Try again (:",safe=False)
