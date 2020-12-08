@@ -60,7 +60,6 @@ def compile(request, username, dirk):
 	os.system('touch ./codes/{}/code_temp.cpp'.format(filepath))
 	os.system('touch ./codes/{}/code_temp.py'.format(filepath))
 	os.system('touch ./codes/{}/code_temp.rb'.format(filepath))
-	os.system('touch ./codes/{}/script.sh'.format(filepath))
 
 	f = open('./codes/{}/in.txt'.format(filepath),'w')
 	f.write(inp)
@@ -131,7 +130,12 @@ def compile(request, username, dirk):
 	    "success": True,
 	    "output": output
 	}
-	os.system('rm -f codes/{}/*.txt codes/{}/a.out'.format(user, user, user))
+	os.system('rm -f codes/{}/*.txt codes/{}/log codes/{}/a.out'.format(filepath, filepath, filepath))
+	os.system('rm -f codes/{}/code_temp.py codes/{}/code_temp.rb codes/{}/code_temp.cpp'.format(filepath,filepath,filepath))
+	try:
+		os.system('rm -rf ./codes/{}/__pycache__'.format(filepath))
+	except:
+		pass
 	return JsonResponse(data, status=HTTP_200_OK)
 	# return JsonResponse({'error': ['File does not exist']}, status=HTTP_400_BAD_REQUEST)
 
