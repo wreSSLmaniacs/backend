@@ -127,6 +127,19 @@ def runcode(request,id):
                 return JsonResponse("Compilation Error", safe=False)
             if os.system('cmp ./codes/temp/{}/out.txt ./codes/temp/{}/myout.txt'.format(user,user)):
                 check=False
+
+        if lang=='ruby':
+            os.system('touch ./codes/temp/{}/code.rb'.format(user))
+            c = open('./codes/temp/{}/code.rb'.format(user),'w')
+            c.write(code)
+            c.close()
+            os.system('cp {} ./codes/temp/{}/in.txt'.format(contest.input.path,user))
+            os.system('cp {} ./codes/temp/{}/out.txt'.format(contest.output.path,user))
+            if os.system('ruby ./codes/temp/{}/code.rb < ./codes/temp/{}/in.txt > ./codes/temp/{}/myout.txt'.format(user,user,user)):
+                os.system('rm -rf ./codes/temp/{}'.format(user))
+                return JsonResponse("Compilation Error", safe=False)
+            if os.system('cmp ./codes/temp/{}/out.txt ./codes/temp/{}/myout.txt'.format(user,user)):
+                check=False
         
         os.system('rm -rf ./codes/temp/{}'.format(user))
         
@@ -190,7 +203,19 @@ def runfile(request,id):
                 return JsonResponse("Compilation Error", safe=False)
             if os.system('cmp ./codes/temp/{}/out.txt ./codes/temp/{}/myout.txt'.format(user,user)):
                 check=False
-        
+
+        if lang=='ruby':
+            fs = FileSystemStorage(location='./codes/temp/{}'.format(user))  
+            fs.save("code.rb", code)
+            os.system('cp {} ./codes/temp/{}/in.txt'.format(contest.input.path,user))
+            os.system('cp {} ./codes/temp/{}/out.txt'.format(contest.output.path,user))
+            if os.system('ruby ./codes/temp/{}/code.rb < ./codes/temp/{}/in.txt > ./codes/temp/{}/myout.txt'.format(user,user,user)):
+                os.system('rm -rf ./codes/temp/{}'.format(user))
+                return JsonResponse("Compilation Error", safe=False)
+            if os.system('cmp ./codes/temp/{}/out.txt ./codes/temp/{}/myout.txt'.format(user,user)):
+                check=False
+
+
         os.system('rm -rf ./codes/temp/{}'.format(user))
 
         if check:

@@ -175,7 +175,7 @@ def compile(request):
         if val == 256:
             return JsonResponse({'success': False, 'output': ['Compilation Error:\n {}'.format(log)]})
 
-    elif language == 'r':
+    elif language == 'ruby':
         g = open('./codes/{}/code_temp.rb'.format(user),'w')
         g.write(script)
         g.close()
