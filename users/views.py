@@ -5,16 +5,14 @@ from django.shortcuts import render
 from rest_framework import exceptions
 from django.contrib.auth import authenticate
 from django.http import HttpResponse
-from rest_framework.decorators import api_view, permission_classes, authentication_classes
+from rest_framework.decorators import api_view, authentication_classes
 from users.models import *
-from django.contrib.auth.models import User, Group
+from django.contrib.auth.models import User
 from django.core.files.storage import FileSystemStorage
-from rest_framework.parsers import JSONParser, FileUploadParser, MultiPartParser, DjangoMultiPartParser, FormParser
+from rest_framework.parsers import FileUploadParser, MultiPartParser, DjangoMultiPartParser
 from users.serializers import *
 from rest_framework.authentication import TokenAuthentication
-from rest_framework.permissions import IsAuthenticated
 
-import os
 
 # Create your views here.
 @api_view(['GET', 'PUT'])
@@ -43,12 +41,12 @@ def userDetail(request, pk):
 @api_view(['POST'])
 def userpk(request):
     if request.method == 'POST':
-        uname = request.data.get('username')
         try:
+            uname = request.data.get('username')
             obj = User.objects.get(username=uname)
             obj = Users.objects.get(user_fk=obj.pk)
         except:
-            return JsonResponse("error invalid user", status=HTTP_404_NOT_FOUND, safe=False)
+            return JsonResponse("error: invalid user", status=HTTP_404_NOT_FOUND, safe=False)
         
         serializer = profileDetailSerializer(obj)
         return JsonResponse(serializer.data, safe=False)
@@ -67,17 +65,20 @@ def registerUser(request):
         try:
             User.objects.get(username=username)
         except:
-            user = User.objects.create_user(
-                username=username,
-                email=email,
-                password=password,
-                first_name=first_name,
-                last_name=last_name
-            )
-            user.set_password(password)
-            user.save()
-            
-            userId = User.objects.get(username=username).pk
+            try: 
+                user = User.objects.create_user(
+                    username=username,
+                    email=email,
+                    password=password,
+                    first_name=first_name,
+                    last_name=last_name
+                )
+                user.set_password(password)
+                user.save()
+                
+                userId = User.objects.get(username=username).pk
+            except:
+                return JsonResponse("error: invalid details", status=HTTP_404_NOT_FOUND, safe=False)
             
             serializer = profileSerializer(data={
                 'user_fk': userId,
@@ -99,8 +100,13 @@ def registerUser(request):
 def login_user(request):
     username = request.data.get("username")
     password = request.data.get("password")
-    user = authenticate(username=username, password=password)
-    user2 = Users.objects.get(user_fk=user.pk)
+    
+    try:
+        user = authenticate(username=username, password=password)
+        user2 = Users.objects.get(user_fk=user.pk)
+    except:
+        return JsonResponse("error: invalid login request", status=HTTP_404_NOT_FOUND, safe=False)
+    
     if user is not None:
         data = {
             'token':'Logged in succesfully',
