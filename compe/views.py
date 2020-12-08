@@ -11,6 +11,13 @@ from .serializers import InfoSerializer
 from django.utils.dateparse import parse_datetime
 from datetime import datetime, timezone
 
+# Point Evaluator
+
+def pointsfromtime(t1,t2,t3):
+    total = t3 - t1
+    elapsed = t2-t1
+    return int(500*total.total_seconds()/elapsed.total_seconds())
+
 # Create your views here.
 
 @api_view(['GET'])
@@ -87,6 +94,10 @@ def runcode(request,id):
         except:
             return JsonResponse("error", status=HTTP_404_NOT_FOUND)
         
+        sub = datetime.now(timezone.utc)
+        if contest.starttime>sub or contest.endtime<sub:
+            return JsonResponse("Submission made to depricated contest, discarded!",safe=False)
+
         os.system('mkdir ./codes/temp/{}'.format(user))
         check = True
 
@@ -118,8 +129,21 @@ def runcode(request,id):
                 check=False
         
         os.system('rm -rf ./codes/temp/{}'.format(user))
+        
         if check:
-            return JsonResponse("Your Code Worked!",safe=False)
+            try:
+                ContestUser.objects.get(username=user,compe=contest)
+                return JsonResponse("You have already passed this contest! Anyway, your Code Works!",safe=False)
+            except:
+                pts = pointsfromtime(contest.starttime,sub,contest.endtime)
+                ContestUser.objects.create(username=user,compe=contest,submittime=sub,points=pts)
+                try:
+                    ptable = PointsTable.objects.get(username=user)
+                except:
+                    ptable = PointsTable.objects.create(username=user,points=0)
+                ptable.points = ptable.points + pts
+                ptable.save()
+                return JsonResponse("Your Code Worked! Your points are updated!",safe=False)
         else:
             return JsonResponse("Incorrect! Try again (:",safe=False)
 
@@ -131,13 +155,16 @@ def runfile(request,id):
         lang = request.data.get('language')
         code = request.FILES['script']
 
-        print(lang)
-
         try:
             contest = Contest.objects.get(id=id)
         except:
             return JsonResponse("error", status=HTTP_404_NOT_FOUND)
-        
+
+        sub = datetime.now(timezone.utc)
+        if contest.starttime>sub or contest.endtime<sub:
+            return JsonResponse("Submission made to depricated contest, discarded!",safe=False)
+
+
         os.system('mkdir ./codes/temp/{}'.format(user))
         check = True
 
@@ -165,7 +192,20 @@ def runfile(request,id):
                 check=False
         
         os.system('rm -rf ./codes/temp/{}'.format(user))
+
         if check:
-            return JsonResponse("Your Code Worked!",safe=False)
+            try:
+                ContestUser.objects.get(username=user,compe=contest)
+                return JsonResponse("You have already passed this contest! Anyway, your Code Works!",safe=False)
+            except:
+                pts = pointsfromtime(contest.starttime,sub,contest.endtime)
+                ContestUser.objects.create(username=user,compe=contest,submittime=sub,points=pts)
+                try:
+                    ptable = PointsTable.objects.get(username=user)
+                except:
+                    ptable = PointsTable.objects.create(username=user,points=0)
+                ptable.points = ptable.points + pts
+                ptable.save()
+                return JsonResponse("Your Code Worked! Your points are updated!",safe=False)
         else:
             return JsonResponse("Incorrect! Try again (:",safe=False)
