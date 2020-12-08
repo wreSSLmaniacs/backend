@@ -6,7 +6,7 @@ from rest_framework.status import HTTP_404_NOT_FOUND
 from django.core.files.storage import FileSystemStorage
 
 from .models import *
-from .serializers import InfoSerializer
+from .serializers import InfoSerializer, DateInfoSerializer
 
 from django.utils.dateparse import parse_datetime
 from datetime import date, datetime, timezone
@@ -27,7 +27,7 @@ def runboard(request):
             contests = Contest.objects.filter(starttime__lte = datetime.now(timezone.utc),endtime__gte = datetime.now(timezone.utc))
         except:
             return JsonResponse("error", status=HTTP_404_NOT_FOUND)
-        serializer = InfoSerializer(contests, many=True)
+        serializer = DateInfoSerializer(contests, many=True)
         return JsonResponse(serializer.data, safe=False)
 
 @api_view(['GET'])
@@ -37,7 +37,7 @@ def upboard(request):
             contests = Contest.objects.filter(starttime__gte = datetime.now(timezone.utc))
         except:
             return JsonResponse("error", status=HTTP_404_NOT_FOUND)
-        serializer = InfoSerializer(contests, many=True)
+        serializer = DateInfoSerializer(contests, many=True)
         return JsonResponse(serializer.data, safe=False)
 
 @api_view(['GET'])
