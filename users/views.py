@@ -109,9 +109,9 @@ def compile(request):
         
     os.system('touch ./codes/{}/in.txt'.format(user))
     os.system('touch ./codes/{}/out.txt'.format(user))
-    os.system('touch ./codes/{}/asdfghjkl.cpp'.format(user))
-    os.system('touch ./codes/{}/asdfghjkl.py'.format(user))
-    os.system('touch ./codes/{}/asdfghjkl.r'.format(user))
+    os.system('touch ./codes/{}/code_temp.cpp'.format(user))
+    os.system('touch ./codes/{}/code_temp.py'.format(user))
+    os.system('touch ./codes/{}/code_temp.rb'.format(user))
     os.system('touch ./codes/{}/script.sh'.format(user))
     
     f = open('./codes/{}/in.txt'.format(user),'w')
@@ -119,45 +119,60 @@ def compile(request):
     f.close()
 
     if language == 'c_cpp':
-        g = open('./codes/{}/asdfghjkl.cpp'.format(user),'w')
+        g = open('./codes/{}/code_temp.cpp'.format(user),'w')
         g.write(script)
         g.close()
 
         os.system('docker run --name cppbox -v "$(pwd)"/codes/{}/:/code --rm -t -d cppenv'.format(user))    # This will start a container
-        val = os.system('docker exec cppbox /bin/sh -c "g++ asdfghjkl.cpp; ./a.out < in.txt > out.txt"')       # This will execute our commands (inside container)
+        val = os.system('docker exec cppbox /bin/sh -c "g++ code_temp.cpp > log 2>&1; ./a.out < in.txt > out.txt 2>&1"')       # This will execute our commands (inside container)
         
         os.system('docker stop cppbox')
+        f = open("./codes/{}/log".format(user), "r")
+        f2 = open("./codes/{}/out.txt".format(user), "r")
+        log = f.read()
+        log += f2.read()
+        f.close()
+        f2.close()
         
-        if val == 256:
-            return JsonResponse({'success': False, 'output': ['Compilation Error']})
-        if val == 6:
-            return JsonResponse({'success': False, 'output': ['Runtime Error']})
+        # if val == 256:
+        if val == 32512:
+            return JsonResponse({'success': False, 'output': ['Compilation Error:\n {}'.format(log)]})
+        if val == 34816:
+            return JsonResponse({'success': False, 'output': ['Runtime Error: \n'.format(log)]})
+        if val != 0:
+            return JsonResponse({'success': False, 'output': ['Unexpected Error: \n'.format(log)]})
 
     elif language == 'python':
-        g = open('./codes/{}/asdfghjkl.py'.format(user),'w')
+        g = open('./codes/{}/code_temp.py'.format(user),'w')
         g.write(script)
         g.close()
         
         os.system('docker run --name pybox -v "$(pwd)"/codes/{}/:/code --rm -t -d pyenv'.format(user))    # This will start a container
-        val = os.system('docker exec pybox /bin/sh -c "python3 asdfghjkl.py < in.txt > out.txt"')       # This will execute our commands (inside container)
+        val = os.system('docker exec pybox /bin/sh -c "python3 code_temp.py < in.txt > out.txt 2>&1"')       # This will execute our commands (inside container)
         
         os.system('docker stop pybox')
+        f = open("./codes/{}/out.txt".format(user), "r")
+        log = f.read();
+        f.close();
         
         if val == 256:
-            return JsonResponse({'success': False, 'output': ['Compilation Error']})
+            return JsonResponse({'success': False, 'output': ['Compilation Error:\n {}'.format(log)]})
 
     elif language == 'r':
-        g = open('./codes/{}/asdfghjkl.r'.format(user),'w')
+        g = open('./codes/{}/code_temp.rb'.format(user),'w')
         g.write(script)
         g.close()
         
-        os.system('docker run --name rbox -v "$(pwd)"/codes/{}/:/code --rm -t -d renv'.format(user))    # This will start a container
-        val = os.system('docker exec pybox /bin/sh -c "r asdfghjkl.r < in.txt > out.txt"')       # This will execute our commands (inside container)
+        os.system('docker run --name rubybox -v "$(pwd)"/codes/{}/:/code --rm -t -d rubyenv'.format(user))    # This will start a container
+        val = os.system('docker exec rubybox /bin/sh -c "ruby code_temp.rb < in.txt > out.txt 2>&1"')       # This will execute our commands (inside container)
         
-        os.system('docker stop rbox')
+        os.system('docker stop rubybox')
+        f = open("./codes/{}/out.txt".format(user), "r")
+        log = f.read();
+        f.close();
         
         if val == 256:
-            return JsonResponse({'success': False, 'output': ['Compilation Error']})
+            return JsonResponse({'success': False, 'output': ['Compilation Error: \n {}'.format(log)]})
 
 
     f = open('./codes/{}/out.txt'.format(user),'r')
