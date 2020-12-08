@@ -172,6 +172,47 @@ def compile(request):
     return JsonResponse(data, status=HTTP_200_OK)
     # return JsonResponse({'error': ['File does not exist']}, status=HTTP_400_BAD_REQUEST)
 
+def renameDir(userId, filepath, newPath):
+    UserFiles.objects.filter(user=userId, filepath=filepath).update(filepath = newPath)
+    directory_content = os.listdir("./codes/{}".format(newPath))
+    for x in directory_content:
+        if os.path.isdir("./codes/{0}/{1}".format(newPath,x)):
+            renameDir(userId, filepath + "/" + x, newPath + "/" + x)
+
+@api_view(['POST'])
+@authentication_classes([TokenAuthentication])
+def rename(request, username, dirk):
+    if dirk == "":
+        dirk = "."
+
+    isFile = request.data.get('file')
+    oldNm = request.data.get('oldName')
+    newNm = request.data.get('newName')
+    oldName = "./codes/{}/{}/{}".format(username,dirk,oldNm)
+    newName = "./codes/{}/{}/{}".format(username,dirk,newNm)
+    userId = User.objects.get(username=username).pk
+    data = request.data
+
+    try:
+        os.rename(oldName, newName)
+        if isFile:
+            filepath = username + "/" + dirk
+            file = UserFiles.objects.get(user=userId,filename=oldNm, filepath=filepath)
+            file.filename = newNm
+            file.save()
+        else:
+            if dirk == ".":
+                filepath = username
+            else:
+                filepath = username + "/" + dirk
+            newPath = filepath + "/" + newNm
+            filepath = filepath + "/" + oldNm
+            print(newPath,filepath)
+            renameDir(userId,filepath,newPath)
+        return JsonResponse(data, status=HTTP_200_OK)
+    except:
+        return JsonResponse({"Error":"Name already exists"}, status=HTTP_400_BAD_REQUEST)
+
 @api_view(['GET', 'DELETE'])
 @authentication_classes([TokenAuthentication])
 def display(request, dirk, username, file):
@@ -216,9 +257,14 @@ def displayAll(request, dirk, username):
     if request.method == 'GET':
         userId = User.objects.get(username=username).pk
         filepath = username + "/" + dirk
+        if not os.path.isdir('./codes/{}'.format(str(username))):
+            path = './codes/{}'.format(str(username))
+            os.mkdir(path)
+
         obj = UserFiles.objects.filter(user=userId,filepath=filepath)
         serializer = userFilesSerializer(obj, many=True)
         data = []
+        print(filepath)
         for file in serializer.data:
             f = open("./codes/{}/{}".format(filepath, file['filename']), 'r')
             script = f.read()
