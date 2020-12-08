@@ -60,6 +60,8 @@ def newcontest(request):
         start = parse_datetime(request.data.get('start'))
         end = parse_datetime(request.data.get('end'))
         try:
+            if start > end:
+                return JsonResponse("Invalid Time Inputs", safe=False)
             contest = Contest.objects.create(title=title,problem=problem,starttime=start,endtime=end)
             contest.input.save(input.name, input)
             contest.output.save(output.name, output)
