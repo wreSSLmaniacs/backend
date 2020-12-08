@@ -8,6 +8,7 @@ from rest_framework.authtoken.views import ObtainAuthToken
 
 urlpatterns = [ 
     url(r'^api/profile$', views.userList),
+    url(r'^api/profile/pk$', views.userpk),
     url(r'^api/profile/add$', views.registerUser),
     url(r'^api/login$', views.login_user),
     url(r'api/compile', views.compile),

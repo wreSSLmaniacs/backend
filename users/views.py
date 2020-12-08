@@ -40,7 +40,20 @@ def userDetail(request, pk):
         
         serializer = profileDetailSerializer(obj)
         return JsonResponse(serializer.data, safe=False)
-    
+
+@api_view(['POST'])
+def userpk(request):
+    if request.method == 'POST':
+        uname = request.data.get('username')
+        try:
+            obj = User.objects.get(username=uname)
+            obj = Users.objects.get(user_fk=obj.pk)
+        except:
+            return JsonResponse("error invalid user", status=HTTP_404_NOT_FOUND, safe=False)
+        
+        serializer = profileDetailSerializer(obj)
+        return JsonResponse(serializer.data, safe=False)
+
 @api_view(['POST'])
 @authentication_classes([TokenAuthentication])
 def registerUser(request):
