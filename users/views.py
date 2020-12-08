@@ -40,7 +40,20 @@ def userDetail(request, pk):
         
         serializer = profileDetailSerializer(obj)
         return JsonResponse(serializer.data, safe=False)
-    
+
+@api_view(['POST'])
+def userpk(request):
+    if request.method == 'POST':
+        uname = request.data.get('username')
+        try:
+            obj = User.objects.get(username=uname)
+            obj = Users.objects.get(user_fk=obj.pk)
+        except:
+            return JsonResponse("error invalid user", status=HTTP_404_NOT_FOUND, safe=False)
+        
+        serializer = profileDetailSerializer(obj)
+        return JsonResponse(serializer.data, safe=False)
+
 @api_view(['POST'])
 @authentication_classes([TokenAuthentication])
 def registerUser(request):
@@ -49,6 +62,8 @@ def registerUser(request):
         password = request.data.get('password')
         email = request.data.get('email')
         image = request.data.get('image')
+        first_name = request.data.get('first_name')
+        last_name = request.data.get('last_name')
         
         try:
             User.objects.get(username=username)
@@ -56,7 +71,9 @@ def registerUser(request):
             user = User.objects.create_user(
                 username=username,
                 email=email,
-                password=password
+                password=password,
+                first_name=first_name,
+                last_name=last_name
             )
             user.set_password(password)
             user.save()
