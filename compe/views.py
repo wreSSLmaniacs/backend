@@ -209,3 +209,12 @@ def runfile(request,id):
                 return JsonResponse("Your Code Worked! Your points are updated!",safe=False)
         else:
             return JsonResponse("Incorrect! Try again (:",safe=False)
+
+@api_view(['GET'])
+def getpoints(request,user):
+    if request.method=='GET':
+        try:
+            ptable = PointsTable.objects.get(username=user)
+        except:
+            ptable = PointsTable.objects.create(username=user,points=0)
+        return JsonResponse(ptable.points,safe=False)
