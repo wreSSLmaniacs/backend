@@ -141,7 +141,7 @@ def compile(request):
         g.close()
 
         os.system('docker run --name cppbox -v "$(pwd)"/codes/{}/:/code --rm -t -d cppenv'.format(user))    # This will start a container
-        val = os.system('docker exec cppbox /bin/sh -c "g++ code_temp.cpp > log 2>&1; ./a.out < in.txt > out.txt 2>&1"')       # This will execute our commands (inside container)
+        val = os.system('docker exec cppbox /bin/sh -c "g++ -std=c++14 code_temp.cpp > log 2>&1; ./a.out < in.txt > out.txt 2>&1"')       # This will execute our commands (inside container)
         
         os.system('docker stop cppbox')
         f = open("./codes/{}/log".format(user), "r")
