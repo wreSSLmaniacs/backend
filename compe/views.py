@@ -83,6 +83,11 @@ def getcontest(request,id):
             contest = Contest.objects.get(id=id)
         except:
             return JsonResponse("error", status=HTTP_404_NOT_FOUND)
+        if contest.starttime>datetime.now(timezone.utc):
+            return JsonResponse({
+                "title" : "How to Punish Oversmart People",
+                "problem": "Attempt the problem when the time comes ye dumb dumb"
+            })
         serializer = InfoSerializer(contest)
         return JsonResponse(serializer.data, safe=False)
 
