@@ -40,13 +40,14 @@ def renameDir(userId, filepath, newPath):
 @api_view(['POST'])
 @authentication_classes([TokenAuthentication])
 def compile(request, username, dirk):
-	if dirk=="":
+	'''Compiles code (language: c++, python, ruby)'''
+    if dirk=="":
 		dirk="."
-	# filename = request.data.get("filename")
+	
 	script = request.data.get("script")
 	language = request.data.get("language")
 	inp = request.data.get("input")
-	user = request.data.get("username")  # Check this
+	user = request.data.get("username")
 
 	if not os.path.exists('codes/{}'.format(user)):
 	    os.system('mkdir ./codes/{}'.format(user))
@@ -54,6 +55,7 @@ def compile(request, username, dirk):
 	if not os.path.exists('codes/{}/{}'.format(user,dirk)):
 	    os.system('mkdir ./codes/{}/{}'.format(user,dirk))
 	    
+    '''Manages compilation of codes inside directory'''
 	filepath = user + "/" + dirk
 	os.system('touch ./codes/{}/in.txt'.format(filepath))
 	os.system('touch ./codes/{}/out.txt'.format(filepath))
@@ -66,6 +68,7 @@ def compile(request, username, dirk):
 	f.close()
 
 	if language == 'c_cpp':
+        '''C++ 14 compilation: Environment isolation using docker container. Exceptions handled for compilation and runtime errors. Returns output if no error otherwise returns the error.'''
 	    g = open('./codes/{}/code_temp.cpp'.format(filepath),'w')
 	    g.write(script)
 	    g.close()
@@ -81,7 +84,6 @@ def compile(request, username, dirk):
 	    f.close()
 	    f2.close()
 	    
-	    # if val == 256:
 	    if val == 32512:
 	        return JsonResponse({'success': False, 'output': ['Compilation Error:\n {}'.format(log)]})
 	    if val == 34816:
@@ -90,6 +92,7 @@ def compile(request, username, dirk):
 	        return JsonResponse({'success': False, 'output': ['Unexpected Error: \n'.format(log)]})
 
 	elif language == 'python':
+        '''Python 3.8.5 compilation: Environment isolation using docker container. Exceptions handled for compilation errors. Returns output if no error otherwise returns the error.'''
 	    g = open('./codes/{}/code_temp.py'.format(filepath),'w')
 	    g.write(script)
 	    g.close()
@@ -106,6 +109,7 @@ def compile(request, username, dirk):
 	        return JsonResponse({'success': False, 'output': ['Compilation Error:\n {}'.format(log)]})
 
 	elif language == 'ruby':
+        '''Ruby 2.7.0 compilation: Environment isolation using docker container. Exceptions handled for compilation errors. Returns output if no error otherwise returns the error.'''
 	    g = open('./codes/{}/code_temp.rb'.format(filepath),'w')
 	    g.write(script)
 	    g.close()
@@ -124,7 +128,6 @@ def compile(request, username, dirk):
 
 	f = open('./codes/{}/out.txt'.format(filepath),'r')
 	output = f.read()
-	# print(output)
 	f.close()
 	data = {
 	    "success": True,
@@ -137,7 +140,6 @@ def compile(request, username, dirk):
 	except:
 		pass
 	return JsonResponse(data, status=HTTP_200_OK)
-	# return JsonResponse({'error': ['File does not exist']}, status=HTTP_400_BAD_REQUEST)
 
 @api_view(['POST'])
 @authentication_classes([TokenAuthentication])
