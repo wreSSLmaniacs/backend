@@ -15,7 +15,12 @@ from rest_framework.permissions import IsAuthenticated
 import os
 
 # Helper Function 
+
+
 def delDir(userId, filepath):
+    """
+    Recursive function for deleting a complete folder and internal contents for user and updating information in database    
+    """
     obj = UserFiles.objects.filter(user=userId, filepath=filepath)
     serializer = userFilesSerializer(obj, many=True)
     directory_content = os.listdir("./codes/{}".format(filepath))
@@ -29,6 +34,9 @@ def delDir(userId, filepath):
     obj.delete()
 
 def renameDir(userId, filepath, newPath):
+    """
+    Recursive function for renaming a folder and updating relevant paths in database   
+    """
     UserFiles.objects.filter(user=userId, filepath=filepath).update(filepath = newPath)
     directory_content = os.listdir("./codes/{}".format(newPath))
     for x in directory_content:
@@ -37,10 +45,28 @@ def renameDir(userId, filepath, newPath):
 
 # Create your views here.
 
+## All classes authenticated with Token Authentication provided by Django REST Framework TokenAuth
+
 @api_view(['POST'])
 @authentication_classes([TokenAuthentication])
 def compile(request, username, dirk):
-	'''Compiles code (language: c++, python, ruby)'''
+	'''
+    Compiles code (language: c++, python, ruby)
+
+    Input: 
+    username - 
+        Username
+        string type
+        Format: [a-zA-Z0-9]+
+        not NULL 
+    dirk - 
+        Directory Path
+        string type
+        Format: [a-zA-Z0-9/_ ]+
+        NULL possible
+
+    Compiles relevant code inside a docker container
+    '''
     if dirk=="":
 		dirk="."
 	
@@ -144,6 +170,21 @@ def compile(request, username, dirk):
 @api_view(['POST'])
 @authentication_classes([TokenAuthentication])
 def rename(request, username, dirk):
+    '''
+    Method created to rename input file or folder and update information in database
+
+    Input:
+    username - 
+        Username
+        string type
+        Format: [a-zA-Z0-9]+
+        not NULL 
+    dirk - 
+        Directory Path
+        string type
+        Format: [a-zA-Z0-9/_ ]+
+        NULL possible
+    '''
     if dirk == "":
         dirk = "."
 
@@ -178,6 +219,28 @@ def rename(request, username, dirk):
 @api_view(['GET', 'DELETE'])
 @authentication_classes([TokenAuthentication])
 def display(request, dirk, username, file):
+    '''
+    Request Operations for a file
+        Get File contents
+        Delete File
+    
+    Input:
+    username - 
+        Username
+        string type
+        Format: [a-zA-Z0-9]+
+        not NULL 
+    dirk - 
+        Directory Path
+        string type
+        Format: [a-zA-Z0-9/_ ]+
+        NULL possible
+    file - 
+        Filename 
+        string type 
+        Format: [a-zA-Z0-9_ ]+.[a-zA-Z0-9_ ]+
+        not NULL
+    '''
     if dirk == "" or dirk is None:
         dirk = "."
     userId = User.objects.get(username=username).pk
@@ -191,19 +254,40 @@ def display(request, dirk, username, file):
     data = {'filename': file, 'script': script}
     try:
         if request.method == 'DELETE':
+            ''' Delete File Operation'''
             os.remove(fileloc)
             obj.delete()
         return JsonResponse(data, status=HTTP_200_OK)
     except:
         return JsonResponse({'error': ['Invalid file reqeust']}, status=HTTP_400_BAD_REQUEST)
 
+
 @api_view(['GET', 'POST', 'DELETE'])
 @authentication_classes([TokenAuthentication])
 def displayAll(request, dirk, username):
+    '''
+    Request Operations for a directory
+        Get list of names of Folders and File in directory
+        Post file inside Folder - add new file or update existing
+        Delete Direcotory
+    
+    Input:
+    username - 
+        Username
+        string type
+        Format: [a-zA-Z0-9]+
+        not NULL 
+    dirk - 
+        Directory Path
+        string type
+        Format: [a-zA-Z0-9/_ ]+
+        NULL possible
+    '''
     if dirk == "":
         dirk = "."
 
     if request.method == 'GET':
+        ''' Get Operation for getting list of names of all files and folders in directory'''
         userId = User.objects.get(username=username).pk
         filepath = username + "/" + dirk
         if not os.path.isdir('./codes/{}'.format(str(username))):
@@ -227,6 +311,7 @@ def displayAll(request, dirk, username):
         return JsonResponse(data, status=HTTP_200_OK, safe=False)
 
     elif request.method == 'POST':
+        ''' Post Operation for adding new file/updating file information to directory'''
         script = request.data.get("script")
         filename = request.data.get("filename")
         try:
@@ -270,6 +355,7 @@ def displayAll(request, dirk, username):
             return JsonResponse({'error': ['Invalid file reqeust']}, status=HTTP_400_BAD_REQUEST)
 
     elif request.method == 'DELETE':
+        ''' Delete Operation for deleting directory and update database'''
         userId = User.objects.get(username=username).pk
         filepath = username + "/" + dirk
         delDir(userId, filepath)
