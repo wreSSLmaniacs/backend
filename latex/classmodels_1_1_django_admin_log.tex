@@ -1,0 +1,80 @@
+\hypertarget{classmodels_1_1_django_admin_log}{}\doxysection{models.\+Django\+Admin\+Log Class Reference}
+\label{classmodels_1_1_django_admin_log}\index{models.DjangoAdminLog@{models.DjangoAdminLog}}
+Inheritance diagram for models.\+Django\+Admin\+Log\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classmodels_1_1_django_admin_log}
+\end{center}
+\end{figure}
+\doxysubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{classmodels_1_1_django_admin_log_1_1_meta}{Meta}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Static Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classmodels_1_1_django_admin_log_aea22b7ed7abdec2fd0a3ef1edde1a500}{action\+\_\+time}} = models.\+Date\+Time\+Field()
+\item 
+\mbox{\hyperlink{classmodels_1_1_django_admin_log_a9fc826f3831365e19402fb6417c2b4a5}{object\+\_\+id}} = models.\+Text\+Field(blank=True, null=True)
+\item 
+\mbox{\hyperlink{classmodels_1_1_django_admin_log_a6930ef7cca8735ba033819921a280e36}{object\+\_\+repr}} = models.\+Char\+Field(max\+\_\+length=200)
+\item 
+\mbox{\hyperlink{classmodels_1_1_django_admin_log_a3f1689c69e61be428bf09e264b07329d}{action\+\_\+flag}} = models.\+Small\+Integer\+Field()
+\item 
+\mbox{\hyperlink{classmodels_1_1_django_admin_log_a7f41fbe1d4e07810301105810fa17199}{change\+\_\+message}} = models.\+Text\+Field()
+\item 
+\mbox{\hyperlink{classmodels_1_1_django_admin_log_afa6381884c68ac2a33d749825397898d}{content\+\_\+type}} = models.\+Foreign\+Key(\textquotesingle{}\mbox{\hyperlink{classmodels_1_1_django_content_type}{Django\+Content\+Type}}\textquotesingle{}, models.\+D\+O\+\_\+\+N\+O\+T\+H\+I\+NG, blank=True, null=True)
+\item 
+\mbox{\hyperlink{classmodels_1_1_django_admin_log_a2843162d4e308a688b92c44b177733aa}{user}} = models.\+Foreign\+Key(\mbox{\hyperlink{classmodels_1_1_auth_user}{Auth\+User}}, models.\+D\+O\+\_\+\+N\+O\+T\+H\+I\+NG)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{classmodels_1_1_django_admin_log_a3f1689c69e61be428bf09e264b07329d}\label{classmodels_1_1_django_admin_log_a3f1689c69e61be428bf09e264b07329d}} 
+\index{models.DjangoAdminLog@{models.DjangoAdminLog}!action\_flag@{action\_flag}}
+\index{action\_flag@{action\_flag}!models.DjangoAdminLog@{models.DjangoAdminLog}}
+\doxysubsubsection{\texorpdfstring{action\_flag}{action\_flag}}
+{\footnotesize\ttfamily models.\+Django\+Admin\+Log.\+action\+\_\+flag = models.\+Small\+Integer\+Field()\hspace{0.3cm}{\ttfamily [static]}}
+
+\mbox{\Hypertarget{classmodels_1_1_django_admin_log_aea22b7ed7abdec2fd0a3ef1edde1a500}\label{classmodels_1_1_django_admin_log_aea22b7ed7abdec2fd0a3ef1edde1a500}} 
+\index{models.DjangoAdminLog@{models.DjangoAdminLog}!action\_time@{action\_time}}
+\index{action\_time@{action\_time}!models.DjangoAdminLog@{models.DjangoAdminLog}}
+\doxysubsubsection{\texorpdfstring{action\_time}{action\_time}}
+{\footnotesize\ttfamily models.\+Django\+Admin\+Log.\+action\+\_\+time = models.\+Date\+Time\+Field()\hspace{0.3cm}{\ttfamily [static]}}
+
+\mbox{\Hypertarget{classmodels_1_1_django_admin_log_a7f41fbe1d4e07810301105810fa17199}\label{classmodels_1_1_django_admin_log_a7f41fbe1d4e07810301105810fa17199}} 
+\index{models.DjangoAdminLog@{models.DjangoAdminLog}!change\_message@{change\_message}}
+\index{change\_message@{change\_message}!models.DjangoAdminLog@{models.DjangoAdminLog}}
+\doxysubsubsection{\texorpdfstring{change\_message}{change\_message}}
+{\footnotesize\ttfamily models.\+Django\+Admin\+Log.\+change\+\_\+message = models.\+Text\+Field()\hspace{0.3cm}{\ttfamily [static]}}
+
+\mbox{\Hypertarget{classmodels_1_1_django_admin_log_afa6381884c68ac2a33d749825397898d}\label{classmodels_1_1_django_admin_log_afa6381884c68ac2a33d749825397898d}} 
+\index{models.DjangoAdminLog@{models.DjangoAdminLog}!content\_type@{content\_type}}
+\index{content\_type@{content\_type}!models.DjangoAdminLog@{models.DjangoAdminLog}}
+\doxysubsubsection{\texorpdfstring{content\_type}{content\_type}}
+{\footnotesize\ttfamily models.\+Django\+Admin\+Log.\+content\+\_\+type = models.\+Foreign\+Key(\textquotesingle{}\mbox{\hyperlink{classmodels_1_1_django_content_type}{Django\+Content\+Type}}\textquotesingle{}, models.\+D\+O\+\_\+\+N\+O\+T\+H\+I\+NG, blank=True, null=True)\hspace{0.3cm}{\ttfamily [static]}}
+
+\mbox{\Hypertarget{classmodels_1_1_django_admin_log_a9fc826f3831365e19402fb6417c2b4a5}\label{classmodels_1_1_django_admin_log_a9fc826f3831365e19402fb6417c2b4a5}} 
+\index{models.DjangoAdminLog@{models.DjangoAdminLog}!object\_id@{object\_id}}
+\index{object\_id@{object\_id}!models.DjangoAdminLog@{models.DjangoAdminLog}}
+\doxysubsubsection{\texorpdfstring{object\_id}{object\_id}}
+{\footnotesize\ttfamily models.\+Django\+Admin\+Log.\+object\+\_\+id = models.\+Text\+Field(blank=True, null=True)\hspace{0.3cm}{\ttfamily [static]}}
+
+\mbox{\Hypertarget{classmodels_1_1_django_admin_log_a6930ef7cca8735ba033819921a280e36}\label{classmodels_1_1_django_admin_log_a6930ef7cca8735ba033819921a280e36}} 
+\index{models.DjangoAdminLog@{models.DjangoAdminLog}!object\_repr@{object\_repr}}
+\index{object\_repr@{object\_repr}!models.DjangoAdminLog@{models.DjangoAdminLog}}
+\doxysubsubsection{\texorpdfstring{object\_repr}{object\_repr}}
+{\footnotesize\ttfamily models.\+Django\+Admin\+Log.\+object\+\_\+repr = models.\+Char\+Field(max\+\_\+length=200)\hspace{0.3cm}{\ttfamily [static]}}
+
+\mbox{\Hypertarget{classmodels_1_1_django_admin_log_a2843162d4e308a688b92c44b177733aa}\label{classmodels_1_1_django_admin_log_a2843162d4e308a688b92c44b177733aa}} 
+\index{models.DjangoAdminLog@{models.DjangoAdminLog}!user@{user}}
+\index{user@{user}!models.DjangoAdminLog@{models.DjangoAdminLog}}
+\doxysubsubsection{\texorpdfstring{user}{user}}
+{\footnotesize\ttfamily models.\+Django\+Admin\+Log.\+user = models.\+Foreign\+Key(\mbox{\hyperlink{classmodels_1_1_auth_user}{Auth\+User}}, models.\+D\+O\+\_\+\+N\+O\+T\+H\+I\+NG)\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{models_8py}{models.\+py}}\end{DoxyCompactItemize}

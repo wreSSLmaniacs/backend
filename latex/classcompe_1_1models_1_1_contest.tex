@@ -1,0 +1,79 @@
+\hypertarget{classcompe_1_1models_1_1_contest}{}\doxysection{compe.\+models.\+Contest Class Reference}
+\label{classcompe_1_1models_1_1_contest}\index{compe.models.Contest@{compe.models.Contest}}
+Inheritance diagram for compe.\+models.\+Contest\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classcompe_1_1models_1_1_contest}
+\end{center}
+\end{figure}
+\doxysubsection*{Static Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classcompe_1_1models_1_1_contest_a9c1762d476fa6925b44831f1d64667cb}{id}} = models.\+Auto\+Field(primary\+\_\+key=True)
+\item 
+\mbox{\hyperlink{classcompe_1_1models_1_1_contest_a48c3aea9538feec60d32c78351b6f195}{title}} = models.\+Char\+Field(max\+\_\+length=64,blank=False,null=False)
+\item 
+\mbox{\hyperlink{classcompe_1_1models_1_1_contest_a6ff841a5fc6d69808eaca8b9979e1ef2}{problem}} = models.\+Text\+Field(blank=False,null=False)
+\item 
+\mbox{\hyperlink{classcompe_1_1models_1_1_contest_aeeb2c214d19498e5afdaa897203486c0}{input}} = models.\+File\+Field(upload\+\_\+to = \mbox{\hyperlink{namespacecompe_1_1models_aee72a549226fb740dcef3bb91d80d168}{inuplocate}}, blank=True,null=True)
+\item 
+\mbox{\hyperlink{classcompe_1_1models_1_1_contest_a3a405abfc3b5497af3f0053ee47bb666}{output}} = models.\+File\+Field(upload\+\_\+to = \mbox{\hyperlink{namespacecompe_1_1models_a6b29a57843935d1c1b7e43ad6f4c9e66}{outuplocate}}, blank=True,null=True)
+\item 
+\mbox{\hyperlink{classcompe_1_1models_1_1_contest_a6d39de8e1c9d59ecbdf6b224eb60e89d}{starttime}} = models.\+Date\+Time\+Field(default=datetime.\+now, blank=False,null=False)
+\item 
+\mbox{\hyperlink{classcompe_1_1models_1_1_contest_a402c6b91bac66fbb321d1c6627f9f5fe}{endtime}} = models.\+Date\+Time\+Field(default=datetime.\+now, blank=False,null=False)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\begin{DoxyVerb}Model to store everything related to a contest\end{DoxyVerb}
+ 
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{classcompe_1_1models_1_1_contest_a402c6b91bac66fbb321d1c6627f9f5fe}\label{classcompe_1_1models_1_1_contest_a402c6b91bac66fbb321d1c6627f9f5fe}} 
+\index{compe.models.Contest@{compe.models.Contest}!endtime@{endtime}}
+\index{endtime@{endtime}!compe.models.Contest@{compe.models.Contest}}
+\doxysubsubsection{\texorpdfstring{endtime}{endtime}}
+{\footnotesize\ttfamily compe.\+models.\+Contest.\+endtime = models.\+Date\+Time\+Field(default=datetime.\+now, blank=False,null=False)\hspace{0.3cm}{\ttfamily [static]}}
+
+\mbox{\Hypertarget{classcompe_1_1models_1_1_contest_a9c1762d476fa6925b44831f1d64667cb}\label{classcompe_1_1models_1_1_contest_a9c1762d476fa6925b44831f1d64667cb}} 
+\index{compe.models.Contest@{compe.models.Contest}!id@{id}}
+\index{id@{id}!compe.models.Contest@{compe.models.Contest}}
+\doxysubsubsection{\texorpdfstring{id}{id}}
+{\footnotesize\ttfamily compe.\+models.\+Contest.\+id = models.\+Auto\+Field(primary\+\_\+key=True)\hspace{0.3cm}{\ttfamily [static]}}
+
+\mbox{\Hypertarget{classcompe_1_1models_1_1_contest_aeeb2c214d19498e5afdaa897203486c0}\label{classcompe_1_1models_1_1_contest_aeeb2c214d19498e5afdaa897203486c0}} 
+\index{compe.models.Contest@{compe.models.Contest}!input@{input}}
+\index{input@{input}!compe.models.Contest@{compe.models.Contest}}
+\doxysubsubsection{\texorpdfstring{input}{input}}
+{\footnotesize\ttfamily compe.\+models.\+Contest.\+input = models.\+File\+Field(upload\+\_\+to = \mbox{\hyperlink{namespacecompe_1_1models_aee72a549226fb740dcef3bb91d80d168}{inuplocate}}, blank=True,null=True)\hspace{0.3cm}{\ttfamily [static]}}
+
+\mbox{\Hypertarget{classcompe_1_1models_1_1_contest_a3a405abfc3b5497af3f0053ee47bb666}\label{classcompe_1_1models_1_1_contest_a3a405abfc3b5497af3f0053ee47bb666}} 
+\index{compe.models.Contest@{compe.models.Contest}!output@{output}}
+\index{output@{output}!compe.models.Contest@{compe.models.Contest}}
+\doxysubsubsection{\texorpdfstring{output}{output}}
+{\footnotesize\ttfamily compe.\+models.\+Contest.\+output = models.\+File\+Field(upload\+\_\+to = \mbox{\hyperlink{namespacecompe_1_1models_a6b29a57843935d1c1b7e43ad6f4c9e66}{outuplocate}}, blank=True,null=True)\hspace{0.3cm}{\ttfamily [static]}}
+
+\mbox{\Hypertarget{classcompe_1_1models_1_1_contest_a6ff841a5fc6d69808eaca8b9979e1ef2}\label{classcompe_1_1models_1_1_contest_a6ff841a5fc6d69808eaca8b9979e1ef2}} 
+\index{compe.models.Contest@{compe.models.Contest}!problem@{problem}}
+\index{problem@{problem}!compe.models.Contest@{compe.models.Contest}}
+\doxysubsubsection{\texorpdfstring{problem}{problem}}
+{\footnotesize\ttfamily compe.\+models.\+Contest.\+problem = models.\+Text\+Field(blank=False,null=False)\hspace{0.3cm}{\ttfamily [static]}}
+
+\mbox{\Hypertarget{classcompe_1_1models_1_1_contest_a6d39de8e1c9d59ecbdf6b224eb60e89d}\label{classcompe_1_1models_1_1_contest_a6d39de8e1c9d59ecbdf6b224eb60e89d}} 
+\index{compe.models.Contest@{compe.models.Contest}!starttime@{starttime}}
+\index{starttime@{starttime}!compe.models.Contest@{compe.models.Contest}}
+\doxysubsubsection{\texorpdfstring{starttime}{starttime}}
+{\footnotesize\ttfamily compe.\+models.\+Contest.\+starttime = models.\+Date\+Time\+Field(default=datetime.\+now, blank=False,null=False)\hspace{0.3cm}{\ttfamily [static]}}
+
+\mbox{\Hypertarget{classcompe_1_1models_1_1_contest_a48c3aea9538feec60d32c78351b6f195}\label{classcompe_1_1models_1_1_contest_a48c3aea9538feec60d32c78351b6f195}} 
+\index{compe.models.Contest@{compe.models.Contest}!title@{title}}
+\index{title@{title}!compe.models.Contest@{compe.models.Contest}}
+\doxysubsubsection{\texorpdfstring{title}{title}}
+{\footnotesize\ttfamily compe.\+models.\+Contest.\+title = models.\+Char\+Field(max\+\_\+length=64,blank=False,null=False)\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+compe/\mbox{\hyperlink{compe_2models_8py}{models.\+py}}\end{DoxyCompactItemize}

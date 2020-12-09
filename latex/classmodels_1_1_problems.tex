@@ -1,0 +1,88 @@
+\hypertarget{classmodels_1_1_problems}{}\doxysection{models.\+Problems Class Reference}
+\label{classmodels_1_1_problems}\index{models.Problems@{models.Problems}}
+Inheritance diagram for models.\+Problems\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classmodels_1_1_problems}
+\end{center}
+\end{figure}
+\doxysubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{classmodels_1_1_problems_1_1_meta}{Meta}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Static Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classmodels_1_1_problems_a2e1ddff19b128c88c574f42eb72c4878}{problem\+\_\+id}} = models.\+Big\+Integer\+Field(primary\+\_\+key=True)
+\item 
+\mbox{\hyperlink{classmodels_1_1_problems_a41599d6d2be48e7bcb60e73417934702}{title}} = models.\+Char\+Field(max\+\_\+length=128, blank=True, null=True)
+\item 
+\mbox{\hyperlink{classmodels_1_1_problems_a610c0568d8868421d57f374a3e6e2255}{statement}} = models.\+Text\+Field(blank=True, null=True)
+\item 
+\mbox{\hyperlink{classmodels_1_1_problems_a97cf2c3494ee213e89166d6112792e0e}{testcases}} = models.\+Text\+Field(blank=True, null=True)
+\item 
+\mbox{\hyperlink{classmodels_1_1_problems_a8da5e742c4e3bcfa27088415088c0aaa}{no\+\_\+subs}} = models.\+Big\+Integer\+Field(blank=True, null=True)
+\item 
+\mbox{\hyperlink{classmodels_1_1_problems_a2b4371eeb6e92b59b30e9408881cabac}{author}} = models.\+Foreign\+Key(\textquotesingle{}\mbox{\hyperlink{classmodels_1_1_rated_users}{Rated\+Users}}\textquotesingle{}, models.\+D\+O\+\_\+\+N\+O\+T\+H\+I\+NG, db\+\_\+column=\textquotesingle{}author\textquotesingle{})
+\item 
+\mbox{\hyperlink{classmodels_1_1_problems_a2e6739df02db6466423e8af96b1360db}{ref\+\_\+blog}} = models.\+Foreign\+Key(\mbox{\hyperlink{classmodels_1_1_blog}{Blog}}, models.\+D\+O\+\_\+\+N\+O\+T\+H\+I\+NG, db\+\_\+column=\textquotesingle{}ref\+\_\+blog\textquotesingle{}, blank=True, null=True)
+\item 
+\mbox{\hyperlink{classmodels_1_1_problems_a342ec585932a9b9073247466b78dc542}{feat\+\_\+contest}} = models.\+Foreign\+Key(\mbox{\hyperlink{classmodels_1_1_contest}{Contest}}, models.\+D\+O\+\_\+\+N\+O\+T\+H\+I\+NG, db\+\_\+column=\textquotesingle{}feat\+\_\+contest\textquotesingle{}, blank=True, null=True)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{classmodels_1_1_problems_a2b4371eeb6e92b59b30e9408881cabac}\label{classmodels_1_1_problems_a2b4371eeb6e92b59b30e9408881cabac}} 
+\index{models.Problems@{models.Problems}!author@{author}}
+\index{author@{author}!models.Problems@{models.Problems}}
+\doxysubsubsection{\texorpdfstring{author}{author}}
+{\footnotesize\ttfamily models.\+Problems.\+author = models.\+Foreign\+Key(\textquotesingle{}\mbox{\hyperlink{classmodels_1_1_rated_users}{Rated\+Users}}\textquotesingle{}, models.\+D\+O\+\_\+\+N\+O\+T\+H\+I\+NG, db\+\_\+column=\textquotesingle{}author\textquotesingle{})\hspace{0.3cm}{\ttfamily [static]}}
+
+\mbox{\Hypertarget{classmodels_1_1_problems_a342ec585932a9b9073247466b78dc542}\label{classmodels_1_1_problems_a342ec585932a9b9073247466b78dc542}} 
+\index{models.Problems@{models.Problems}!feat\_contest@{feat\_contest}}
+\index{feat\_contest@{feat\_contest}!models.Problems@{models.Problems}}
+\doxysubsubsection{\texorpdfstring{feat\_contest}{feat\_contest}}
+{\footnotesize\ttfamily models.\+Problems.\+feat\+\_\+contest = models.\+Foreign\+Key(\mbox{\hyperlink{classmodels_1_1_contest}{Contest}}, models.\+D\+O\+\_\+\+N\+O\+T\+H\+I\+NG, db\+\_\+column=\textquotesingle{}feat\+\_\+contest\textquotesingle{}, blank=True, null=True)\hspace{0.3cm}{\ttfamily [static]}}
+
+\mbox{\Hypertarget{classmodels_1_1_problems_a8da5e742c4e3bcfa27088415088c0aaa}\label{classmodels_1_1_problems_a8da5e742c4e3bcfa27088415088c0aaa}} 
+\index{models.Problems@{models.Problems}!no\_subs@{no\_subs}}
+\index{no\_subs@{no\_subs}!models.Problems@{models.Problems}}
+\doxysubsubsection{\texorpdfstring{no\_subs}{no\_subs}}
+{\footnotesize\ttfamily models.\+Problems.\+no\+\_\+subs = models.\+Big\+Integer\+Field(blank=True, null=True)\hspace{0.3cm}{\ttfamily [static]}}
+
+\mbox{\Hypertarget{classmodels_1_1_problems_a2e1ddff19b128c88c574f42eb72c4878}\label{classmodels_1_1_problems_a2e1ddff19b128c88c574f42eb72c4878}} 
+\index{models.Problems@{models.Problems}!problem\_id@{problem\_id}}
+\index{problem\_id@{problem\_id}!models.Problems@{models.Problems}}
+\doxysubsubsection{\texorpdfstring{problem\_id}{problem\_id}}
+{\footnotesize\ttfamily models.\+Problems.\+problem\+\_\+id = models.\+Big\+Integer\+Field(primary\+\_\+key=True)\hspace{0.3cm}{\ttfamily [static]}}
+
+\mbox{\Hypertarget{classmodels_1_1_problems_a2e6739df02db6466423e8af96b1360db}\label{classmodels_1_1_problems_a2e6739df02db6466423e8af96b1360db}} 
+\index{models.Problems@{models.Problems}!ref\_blog@{ref\_blog}}
+\index{ref\_blog@{ref\_blog}!models.Problems@{models.Problems}}
+\doxysubsubsection{\texorpdfstring{ref\_blog}{ref\_blog}}
+{\footnotesize\ttfamily models.\+Problems.\+ref\+\_\+blog = models.\+Foreign\+Key(\mbox{\hyperlink{classmodels_1_1_blog}{Blog}}, models.\+D\+O\+\_\+\+N\+O\+T\+H\+I\+NG, db\+\_\+column=\textquotesingle{}ref\+\_\+blog\textquotesingle{}, blank=True, null=True)\hspace{0.3cm}{\ttfamily [static]}}
+
+\mbox{\Hypertarget{classmodels_1_1_problems_a610c0568d8868421d57f374a3e6e2255}\label{classmodels_1_1_problems_a610c0568d8868421d57f374a3e6e2255}} 
+\index{models.Problems@{models.Problems}!statement@{statement}}
+\index{statement@{statement}!models.Problems@{models.Problems}}
+\doxysubsubsection{\texorpdfstring{statement}{statement}}
+{\footnotesize\ttfamily models.\+Problems.\+statement = models.\+Text\+Field(blank=True, null=True)\hspace{0.3cm}{\ttfamily [static]}}
+
+\mbox{\Hypertarget{classmodels_1_1_problems_a97cf2c3494ee213e89166d6112792e0e}\label{classmodels_1_1_problems_a97cf2c3494ee213e89166d6112792e0e}} 
+\index{models.Problems@{models.Problems}!testcases@{testcases}}
+\index{testcases@{testcases}!models.Problems@{models.Problems}}
+\doxysubsubsection{\texorpdfstring{testcases}{testcases}}
+{\footnotesize\ttfamily models.\+Problems.\+testcases = models.\+Text\+Field(blank=True, null=True)\hspace{0.3cm}{\ttfamily [static]}}
+
+\mbox{\Hypertarget{classmodels_1_1_problems_a41599d6d2be48e7bcb60e73417934702}\label{classmodels_1_1_problems_a41599d6d2be48e7bcb60e73417934702}} 
+\index{models.Problems@{models.Problems}!title@{title}}
+\index{title@{title}!models.Problems@{models.Problems}}
+\doxysubsubsection{\texorpdfstring{title}{title}}
+{\footnotesize\ttfamily models.\+Problems.\+title = models.\+Char\+Field(max\+\_\+length=128, blank=True, null=True)\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{models_8py}{models.\+py}}\end{DoxyCompactItemize}

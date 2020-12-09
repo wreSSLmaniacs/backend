@@ -1,0 +1,72 @@
+\hypertarget{classmodels_1_1_contest_user}{}\doxysection{models.\+Contest\+User Class Reference}
+\label{classmodels_1_1_contest_user}\index{models.ContestUser@{models.ContestUser}}
+Inheritance diagram for models.\+Contest\+User\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classmodels_1_1_contest_user}
+\end{center}
+\end{figure}
+\doxysubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{classmodels_1_1_contest_user_1_1_meta}{Meta}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Static Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classmodels_1_1_contest_user_a022789e11677267e393012278f87a465}{perf\+\_\+id}} = models.\+Big\+Integer\+Field(primary\+\_\+key=True)
+\item 
+\mbox{\hyperlink{classmodels_1_1_contest_user_a69afe58919661395635c5259ed8ee691}{contest}} = models.\+Foreign\+Key(\mbox{\hyperlink{classmodels_1_1_contest}{Contest}}, models.\+D\+O\+\_\+\+N\+O\+T\+H\+I\+NG)
+\item 
+\mbox{\hyperlink{classmodels_1_1_contest_user_a723c8592197879739474dc6eb03f289f}{user}} = models.\+Foreign\+Key(\textquotesingle{}\mbox{\hyperlink{classmodels_1_1_rated_users}{Rated\+Users}}\textquotesingle{}, models.\+D\+O\+\_\+\+N\+O\+T\+H\+I\+NG, blank=True, null=True)
+\item 
+\mbox{\hyperlink{classmodels_1_1_contest_user_ad7f93127ff05d66c8ebd5b81cabf28a2}{ranking}} = models.\+Integer\+Field(blank=True, null=True)
+\item 
+\mbox{\hyperlink{classmodels_1_1_contest_user_a50e86c28358f0671de239cf4738284bf}{net\+\_\+score}} = models.\+Integer\+Field(blank=True, null=True)
+\item 
+\mbox{\hyperlink{classmodels_1_1_contest_user_a3a8e4c41f6c0e2a101c4b025f01e5484}{del\+\_\+rating}} = models.\+Integer\+Field(blank=True, null=True)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{classmodels_1_1_contest_user_a69afe58919661395635c5259ed8ee691}\label{classmodels_1_1_contest_user_a69afe58919661395635c5259ed8ee691}} 
+\index{models.ContestUser@{models.ContestUser}!contest@{contest}}
+\index{contest@{contest}!models.ContestUser@{models.ContestUser}}
+\doxysubsubsection{\texorpdfstring{contest}{contest}}
+{\footnotesize\ttfamily models.\+Contest\+User.\+contest = models.\+Foreign\+Key(\mbox{\hyperlink{classmodels_1_1_contest}{Contest}}, models.\+D\+O\+\_\+\+N\+O\+T\+H\+I\+NG)\hspace{0.3cm}{\ttfamily [static]}}
+
+\mbox{\Hypertarget{classmodels_1_1_contest_user_a3a8e4c41f6c0e2a101c4b025f01e5484}\label{classmodels_1_1_contest_user_a3a8e4c41f6c0e2a101c4b025f01e5484}} 
+\index{models.ContestUser@{models.ContestUser}!del\_rating@{del\_rating}}
+\index{del\_rating@{del\_rating}!models.ContestUser@{models.ContestUser}}
+\doxysubsubsection{\texorpdfstring{del\_rating}{del\_rating}}
+{\footnotesize\ttfamily models.\+Contest\+User.\+del\+\_\+rating = models.\+Integer\+Field(blank=True, null=True)\hspace{0.3cm}{\ttfamily [static]}}
+
+\mbox{\Hypertarget{classmodels_1_1_contest_user_a50e86c28358f0671de239cf4738284bf}\label{classmodels_1_1_contest_user_a50e86c28358f0671de239cf4738284bf}} 
+\index{models.ContestUser@{models.ContestUser}!net\_score@{net\_score}}
+\index{net\_score@{net\_score}!models.ContestUser@{models.ContestUser}}
+\doxysubsubsection{\texorpdfstring{net\_score}{net\_score}}
+{\footnotesize\ttfamily models.\+Contest\+User.\+net\+\_\+score = models.\+Integer\+Field(blank=True, null=True)\hspace{0.3cm}{\ttfamily [static]}}
+
+\mbox{\Hypertarget{classmodels_1_1_contest_user_a022789e11677267e393012278f87a465}\label{classmodels_1_1_contest_user_a022789e11677267e393012278f87a465}} 
+\index{models.ContestUser@{models.ContestUser}!perf\_id@{perf\_id}}
+\index{perf\_id@{perf\_id}!models.ContestUser@{models.ContestUser}}
+\doxysubsubsection{\texorpdfstring{perf\_id}{perf\_id}}
+{\footnotesize\ttfamily models.\+Contest\+User.\+perf\+\_\+id = models.\+Big\+Integer\+Field(primary\+\_\+key=True)\hspace{0.3cm}{\ttfamily [static]}}
+
+\mbox{\Hypertarget{classmodels_1_1_contest_user_ad7f93127ff05d66c8ebd5b81cabf28a2}\label{classmodels_1_1_contest_user_ad7f93127ff05d66c8ebd5b81cabf28a2}} 
+\index{models.ContestUser@{models.ContestUser}!ranking@{ranking}}
+\index{ranking@{ranking}!models.ContestUser@{models.ContestUser}}
+\doxysubsubsection{\texorpdfstring{ranking}{ranking}}
+{\footnotesize\ttfamily models.\+Contest\+User.\+ranking = models.\+Integer\+Field(blank=True, null=True)\hspace{0.3cm}{\ttfamily [static]}}
+
+\mbox{\Hypertarget{classmodels_1_1_contest_user_a723c8592197879739474dc6eb03f289f}\label{classmodels_1_1_contest_user_a723c8592197879739474dc6eb03f289f}} 
+\index{models.ContestUser@{models.ContestUser}!user@{user}}
+\index{user@{user}!models.ContestUser@{models.ContestUser}}
+\doxysubsubsection{\texorpdfstring{user}{user}}
+{\footnotesize\ttfamily models.\+Contest\+User.\+user = models.\+Foreign\+Key(\textquotesingle{}\mbox{\hyperlink{classmodels_1_1_rated_users}{Rated\+Users}}\textquotesingle{}, models.\+D\+O\+\_\+\+N\+O\+T\+H\+I\+NG, blank=True, null=True)\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{models_8py}{models.\+py}}\end{DoxyCompactItemize}

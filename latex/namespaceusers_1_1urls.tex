@@ -1,0 +1,53 @@
+\hypertarget{namespaceusers_1_1urls}{}\doxysection{users.\+urls Namespace Reference}
+\label{namespaceusers_1_1urls}\index{users.urls@{users.urls}}
+\doxysubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+list \mbox{\hyperlink{namespaceusers_1_1urls_a339048dc543953b7d650a82282a999f6}{urlpatterns}}
+\item 
+\mbox{\hyperlink{namespaceusers_1_1urls_ae738002d24de078141bf8ba4345a0f9f}{C\+O\+D\+E\+S\+\_\+\+U\+RL}}
+\item 
+\mbox{\hyperlink{namespaceusers_1_1urls_a424c426eec38811448f5147ed160c593}{document\+\_\+root}}
+\item 
+\mbox{\hyperlink{namespaceusers_1_1urls_a3110a05987726fa1c2ba71f6c9c924ef}{M\+E\+D\+I\+A\+\_\+\+U\+RL}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Variable Documentation}
+\mbox{\Hypertarget{namespaceusers_1_1urls_ae738002d24de078141bf8ba4345a0f9f}\label{namespaceusers_1_1urls_ae738002d24de078141bf8ba4345a0f9f}} 
+\index{users.urls@{users.urls}!CODES\_URL@{CODES\_URL}}
+\index{CODES\_URL@{CODES\_URL}!users.urls@{users.urls}}
+\doxysubsubsection{\texorpdfstring{CODES\_URL}{CODES\_URL}}
+{\footnotesize\ttfamily users.\+urls.\+C\+O\+D\+E\+S\+\_\+\+U\+RL}
+
+\mbox{\Hypertarget{namespaceusers_1_1urls_a424c426eec38811448f5147ed160c593}\label{namespaceusers_1_1urls_a424c426eec38811448f5147ed160c593}} 
+\index{users.urls@{users.urls}!document\_root@{document\_root}}
+\index{document\_root@{document\_root}!users.urls@{users.urls}}
+\doxysubsubsection{\texorpdfstring{document\_root}{document\_root}}
+{\footnotesize\ttfamily users.\+urls.\+document\+\_\+root}
+
+\mbox{\Hypertarget{namespaceusers_1_1urls_a3110a05987726fa1c2ba71f6c9c924ef}\label{namespaceusers_1_1urls_a3110a05987726fa1c2ba71f6c9c924ef}} 
+\index{users.urls@{users.urls}!MEDIA\_URL@{MEDIA\_URL}}
+\index{MEDIA\_URL@{MEDIA\_URL}!users.urls@{users.urls}}
+\doxysubsubsection{\texorpdfstring{MEDIA\_URL}{MEDIA\_URL}}
+{\footnotesize\ttfamily users.\+urls.\+M\+E\+D\+I\+A\+\_\+\+U\+RL}
+
+\mbox{\Hypertarget{namespaceusers_1_1urls_a339048dc543953b7d650a82282a999f6}\label{namespaceusers_1_1urls_a339048dc543953b7d650a82282a999f6}} 
+\index{users.urls@{users.urls}!urlpatterns@{urlpatterns}}
+\index{urlpatterns@{urlpatterns}!users.urls@{users.urls}}
+\doxysubsubsection{\texorpdfstring{urlpatterns}{urlpatterns}}
+{\footnotesize\ttfamily list users.\+urls.\+urlpatterns}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 =  [ }
+\DoxyCodeLine{2     url(\textcolor{stringliteral}{r'\string^api/profile\$'}, views.userList),}
+\DoxyCodeLine{3     url(\textcolor{stringliteral}{r'\string^api/profile/pk\$'}, views.userpk),}
+\DoxyCodeLine{4     url(\textcolor{stringliteral}{r'\string^api/profile/add\$'}, views.registerUser),}
+\DoxyCodeLine{5     url(\textcolor{stringliteral}{r'\string^api/login\$'}, views.login\_user),}
+\DoxyCodeLine{6     url(\textcolor{stringliteral}{r'api/image'}, views.image.as\_view()),}
+\DoxyCodeLine{7     url(\textcolor{stringliteral}{r'\string^api/profile/(?P<pk>[0-\/9]+)\$'}, views.userDetail),    }
+\DoxyCodeLine{8     url(\textcolor{stringliteral}{r'\string^auth/'},ObtainAuthToken.as\_view())}
+\DoxyCodeLine{9 ]}
+
+\end{DoxyCode}

@@ -1,0 +1,56 @@
+\hypertarget{classmodels_1_1_blog}{}\doxysection{models.\+Blog Class Reference}
+\label{classmodels_1_1_blog}\index{models.Blog@{models.Blog}}
+Inheritance diagram for models.\+Blog\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classmodels_1_1_blog}
+\end{center}
+\end{figure}
+\doxysubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{classmodels_1_1_blog_1_1_meta}{Meta}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Static Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classmodels_1_1_blog_aa052b4b5503d859e13b27aa618a5075f}{blog\+\_\+id}} = models.\+Big\+Integer\+Field(primary\+\_\+key=True)
+\item 
+\mbox{\hyperlink{classmodels_1_1_blog_a082095dbc86fbaff950980e042a70d4f}{title}} = models.\+Char\+Field(max\+\_\+length=128)
+\item 
+\mbox{\hyperlink{classmodels_1_1_blog_ab1d95f9d78126e4799adf3ce8029c80a}{content}} = models.\+Text\+Field()
+\item 
+\mbox{\hyperlink{classmodels_1_1_blog_a271135d907aafdd72901750392359396}{author}} = models.\+Foreign\+Key(\textquotesingle{}\mbox{\hyperlink{classmodels_1_1_rated_users}{Rated\+Users}}\textquotesingle{}, models.\+D\+O\+\_\+\+N\+O\+T\+H\+I\+NG, db\+\_\+column=\textquotesingle{}author\textquotesingle{})
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{classmodels_1_1_blog_a271135d907aafdd72901750392359396}\label{classmodels_1_1_blog_a271135d907aafdd72901750392359396}} 
+\index{models.Blog@{models.Blog}!author@{author}}
+\index{author@{author}!models.Blog@{models.Blog}}
+\doxysubsubsection{\texorpdfstring{author}{author}}
+{\footnotesize\ttfamily models.\+Blog.\+author = models.\+Foreign\+Key(\textquotesingle{}\mbox{\hyperlink{classmodels_1_1_rated_users}{Rated\+Users}}\textquotesingle{}, models.\+D\+O\+\_\+\+N\+O\+T\+H\+I\+NG, db\+\_\+column=\textquotesingle{}author\textquotesingle{})\hspace{0.3cm}{\ttfamily [static]}}
+
+\mbox{\Hypertarget{classmodels_1_1_blog_aa052b4b5503d859e13b27aa618a5075f}\label{classmodels_1_1_blog_aa052b4b5503d859e13b27aa618a5075f}} 
+\index{models.Blog@{models.Blog}!blog\_id@{blog\_id}}
+\index{blog\_id@{blog\_id}!models.Blog@{models.Blog}}
+\doxysubsubsection{\texorpdfstring{blog\_id}{blog\_id}}
+{\footnotesize\ttfamily models.\+Blog.\+blog\+\_\+id = models.\+Big\+Integer\+Field(primary\+\_\+key=True)\hspace{0.3cm}{\ttfamily [static]}}
+
+\mbox{\Hypertarget{classmodels_1_1_blog_ab1d95f9d78126e4799adf3ce8029c80a}\label{classmodels_1_1_blog_ab1d95f9d78126e4799adf3ce8029c80a}} 
+\index{models.Blog@{models.Blog}!content@{content}}
+\index{content@{content}!models.Blog@{models.Blog}}
+\doxysubsubsection{\texorpdfstring{content}{content}}
+{\footnotesize\ttfamily models.\+Blog.\+content = models.\+Text\+Field()\hspace{0.3cm}{\ttfamily [static]}}
+
+\mbox{\Hypertarget{classmodels_1_1_blog_a082095dbc86fbaff950980e042a70d4f}\label{classmodels_1_1_blog_a082095dbc86fbaff950980e042a70d4f}} 
+\index{models.Blog@{models.Blog}!title@{title}}
+\index{title@{title}!models.Blog@{models.Blog}}
+\doxysubsubsection{\texorpdfstring{title}{title}}
+{\footnotesize\ttfamily models.\+Blog.\+title = models.\+Char\+Field(max\+\_\+length=128)\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{models_8py}{models.\+py}}\end{DoxyCompactItemize}

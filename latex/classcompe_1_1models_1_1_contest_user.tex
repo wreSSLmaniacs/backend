@@ -1,0 +1,56 @@
+\hypertarget{classcompe_1_1models_1_1_contest_user}{}\doxysection{compe.\+models.\+Contest\+User Class Reference}
+\label{classcompe_1_1models_1_1_contest_user}\index{compe.models.ContestUser@{compe.models.ContestUser}}
+Inheritance diagram for compe.\+models.\+Contest\+User\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classcompe_1_1models_1_1_contest_user}
+\end{center}
+\end{figure}
+\doxysubsection*{Static Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classcompe_1_1models_1_1_contest_user_ac736d2169c526401b7763f0e4bdef800}{id}} = models.\+Auto\+Field(primary\+\_\+key=True)
+\item 
+\mbox{\hyperlink{classcompe_1_1models_1_1_contest_user_a96802b8ff1b4f4dd2e26fca4d3055724}{username}} = models.\+Char\+Field(max\+\_\+length=64,blank=False,null=False)
+\item 
+\mbox{\hyperlink{classcompe_1_1models_1_1_contest_user_ad982ca7ed307af3356da99f7011095cb}{compe}} = models.\+Foreign\+Key(\textquotesingle{}\mbox{\hyperlink{classcompe_1_1models_1_1_contest}{Contest}}\textquotesingle{}, models.\+D\+O\+\_\+\+N\+O\+T\+H\+I\+NG)
+\item 
+\mbox{\hyperlink{classcompe_1_1models_1_1_contest_user_a85a5e3a8ffe3cc42f911fef2a30b1948}{submittime}} = models.\+Date\+Time\+Field(default=datetime.\+now, blank=False)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\begin{DoxyVerb}Stores one entry per (user,contest) pair : 
+Time of first successful submission and Points Obtained\end{DoxyVerb}
+ 
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{classcompe_1_1models_1_1_contest_user_ad982ca7ed307af3356da99f7011095cb}\label{classcompe_1_1models_1_1_contest_user_ad982ca7ed307af3356da99f7011095cb}} 
+\index{compe.models.ContestUser@{compe.models.ContestUser}!compe@{compe}}
+\index{compe@{compe}!compe.models.ContestUser@{compe.models.ContestUser}}
+\doxysubsubsection{\texorpdfstring{compe}{compe}}
+{\footnotesize\ttfamily compe.\+models.\+Contest\+User.\+compe = models.\+Foreign\+Key(\textquotesingle{}\mbox{\hyperlink{classcompe_1_1models_1_1_contest}{Contest}}\textquotesingle{}, models.\+D\+O\+\_\+\+N\+O\+T\+H\+I\+NG)\hspace{0.3cm}{\ttfamily [static]}}
+
+\mbox{\Hypertarget{classcompe_1_1models_1_1_contest_user_ac736d2169c526401b7763f0e4bdef800}\label{classcompe_1_1models_1_1_contest_user_ac736d2169c526401b7763f0e4bdef800}} 
+\index{compe.models.ContestUser@{compe.models.ContestUser}!id@{id}}
+\index{id@{id}!compe.models.ContestUser@{compe.models.ContestUser}}
+\doxysubsubsection{\texorpdfstring{id}{id}}
+{\footnotesize\ttfamily compe.\+models.\+Contest\+User.\+id = models.\+Auto\+Field(primary\+\_\+key=True)\hspace{0.3cm}{\ttfamily [static]}}
+
+\mbox{\Hypertarget{classcompe_1_1models_1_1_contest_user_a85a5e3a8ffe3cc42f911fef2a30b1948}\label{classcompe_1_1models_1_1_contest_user_a85a5e3a8ffe3cc42f911fef2a30b1948}} 
+\index{compe.models.ContestUser@{compe.models.ContestUser}!submittime@{submittime}}
+\index{submittime@{submittime}!compe.models.ContestUser@{compe.models.ContestUser}}
+\doxysubsubsection{\texorpdfstring{submittime}{submittime}}
+{\footnotesize\ttfamily compe.\+models.\+Contest\+User.\+submittime = models.\+Date\+Time\+Field(default=datetime.\+now, blank=False)\hspace{0.3cm}{\ttfamily [static]}}
+
+\mbox{\Hypertarget{classcompe_1_1models_1_1_contest_user_a96802b8ff1b4f4dd2e26fca4d3055724}\label{classcompe_1_1models_1_1_contest_user_a96802b8ff1b4f4dd2e26fca4d3055724}} 
+\index{compe.models.ContestUser@{compe.models.ContestUser}!username@{username}}
+\index{username@{username}!compe.models.ContestUser@{compe.models.ContestUser}}
+\doxysubsubsection{\texorpdfstring{username}{username}}
+{\footnotesize\ttfamily compe.\+models.\+Contest\+User.\+username = models.\+Char\+Field(max\+\_\+length=64,blank=False,null=False)\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+compe/\mbox{\hyperlink{compe_2models_8py}{models.\+py}}\end{DoxyCompactItemize}

@@ -1,0 +1,133 @@
+\hypertarget{namespaceprojects_1_1views}{}\doxysection{projects.\+views Namespace Reference}
+\label{namespaceprojects_1_1views}\index{projects.views@{projects.views}}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+def \mbox{\hyperlink{namespaceprojects_1_1views_af64444bf5df85637271a2be2df2b33c5}{del\+Dir}} (user\+Id, filepath)
+\item 
+def \mbox{\hyperlink{namespaceprojects_1_1views_a846febfaa8f90d97cf9ec8f0e205a1e2}{rename\+Dir}} (user\+Id, filepath, new\+Path)
+\item 
+def \mbox{\hyperlink{namespaceprojects_1_1views_abdb3ee51e4cb3c4db59a74bc1cc908ef}{compile}} (request, \mbox{\hyperlink{api_8txt_a86b47cca8d76d7556477b4d5171b15ab}{username}}, dirk)
+\begin{DoxyCompactList}\small\item\em All classes authenticated with Token Authentication provided by Django R\+E\+ST Framework Token\+Auth. \end{DoxyCompactList}\item 
+def \mbox{\hyperlink{namespaceprojects_1_1views_aec3fe936acb92966267026b7f6513fcd}{rename}} (request, \mbox{\hyperlink{api_8txt_a86b47cca8d76d7556477b4d5171b15ab}{username}}, dirk)
+\item 
+def \mbox{\hyperlink{namespaceprojects_1_1views_ad650c39ce6beac5a2eb5cf12bc9ecf2e}{display}} (request, dirk, \mbox{\hyperlink{api_8txt_a86b47cca8d76d7556477b4d5171b15ab}{username}}, file)
+\item 
+def \mbox{\hyperlink{namespaceprojects_1_1views_adb4d45f191fd14b1e22f1b04a8e9dd85}{display\+All}} (request, dirk, \mbox{\hyperlink{api_8txt_a86b47cca8d76d7556477b4d5171b15ab}{username}})
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{namespaceprojects_1_1views_abdb3ee51e4cb3c4db59a74bc1cc908ef}\label{namespaceprojects_1_1views_abdb3ee51e4cb3c4db59a74bc1cc908ef}} 
+\index{projects.views@{projects.views}!compile@{compile}}
+\index{compile@{compile}!projects.views@{projects.views}}
+\doxysubsubsection{\texorpdfstring{compile()}{compile()}}
+{\footnotesize\ttfamily def projects.\+views.\+compile (\begin{DoxyParamCaption}\item[{}]{request,  }\item[{}]{username,  }\item[{}]{dirk }\end{DoxyParamCaption})}
+
+
+
+All classes authenticated with Token Authentication provided by Django R\+E\+ST Framework Token\+Auth. 
+
+\begin{DoxyVerb}Compiles code (language: c++, python, ruby)
+
+Input: 
+username - 
+    Username
+    string type
+    Format: [a-zA-Z0-9]+
+    not NULL 
+dirk - 
+    Directory Path
+    string type
+    Format: [a-zA-Z0-9/_ ]+
+    NULL possible
+
+Compiles relevant code inside a docker container
+\end{DoxyVerb}
+ \mbox{\Hypertarget{namespaceprojects_1_1views_af64444bf5df85637271a2be2df2b33c5}\label{namespaceprojects_1_1views_af64444bf5df85637271a2be2df2b33c5}} 
+\index{projects.views@{projects.views}!delDir@{delDir}}
+\index{delDir@{delDir}!projects.views@{projects.views}}
+\doxysubsubsection{\texorpdfstring{delDir()}{delDir()}}
+{\footnotesize\ttfamily def projects.\+views.\+del\+Dir (\begin{DoxyParamCaption}\item[{}]{user\+Id,  }\item[{}]{filepath }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Recursive function for deleting a complete folder and internal contents for user and updating information in database    
+\end{DoxyVerb}
+ \mbox{\Hypertarget{namespaceprojects_1_1views_ad650c39ce6beac5a2eb5cf12bc9ecf2e}\label{namespaceprojects_1_1views_ad650c39ce6beac5a2eb5cf12bc9ecf2e}} 
+\index{projects.views@{projects.views}!display@{display}}
+\index{display@{display}!projects.views@{projects.views}}
+\doxysubsubsection{\texorpdfstring{display()}{display()}}
+{\footnotesize\ttfamily def projects.\+views.\+display (\begin{DoxyParamCaption}\item[{}]{request,  }\item[{}]{dirk,  }\item[{}]{username,  }\item[{}]{file }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Request Operations for a file
+    Get File contents
+    Delete File
+
+Input:
+username - 
+    Username
+    string type
+    Format: [a-zA-Z0-9]+
+    not NULL 
+dirk - 
+    Directory Path
+    string type
+    Format: [a-zA-Z0-9/_ ]+
+    NULL possible
+file - 
+    Filename 
+    string type 
+    Format: [a-zA-Z0-9_ ]+.[a-zA-Z0-9_ ]+
+    not NULL
+\end{DoxyVerb}
+ \mbox{\Hypertarget{namespaceprojects_1_1views_adb4d45f191fd14b1e22f1b04a8e9dd85}\label{namespaceprojects_1_1views_adb4d45f191fd14b1e22f1b04a8e9dd85}} 
+\index{projects.views@{projects.views}!displayAll@{displayAll}}
+\index{displayAll@{displayAll}!projects.views@{projects.views}}
+\doxysubsubsection{\texorpdfstring{displayAll()}{displayAll()}}
+{\footnotesize\ttfamily def projects.\+views.\+display\+All (\begin{DoxyParamCaption}\item[{}]{request,  }\item[{}]{dirk,  }\item[{}]{username }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Request Operations for a directory
+    Get list of names of Folders and File in directory
+    Post file inside Folder - add new file or update existing
+    Delete Direcotory
+
+Input:
+username - 
+    Username
+    string type
+    Format: [a-zA-Z0-9]+
+    not NULL 
+dirk - 
+    Directory Path
+    string type
+    Format: [a-zA-Z0-9/_ ]+
+    NULL possible
+\end{DoxyVerb}
+ \mbox{\Hypertarget{namespaceprojects_1_1views_aec3fe936acb92966267026b7f6513fcd}\label{namespaceprojects_1_1views_aec3fe936acb92966267026b7f6513fcd}} 
+\index{projects.views@{projects.views}!rename@{rename}}
+\index{rename@{rename}!projects.views@{projects.views}}
+\doxysubsubsection{\texorpdfstring{rename()}{rename()}}
+{\footnotesize\ttfamily def projects.\+views.\+rename (\begin{DoxyParamCaption}\item[{}]{request,  }\item[{}]{username,  }\item[{}]{dirk }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Method created to rename input file or folder and update information in database
+
+Input:
+username - 
+    Username
+    string type
+    Format: [a-zA-Z0-9]+
+    not NULL 
+dirk - 
+    Directory Path
+    string type
+    Format: [a-zA-Z0-9/_ ]+
+    NULL possible
+\end{DoxyVerb}
+ \mbox{\Hypertarget{namespaceprojects_1_1views_a846febfaa8f90d97cf9ec8f0e205a1e2}\label{namespaceprojects_1_1views_a846febfaa8f90d97cf9ec8f0e205a1e2}} 
+\index{projects.views@{projects.views}!renameDir@{renameDir}}
+\index{renameDir@{renameDir}!projects.views@{projects.views}}
+\doxysubsubsection{\texorpdfstring{renameDir()}{renameDir()}}
+{\footnotesize\ttfamily def projects.\+views.\+rename\+Dir (\begin{DoxyParamCaption}\item[{}]{user\+Id,  }\item[{}]{filepath,  }\item[{}]{new\+Path }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Recursive function for renaming a folder and updating relevant paths in database   
+\end{DoxyVerb}
+ 

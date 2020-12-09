@@ -1,0 +1,115 @@
+\hypertarget{namespacecompe_1_1views}{}\doxysection{compe.\+views Namespace Reference}
+\label{namespacecompe_1_1views}\index{compe.views@{compe.views}}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+def \mbox{\hyperlink{namespacecompe_1_1views_a29dfe0b4731f69d192d2da5395e2b33c}{pointsfromtime}} (t1, t2, t3)
+\begin{DoxyCompactList}\small\item\em Point Evaluator, currently hyperbolic, we plan to change this to a Gompertz function in a patch. \end{DoxyCompactList}\item 
+def \mbox{\hyperlink{namespacecompe_1_1views_ac5d25de391425d58ff00543a884157b3}{runboard}} (request)
+\begin{DoxyCompactList}\small\item\em All classes authenticated with Token Authentication provided by Django R\+E\+ST Framework Token\+Auth. \end{DoxyCompactList}\item 
+def \mbox{\hyperlink{namespacecompe_1_1views_acc094cd78237186048bd4c84afc1caf1}{upboard}} (request)
+\item 
+def \mbox{\hyperlink{namespacecompe_1_1views_ac290a9583f3f221bb9f6c407f813f4fb}{pastboard}} (request)
+\item 
+def \mbox{\hyperlink{namespacecompe_1_1views_aa335f9680fc08e1277c256201bdd425e}{newcontest}} (request)
+\item 
+def \mbox{\hyperlink{namespacecompe_1_1views_ad7a8c0388c3629182f82e657aaf54fb1}{getcontest}} (request, id)
+\item 
+def \mbox{\hyperlink{namespacecompe_1_1views_afadcb734c2201ff735cd7fe5f9640bc3}{runcode}} (request, id)
+\item 
+def \mbox{\hyperlink{namespacecompe_1_1views_ad8f07c9fb0ae169f85a7151886061ab2}{runfile}} (request, id)
+\item 
+def \mbox{\hyperlink{namespacecompe_1_1views_a3c039492cb9b22e772d960932fd2f964}{getpoints}} (request, user)
+\item 
+def \mbox{\hyperlink{namespacecompe_1_1views_a1c9848e366df9723e4acd3f2afd2f8b4}{isrunning}} (request, id)
+\item 
+def \mbox{\hyperlink{namespacecompe_1_1views_aa76a47a9644a0399f2c321d358053d82}{passedpoints}} (request, user, id)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{namespacecompe_1_1views_ad7a8c0388c3629182f82e657aaf54fb1}\label{namespacecompe_1_1views_ad7a8c0388c3629182f82e657aaf54fb1}} 
+\index{compe.views@{compe.views}!getcontest@{getcontest}}
+\index{getcontest@{getcontest}!compe.views@{compe.views}}
+\doxysubsubsection{\texorpdfstring{getcontest()}{getcontest()}}
+{\footnotesize\ttfamily def compe.\+views.\+getcontest (\begin{DoxyParamCaption}\item[{}]{request,  }\item[{}]{id }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}View to query the contest table by contest ID\end{DoxyVerb}
+ \mbox{\Hypertarget{namespacecompe_1_1views_a3c039492cb9b22e772d960932fd2f964}\label{namespacecompe_1_1views_a3c039492cb9b22e772d960932fd2f964}} 
+\index{compe.views@{compe.views}!getpoints@{getpoints}}
+\index{getpoints@{getpoints}!compe.views@{compe.views}}
+\doxysubsubsection{\texorpdfstring{getpoints()}{getpoints()}}
+{\footnotesize\ttfamily def compe.\+views.\+getpoints (\begin{DoxyParamCaption}\item[{}]{request,  }\item[{}]{user }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}View to query for points of a user, when non existent, it creates an entry with 0 points. Used by the profile page.\end{DoxyVerb}
+ \mbox{\Hypertarget{namespacecompe_1_1views_a1c9848e366df9723e4acd3f2afd2f8b4}\label{namespacecompe_1_1views_a1c9848e366df9723e4acd3f2afd2f8b4}} 
+\index{compe.views@{compe.views}!isrunning@{isrunning}}
+\index{isrunning@{isrunning}!compe.views@{compe.views}}
+\doxysubsubsection{\texorpdfstring{isrunning()}{isrunning()}}
+{\footnotesize\ttfamily def compe.\+views.\+isrunning (\begin{DoxyParamCaption}\item[{}]{request,  }\item[{}]{id }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}A lightweight view to check if a contest is running, used by the lifecycle hook on a contest's main page.\end{DoxyVerb}
+ \mbox{\Hypertarget{namespacecompe_1_1views_aa335f9680fc08e1277c256201bdd425e}\label{namespacecompe_1_1views_aa335f9680fc08e1277c256201bdd425e}} 
+\index{compe.views@{compe.views}!newcontest@{newcontest}}
+\index{newcontest@{newcontest}!compe.views@{compe.views}}
+\doxysubsubsection{\texorpdfstring{newcontest()}{newcontest()}}
+{\footnotesize\ttfamily def compe.\+views.\+newcontest (\begin{DoxyParamCaption}\item[{}]{request }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}View accepts new competitions into the Contests table\end{DoxyVerb}
+ \mbox{\Hypertarget{namespacecompe_1_1views_aa76a47a9644a0399f2c321d358053d82}\label{namespacecompe_1_1views_aa76a47a9644a0399f2c321d358053d82}} 
+\index{compe.views@{compe.views}!passedpoints@{passedpoints}}
+\index{passedpoints@{passedpoints}!compe.views@{compe.views}}
+\doxysubsubsection{\texorpdfstring{passedpoints()}{passedpoints()}}
+{\footnotesize\ttfamily def compe.\+views.\+passedpoints (\begin{DoxyParamCaption}\item[{}]{request,  }\item[{}]{user,  }\item[{}]{id }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}A lightweight view to query a user's points in a particular contest. Used by the contest and pastcontest pages.\end{DoxyVerb}
+ \mbox{\Hypertarget{namespacecompe_1_1views_ac290a9583f3f221bb9f6c407f813f4fb}\label{namespacecompe_1_1views_ac290a9583f3f221bb9f6c407f813f4fb}} 
+\index{compe.views@{compe.views}!pastboard@{pastboard}}
+\index{pastboard@{pastboard}!compe.views@{compe.views}}
+\doxysubsubsection{\texorpdfstring{pastboard()}{pastboard()}}
+{\footnotesize\ttfamily def compe.\+views.\+pastboard (\begin{DoxyParamCaption}\item[{}]{request }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}View queries the Contests table for contests which are over at time of request\end{DoxyVerb}
+ \mbox{\Hypertarget{namespacecompe_1_1views_a29dfe0b4731f69d192d2da5395e2b33c}\label{namespacecompe_1_1views_a29dfe0b4731f69d192d2da5395e2b33c}} 
+\index{compe.views@{compe.views}!pointsfromtime@{pointsfromtime}}
+\index{pointsfromtime@{pointsfromtime}!compe.views@{compe.views}}
+\doxysubsubsection{\texorpdfstring{pointsfromtime()}{pointsfromtime()}}
+{\footnotesize\ttfamily def compe.\+views.\+pointsfromtime (\begin{DoxyParamCaption}\item[{}]{t1,  }\item[{}]{t2,  }\item[{}]{t3 }\end{DoxyParamCaption})}
+
+
+
+Point Evaluator, currently hyperbolic, we plan to change this to a Gompertz function in a patch. 
+
+\mbox{\Hypertarget{namespacecompe_1_1views_ac5d25de391425d58ff00543a884157b3}\label{namespacecompe_1_1views_ac5d25de391425d58ff00543a884157b3}} 
+\index{compe.views@{compe.views}!runboard@{runboard}}
+\index{runboard@{runboard}!compe.views@{compe.views}}
+\doxysubsubsection{\texorpdfstring{runboard()}{runboard()}}
+{\footnotesize\ttfamily def compe.\+views.\+runboard (\begin{DoxyParamCaption}\item[{}]{request }\end{DoxyParamCaption})}
+
+
+
+All classes authenticated with Token Authentication provided by Django R\+E\+ST Framework Token\+Auth. 
+
+\begin{DoxyVerb}View queries the Contests table for contests running at time of request\end{DoxyVerb}
+ \mbox{\Hypertarget{namespacecompe_1_1views_afadcb734c2201ff735cd7fe5f9640bc3}\label{namespacecompe_1_1views_afadcb734c2201ff735cd7fe5f9640bc3}} 
+\index{compe.views@{compe.views}!runcode@{runcode}}
+\index{runcode@{runcode}!compe.views@{compe.views}}
+\doxysubsubsection{\texorpdfstring{runcode()}{runcode()}}
+{\footnotesize\ttfamily def compe.\+views.\+runcode (\begin{DoxyParamCaption}\item[{}]{request,  }\item[{}]{id }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}View receives code as a string through the editor and runs it, update points on a first successful submission\end{DoxyVerb}
+ \mbox{\Hypertarget{namespacecompe_1_1views_ad8f07c9fb0ae169f85a7151886061ab2}\label{namespacecompe_1_1views_ad8f07c9fb0ae169f85a7151886061ab2}} 
+\index{compe.views@{compe.views}!runfile@{runfile}}
+\index{runfile@{runfile}!compe.views@{compe.views}}
+\doxysubsubsection{\texorpdfstring{runfile()}{runfile()}}
+{\footnotesize\ttfamily def compe.\+views.\+runfile (\begin{DoxyParamCaption}\item[{}]{request,  }\item[{}]{id }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}View receives file and language, runs it, update points on a first successful submission\end{DoxyVerb}
+ \mbox{\Hypertarget{namespacecompe_1_1views_acc094cd78237186048bd4c84afc1caf1}\label{namespacecompe_1_1views_acc094cd78237186048bd4c84afc1caf1}} 
+\index{compe.views@{compe.views}!upboard@{upboard}}
+\index{upboard@{upboard}!compe.views@{compe.views}}
+\doxysubsubsection{\texorpdfstring{upboard()}{upboard()}}
+{\footnotesize\ttfamily def compe.\+views.\+upboard (\begin{DoxyParamCaption}\item[{}]{request }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}View queries the Contests table for contests yet to start at time of request\end{DoxyVerb}
+ 

@@ -1,0 +1,72 @@
+\hypertarget{classmodels_1_1_contest}{}\doxysection{models.\+Contest Class Reference}
+\label{classmodels_1_1_contest}\index{models.Contest@{models.Contest}}
+Inheritance diagram for models.\+Contest\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classmodels_1_1_contest}
+\end{center}
+\end{figure}
+\doxysubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{classmodels_1_1_contest_1_1_meta}{Meta}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Static Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classmodels_1_1_contest_a48f54030cafac079e2bbf4817371afd5}{contest\+\_\+id}} = models.\+Big\+Integer\+Field(primary\+\_\+key=True)
+\item 
+\mbox{\hyperlink{classmodels_1_1_contest_aeb3082b6194b2ae50046088a42d66358}{title}} = models.\+Char\+Field(max\+\_\+length=128)
+\item 
+\mbox{\hyperlink{classmodels_1_1_contest_aaee6d2ce77374fa8815c6c56ffdf0ade}{blog}} = models.\+Foreign\+Key(\mbox{\hyperlink{classmodels_1_1_blog}{Blog}}, models.\+D\+O\+\_\+\+N\+O\+T\+H\+I\+NG, blank=True, null=True)
+\item 
+\mbox{\hyperlink{classmodels_1_1_contest_a800d0efe677cff87e56c8e621a9a5405}{patricipant\+\_\+count}} = models.\+Big\+Integer\+Field(blank=True, null=True)
+\item 
+\mbox{\hyperlink{classmodels_1_1_contest_a9f52e05ec09f1d2cd2bc014ae6b8b83d}{desc}} = models.\+Text\+Field(blank=True, null=True)
+\item 
+\mbox{\hyperlink{classmodels_1_1_contest_ac8d12f4972cb5dc6a7a328465cac6e8b}{isrunning}} = models.\+Boolean\+Field(db\+\_\+column=\textquotesingle{}is\+Running\textquotesingle{}, blank=True, null=True)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{classmodels_1_1_contest_aaee6d2ce77374fa8815c6c56ffdf0ade}\label{classmodels_1_1_contest_aaee6d2ce77374fa8815c6c56ffdf0ade}} 
+\index{models.Contest@{models.Contest}!blog@{blog}}
+\index{blog@{blog}!models.Contest@{models.Contest}}
+\doxysubsubsection{\texorpdfstring{blog}{blog}}
+{\footnotesize\ttfamily models.\+Contest.\+blog = models.\+Foreign\+Key(\mbox{\hyperlink{classmodels_1_1_blog}{Blog}}, models.\+D\+O\+\_\+\+N\+O\+T\+H\+I\+NG, blank=True, null=True)\hspace{0.3cm}{\ttfamily [static]}}
+
+\mbox{\Hypertarget{classmodels_1_1_contest_a48f54030cafac079e2bbf4817371afd5}\label{classmodels_1_1_contest_a48f54030cafac079e2bbf4817371afd5}} 
+\index{models.Contest@{models.Contest}!contest\_id@{contest\_id}}
+\index{contest\_id@{contest\_id}!models.Contest@{models.Contest}}
+\doxysubsubsection{\texorpdfstring{contest\_id}{contest\_id}}
+{\footnotesize\ttfamily models.\+Contest.\+contest\+\_\+id = models.\+Big\+Integer\+Field(primary\+\_\+key=True)\hspace{0.3cm}{\ttfamily [static]}}
+
+\mbox{\Hypertarget{classmodels_1_1_contest_a9f52e05ec09f1d2cd2bc014ae6b8b83d}\label{classmodels_1_1_contest_a9f52e05ec09f1d2cd2bc014ae6b8b83d}} 
+\index{models.Contest@{models.Contest}!desc@{desc}}
+\index{desc@{desc}!models.Contest@{models.Contest}}
+\doxysubsubsection{\texorpdfstring{desc}{desc}}
+{\footnotesize\ttfamily models.\+Contest.\+desc = models.\+Text\+Field(blank=True, null=True)\hspace{0.3cm}{\ttfamily [static]}}
+
+\mbox{\Hypertarget{classmodels_1_1_contest_ac8d12f4972cb5dc6a7a328465cac6e8b}\label{classmodels_1_1_contest_ac8d12f4972cb5dc6a7a328465cac6e8b}} 
+\index{models.Contest@{models.Contest}!isrunning@{isrunning}}
+\index{isrunning@{isrunning}!models.Contest@{models.Contest}}
+\doxysubsubsection{\texorpdfstring{isrunning}{isrunning}}
+{\footnotesize\ttfamily models.\+Contest.\+isrunning = models.\+Boolean\+Field(db\+\_\+column=\textquotesingle{}is\+Running\textquotesingle{}, blank=True, null=True)\hspace{0.3cm}{\ttfamily [static]}}
+
+\mbox{\Hypertarget{classmodels_1_1_contest_a800d0efe677cff87e56c8e621a9a5405}\label{classmodels_1_1_contest_a800d0efe677cff87e56c8e621a9a5405}} 
+\index{models.Contest@{models.Contest}!patricipant\_count@{patricipant\_count}}
+\index{patricipant\_count@{patricipant\_count}!models.Contest@{models.Contest}}
+\doxysubsubsection{\texorpdfstring{patricipant\_count}{patricipant\_count}}
+{\footnotesize\ttfamily models.\+Contest.\+patricipant\+\_\+count = models.\+Big\+Integer\+Field(blank=True, null=True)\hspace{0.3cm}{\ttfamily [static]}}
+
+\mbox{\Hypertarget{classmodels_1_1_contest_aeb3082b6194b2ae50046088a42d66358}\label{classmodels_1_1_contest_aeb3082b6194b2ae50046088a42d66358}} 
+\index{models.Contest@{models.Contest}!title@{title}}
+\index{title@{title}!models.Contest@{models.Contest}}
+\doxysubsubsection{\texorpdfstring{title}{title}}
+{\footnotesize\ttfamily models.\+Contest.\+title = models.\+Char\+Field(max\+\_\+length=128)\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{models_8py}{models.\+py}}\end{DoxyCompactItemize}

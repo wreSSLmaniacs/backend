@@ -1,0 +1,104 @@
+\hypertarget{classmodels_1_1_submissions}{}\doxysection{models.\+Submissions Class Reference}
+\label{classmodels_1_1_submissions}\index{models.Submissions@{models.Submissions}}
+Inheritance diagram for models.\+Submissions\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classmodels_1_1_submissions}
+\end{center}
+\end{figure}
+\doxysubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{classmodels_1_1_submissions_1_1_meta}{Meta}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Static Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classmodels_1_1_submissions_aac4463e7898f2f511b4c052e0fb211d6}{submission\+\_\+id}} = models.\+Big\+Integer\+Field(primary\+\_\+key=True)
+\item 
+\mbox{\hyperlink{classmodels_1_1_submissions_a207bb19b658300c02ace8a45374709ea}{problem}} = models.\+Foreign\+Key(\mbox{\hyperlink{classmodels_1_1_problems}{Problems}}, models.\+D\+O\+\_\+\+N\+O\+T\+H\+I\+NG)
+\item 
+\mbox{\hyperlink{classmodels_1_1_submissions_a1df439c8df4eba3e4aab1be16aa19acc}{user}} = models.\+Foreign\+Key(\mbox{\hyperlink{classmodels_1_1_rated_users}{Rated\+Users}}, models.\+D\+O\+\_\+\+N\+O\+T\+H\+I\+NG)
+\item 
+\mbox{\hyperlink{classmodels_1_1_submissions_a65d16df2a1a8c42fd8bc5e23cb0d8077}{code}} = models.\+Text\+Field()
+\item 
+\mbox{\hyperlink{classmodels_1_1_submissions_ad653e54f47804151f50ff1b9b5cd0e8f}{language}} = models.\+Char\+Field(max\+\_\+length=16)
+\item 
+\mbox{\hyperlink{classmodels_1_1_submissions_af3662ce606441ee8c7f417309f63a0c1}{verdict}} = models.\+Char\+Field(max\+\_\+length=16)
+\item 
+\mbox{\hyperlink{classmodels_1_1_submissions_a802ee02526b99b2a5d7cd886ec836d0a}{score}} = models.\+Integer\+Field()
+\item 
+\mbox{\hyperlink{classmodels_1_1_submissions_aa8dab1736caef3f474fb63019ff9037b}{time\+\_\+of\+\_\+submission}} = models.\+Date\+Time\+Field()
+\item 
+\mbox{\hyperlink{classmodels_1_1_submissions_ab4437c6cbcd8740201c033e079d8854c}{contest\+\_\+submission}} = models.\+Boolean\+Field()
+\item 
+\mbox{\hyperlink{classmodels_1_1_submissions_a5eac421335fb80923a508bf9ec193566}{contest}} = models.\+Foreign\+Key(\mbox{\hyperlink{classmodels_1_1_contest_user}{Contest\+User}}, models.\+D\+O\+\_\+\+N\+O\+T\+H\+I\+NG, blank=True, null=True)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{classmodels_1_1_submissions_a65d16df2a1a8c42fd8bc5e23cb0d8077}\label{classmodels_1_1_submissions_a65d16df2a1a8c42fd8bc5e23cb0d8077}} 
+\index{models.Submissions@{models.Submissions}!code@{code}}
+\index{code@{code}!models.Submissions@{models.Submissions}}
+\doxysubsubsection{\texorpdfstring{code}{code}}
+{\footnotesize\ttfamily models.\+Submissions.\+code = models.\+Text\+Field()\hspace{0.3cm}{\ttfamily [static]}}
+
+\mbox{\Hypertarget{classmodels_1_1_submissions_a5eac421335fb80923a508bf9ec193566}\label{classmodels_1_1_submissions_a5eac421335fb80923a508bf9ec193566}} 
+\index{models.Submissions@{models.Submissions}!contest@{contest}}
+\index{contest@{contest}!models.Submissions@{models.Submissions}}
+\doxysubsubsection{\texorpdfstring{contest}{contest}}
+{\footnotesize\ttfamily models.\+Submissions.\+contest = models.\+Foreign\+Key(\mbox{\hyperlink{classmodels_1_1_contest_user}{Contest\+User}}, models.\+D\+O\+\_\+\+N\+O\+T\+H\+I\+NG, blank=True, null=True)\hspace{0.3cm}{\ttfamily [static]}}
+
+\mbox{\Hypertarget{classmodels_1_1_submissions_ab4437c6cbcd8740201c033e079d8854c}\label{classmodels_1_1_submissions_ab4437c6cbcd8740201c033e079d8854c}} 
+\index{models.Submissions@{models.Submissions}!contest\_submission@{contest\_submission}}
+\index{contest\_submission@{contest\_submission}!models.Submissions@{models.Submissions}}
+\doxysubsubsection{\texorpdfstring{contest\_submission}{contest\_submission}}
+{\footnotesize\ttfamily models.\+Submissions.\+contest\+\_\+submission = models.\+Boolean\+Field()\hspace{0.3cm}{\ttfamily [static]}}
+
+\mbox{\Hypertarget{classmodels_1_1_submissions_ad653e54f47804151f50ff1b9b5cd0e8f}\label{classmodels_1_1_submissions_ad653e54f47804151f50ff1b9b5cd0e8f}} 
+\index{models.Submissions@{models.Submissions}!language@{language}}
+\index{language@{language}!models.Submissions@{models.Submissions}}
+\doxysubsubsection{\texorpdfstring{language}{language}}
+{\footnotesize\ttfamily models.\+Submissions.\+language = models.\+Char\+Field(max\+\_\+length=16)\hspace{0.3cm}{\ttfamily [static]}}
+
+\mbox{\Hypertarget{classmodels_1_1_submissions_a207bb19b658300c02ace8a45374709ea}\label{classmodels_1_1_submissions_a207bb19b658300c02ace8a45374709ea}} 
+\index{models.Submissions@{models.Submissions}!problem@{problem}}
+\index{problem@{problem}!models.Submissions@{models.Submissions}}
+\doxysubsubsection{\texorpdfstring{problem}{problem}}
+{\footnotesize\ttfamily models.\+Submissions.\+problem = models.\+Foreign\+Key(\mbox{\hyperlink{classmodels_1_1_problems}{Problems}}, models.\+D\+O\+\_\+\+N\+O\+T\+H\+I\+NG)\hspace{0.3cm}{\ttfamily [static]}}
+
+\mbox{\Hypertarget{classmodels_1_1_submissions_a802ee02526b99b2a5d7cd886ec836d0a}\label{classmodels_1_1_submissions_a802ee02526b99b2a5d7cd886ec836d0a}} 
+\index{models.Submissions@{models.Submissions}!score@{score}}
+\index{score@{score}!models.Submissions@{models.Submissions}}
+\doxysubsubsection{\texorpdfstring{score}{score}}
+{\footnotesize\ttfamily models.\+Submissions.\+score = models.\+Integer\+Field()\hspace{0.3cm}{\ttfamily [static]}}
+
+\mbox{\Hypertarget{classmodels_1_1_submissions_aac4463e7898f2f511b4c052e0fb211d6}\label{classmodels_1_1_submissions_aac4463e7898f2f511b4c052e0fb211d6}} 
+\index{models.Submissions@{models.Submissions}!submission\_id@{submission\_id}}
+\index{submission\_id@{submission\_id}!models.Submissions@{models.Submissions}}
+\doxysubsubsection{\texorpdfstring{submission\_id}{submission\_id}}
+{\footnotesize\ttfamily models.\+Submissions.\+submission\+\_\+id = models.\+Big\+Integer\+Field(primary\+\_\+key=True)\hspace{0.3cm}{\ttfamily [static]}}
+
+\mbox{\Hypertarget{classmodels_1_1_submissions_aa8dab1736caef3f474fb63019ff9037b}\label{classmodels_1_1_submissions_aa8dab1736caef3f474fb63019ff9037b}} 
+\index{models.Submissions@{models.Submissions}!time\_of\_submission@{time\_of\_submission}}
+\index{time\_of\_submission@{time\_of\_submission}!models.Submissions@{models.Submissions}}
+\doxysubsubsection{\texorpdfstring{time\_of\_submission}{time\_of\_submission}}
+{\footnotesize\ttfamily models.\+Submissions.\+time\+\_\+of\+\_\+submission = models.\+Date\+Time\+Field()\hspace{0.3cm}{\ttfamily [static]}}
+
+\mbox{\Hypertarget{classmodels_1_1_submissions_a1df439c8df4eba3e4aab1be16aa19acc}\label{classmodels_1_1_submissions_a1df439c8df4eba3e4aab1be16aa19acc}} 
+\index{models.Submissions@{models.Submissions}!user@{user}}
+\index{user@{user}!models.Submissions@{models.Submissions}}
+\doxysubsubsection{\texorpdfstring{user}{user}}
+{\footnotesize\ttfamily models.\+Submissions.\+user = models.\+Foreign\+Key(\mbox{\hyperlink{classmodels_1_1_rated_users}{Rated\+Users}}, models.\+D\+O\+\_\+\+N\+O\+T\+H\+I\+NG)\hspace{0.3cm}{\ttfamily [static]}}
+
+\mbox{\Hypertarget{classmodels_1_1_submissions_af3662ce606441ee8c7f417309f63a0c1}\label{classmodels_1_1_submissions_af3662ce606441ee8c7f417309f63a0c1}} 
+\index{models.Submissions@{models.Submissions}!verdict@{verdict}}
+\index{verdict@{verdict}!models.Submissions@{models.Submissions}}
+\doxysubsubsection{\texorpdfstring{verdict}{verdict}}
+{\footnotesize\ttfamily models.\+Submissions.\+verdict = models.\+Char\+Field(max\+\_\+length=16)\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{models_8py}{models.\+py}}\end{DoxyCompactItemize}
