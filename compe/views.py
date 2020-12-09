@@ -18,7 +18,7 @@ from datetime import date, datetime, timezone
 def pointsfromtime(t1,t2,t3):
     total = t3 - t1
     elapsed = t2-t1
-    return int(500*total.total_seconds()/elapsed.total_seconds())
+    return int(1000-500*elapsed.total_seconds()/total.total_seconds())
 
 # Create your views here.
 
@@ -83,6 +83,11 @@ def getcontest(request,id):
             contest = Contest.objects.get(id=id)
         except:
             return JsonResponse("error", status=HTTP_404_NOT_FOUND)
+        if contest.starttime>datetime.now(timezone.utc):
+            return JsonResponse({
+                "title" : "How to Punish Oversmart People",
+                "problem": "Attempt the problem when the time comes ye dumb dumb"
+            })
         serializer = InfoSerializer(contest)
         return JsonResponse(serializer.data, safe=False)
 
@@ -117,7 +122,7 @@ def runcode(request,id):
             if os.system('g++ -std=c++17 ./codes/temp/{}/code.cpp -o ./codes/temp/{}/exec'.format(user,user)):
                 os.system('rm -rf ./codes/temp/{}'.format(user))
                 return JsonResponse("Compilation Error", safe=False)
-            os.system('./codes/temp/{}/exec < ./codes/temp/{}/in.txt > ./codes/temp/{}/myout.txt'.format(user,user,user))
+            os.system('./codes/timeout -m 256000 -t 3500 ./codes/temp/{}/exec < ./codes/temp/{}/in.txt > ./codes/temp/{}/myout.txt'.format(user,user,user))
             if os.system('cmp ./codes/temp/{}/out.txt ./codes/temp/{}/myout.txt'.format(user,user)):
                 check=False
 
@@ -128,7 +133,7 @@ def runcode(request,id):
             c.close()
             os.system('cp {} ./codes/temp/{}/in.txt'.format(contest.input.path,user))
             os.system('cp {} ./codes/temp/{}/out.txt'.format(contest.output.path,user))
-            if os.system('python3 ./codes/temp/{}/code.py < ./codes/temp/{}/in.txt > ./codes/temp/{}/myout.txt'.format(user,user,user)):
+            if os.system('./codes/timeout -m 256000 -t 3500 python3 ./codes/temp/{}/code.py < ./codes/temp/{}/in.txt > ./codes/temp/{}/myout.txt'.format(user,user,user)):
                 os.system('rm -rf ./codes/temp/{}'.format(user))
                 return JsonResponse("Compilation Error", safe=False)
             if os.system('cmp ./codes/temp/{}/out.txt ./codes/temp/{}/myout.txt'.format(user,user)):
@@ -141,7 +146,7 @@ def runcode(request,id):
             c.close()
             os.system('cp {} ./codes/temp/{}/in.txt'.format(contest.input.path,user))
             os.system('cp {} ./codes/temp/{}/out.txt'.format(contest.output.path,user))
-            if os.system('ruby ./codes/temp/{}/code.rb < ./codes/temp/{}/in.txt > ./codes/temp/{}/myout.txt'.format(user,user,user)):
+            if os.system('./codes/timeout -m 256000 -t 3500 ruby ./codes/temp/{}/code.rb < ./codes/temp/{}/in.txt > ./codes/temp/{}/myout.txt'.format(user,user,user)):
                 os.system('rm -rf ./codes/temp/{}'.format(user))
                 return JsonResponse("Compilation Error", safe=False)
             if os.system('cmp ./codes/temp/{}/out.txt ./codes/temp/{}/myout.txt'.format(user,user)):
@@ -196,7 +201,7 @@ def runfile(request,id):
             if os.system('g++ -std=c++17 ./codes/temp/{}/code.cpp -o ./codes/temp/{}/exec'.format(user,user)):
                 os.system('rm -rf ./codes/temp/{}'.format(user))
                 return JsonResponse("Compilation Error", safe=False)
-            os.system('./codes/temp/{}/exec < ./codes/temp/{}/in.txt > ./codes/temp/{}/myout.txt'.format(user,user,user))
+            os.system('./codes/timeout -m 256000 -t 3500 ./codes/temp/{}/exec < ./codes/temp/{}/in.txt > ./codes/temp/{}/myout.txt'.format(user,user,user))
             if os.system('cmp ./codes/temp/{}/out.txt ./codes/temp/{}/myout.txt'.format(user,user)):
                 check=False
 
@@ -205,7 +210,7 @@ def runfile(request,id):
             fs.save("code.py", code)
             os.system('cp {} ./codes/temp/{}/in.txt'.format(contest.input.path,user))
             os.system('cp {} ./codes/temp/{}/out.txt'.format(contest.output.path,user))
-            if os.system('python3 ./codes/temp/{}/code.py < ./codes/temp/{}/in.txt > ./codes/temp/{}/myout.txt'.format(user,user,user)):
+            if os.system('./codes/timeout -m 256000 -t 3500 python3 ./codes/temp/{}/code.py < ./codes/temp/{}/in.txt > ./codes/temp/{}/myout.txt'.format(user,user,user)):
                 os.system('rm -rf ./codes/temp/{}'.format(user))
                 return JsonResponse("Compilation Error", safe=False)
             if os.system('cmp ./codes/temp/{}/out.txt ./codes/temp/{}/myout.txt'.format(user,user)):
@@ -216,7 +221,7 @@ def runfile(request,id):
             fs.save("code.rb", code)
             os.system('cp {} ./codes/temp/{}/in.txt'.format(contest.input.path,user))
             os.system('cp {} ./codes/temp/{}/out.txt'.format(contest.output.path,user))
-            if os.system('ruby ./codes/temp/{}/code.rb < ./codes/temp/{}/in.txt > ./codes/temp/{}/myout.txt'.format(user,user,user)):
+            if os.system('./codes/timeout -m 256000 -t 3500 ruby ./codes/temp/{}/code.rb < ./codes/temp/{}/in.txt > ./codes/temp/{}/myout.txt'.format(user,user,user)):
                 os.system('rm -rf ./codes/temp/{}'.format(user))
                 return JsonResponse("Compilation Error", safe=False)
             if os.system('cmp ./codes/temp/{}/out.txt ./codes/temp/{}/myout.txt'.format(user,user)):
