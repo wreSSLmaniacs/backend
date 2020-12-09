@@ -71,7 +71,7 @@ def compile(request, username, dirk):
 	    g.close()
 
 	    os.system('docker run --name cppbox -v "$(pwd)"/codes/{}/:/code --rm -t -d cppenv'.format(filepath))    # This will start a container
-	    val = os.system('docker exec cppbox /bin/sh -c "g++ -std=c++14 code_temp.cpp > log 2>&1; ./a.out < in.txt > out.txt 2>&1"')       # This will execute our commands (inside container)
+	    val = os.system('docker exec cppbox /bin/sh -c "g++ -std=c++14 code_temp.cpp > log 2>&1;timeout 5 ./a.out < in.txt > out.txt 2>&1"')       # This will execute our commands (inside container)
 	    
 	    os.system('docker stop cppbox')
 	    f = open("./codes/{}/log".format(filepath), "r")
@@ -95,7 +95,7 @@ def compile(request, username, dirk):
 	    g.close()
 	    
 	    os.system('docker run --name pybox -v "$(pwd)"/codes/{}/:/code --rm -t -d pyenv'.format(filepath))    # This will start a container
-	    val = os.system('docker exec pybox /bin/sh -c "python3 code_temp.py < in.txt > out.txt 2>&1"')       # This will execute our commands (inside container)
+	    val = os.system('docker exec pybox /bin/sh -c "timeout 5 python3 code_temp.py < in.txt > out.txt 2>&1"')       # This will execute our commands (inside container)
 	    
 	    os.system('docker stop pybox')
 	    f = open("./codes/{}/out.txt".format(filepath), "r")
@@ -111,7 +111,7 @@ def compile(request, username, dirk):
 	    g.close()
 	    
 	    os.system('docker run --name rubybox -v "$(pwd)"/codes/{}/:/code --rm -t -d rubyenv'.format(filepath))    # This will start a container
-	    val = os.system('docker exec rubybox /bin/sh -c "ruby code_temp.rb < in.txt > out.txt 2>&1"')       # This will execute our commands (inside container)
+	    val = os.system('docker exec rubybox /bin/sh -c "timeout 5 ruby code_temp.rb < in.txt > out.txt 2>&1"')       # This will execute our commands (inside container)
 	    
 	    os.system('docker stop rubybox')
 	    f = open("./codes/{}/out.txt".format(filepath), "r")
