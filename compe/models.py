@@ -24,8 +24,8 @@ class Contest(models.Model):
 
 class PointsTable(models.Model):
     """Stores one entry per user : Total Points"""
-	id = models.AutoField(primary_key=True)
-	username = models.CharField(max_length=64,blank=False,null=False)
+    id = models.AutoField(primary_key=True)
+    username = models.CharField(max_length=64,blank=False,null=False)
 	points = models.IntegerField(blank=False,null=False)
 
 class ContestUser(models.Model):

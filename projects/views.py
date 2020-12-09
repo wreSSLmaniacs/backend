@@ -92,7 +92,13 @@ def compile(request, username, dirk):
 	f = open('./codes/{}/in.txt'.format(filepath),'w')
 	f.write(inp)
 	f.close()
-
+    """
+    Docker support for each language.
+    For each language a container is created in the directory of the user with the help of pre-built images.
+    If there is an existing container we remove the container.
+    After creation we execute the container and create a bash shell in the container and run the command.
+    After execution of the code the container is stopped.
+    """
 	if language == 'c_cpp':
         '''C++ 14 compilation: Environment isolation using docker container. Exceptions handled for compilation and runtime errors. Returns output if no error otherwise returns the error.'''
 	    g = open('./codes/{}/code_temp.cpp'.format(filepath),'w')
