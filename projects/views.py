@@ -66,7 +66,14 @@ def compile(request, username, dirk):
         NULL possible
 
     Compiles relevant code inside a docker container
+
+    Docker support for each language.
+    For each language a container is created in the directory of the user with the help of pre-built images.
+    If there is an existing container we remove the container.
+    After creation we execute the container and execute the script using the '-c' flag in the container and run the command.
+    After execution of the code the container is stopped and deleted (-rm flag).
     '''
+
     if dirk=="":
 		dirk="."
 	
@@ -92,15 +99,7 @@ def compile(request, username, dirk):
 	f = open('./codes/{}/in.txt'.format(filepath),'w')
 	f.write(inp)
 	f.close()
-    """
-    Docker support for each language.
-    For each language a container is created in the directory of the user with the help of pre-built images.
-    If there is an existing container we remove the container.
-    After creation we execute the container and create a bash shell in the container and run the command.
-    After execution of the code the container is stopped.
-    """
 	if language == 'c_cpp':
-        '''C++ 14 compilation: Environment isolation using docker container. Exceptions handled for compilation and runtime errors. Returns output if no error otherwise returns the error.'''
 	    g = open('./codes/{}/code_temp.cpp'.format(filepath),'w')
 	    g.write(script)
 	    g.close()
@@ -124,7 +123,6 @@ def compile(request, username, dirk):
 	        return JsonResponse({'success': False, 'output': ['Unexpected Error: \n'.format(log)]})
 
 	elif language == 'python':
-        '''Python 3.8.5 compilation: Environment isolation using docker container. Exceptions handled for compilation errors. Returns output if no error otherwise returns the error.'''
 	    g = open('./codes/{}/code_temp.py'.format(filepath),'w')
 	    g.write(script)
 	    g.close()
@@ -141,7 +139,6 @@ def compile(request, username, dirk):
 	        return JsonResponse({'success': False, 'output': ['Compilation Error:\n {}'.format(log)]})
 
 	elif language == 'ruby':
-        '''Ruby 2.7.0 compilation: Environment isolation using docker container. Exceptions handled for compilation errors. Returns output if no error otherwise returns the error.'''
 	    g = open('./codes/{}/code_temp.rb'.format(filepath),'w')
 	    g.write(script)
 	    g.close()
