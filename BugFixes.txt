@@ -1,0 +1,4 @@
+Bug Fixes:
+1. Updated points system from hyperbolic to linear
+2. Check if user is accessing future contests via url
+3. Add timeout script in executation for time limit
