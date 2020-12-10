@@ -17,8 +17,12 @@ from rest_framework.authentication import TokenAuthentication
 # Create your views here.
 @api_view(['GET', 'PUT'])
 @authentication_classes([TokenAuthentication])
-def userList(request):
-    '''Returns list of all the registered users'''
+def userList(request):    
+    '''
+    Requests: GET, PUT
+
+    Returns list of all the registered users
+    '''
     if request.method == 'GET':
         obj = Users.objects.all()
         title = request.GET.get('title', None)
@@ -30,7 +34,13 @@ def userList(request):
 @api_view(['GET', 'PUT'])
 @authentication_classes([TokenAuthentication])
 def userDetail(request, pk):
-    '''Returns details of the user, given userid (primary key)'''
+    '''
+    Requests: GET 
+
+    Input: userid (primary key)
+
+    Return: details of the user
+    '''
     if request.method == 'GET':
         try:
             obj = Users.objects.get(pk=pk)
@@ -42,7 +52,13 @@ def userDetail(request, pk):
 
 @api_view(['POST'])
 def userpk(request):
-    '''Returns details of the user, given username'''
+    '''
+    Requests: POST
+
+    Input: username
+
+    Return: details of the user
+    '''
     if request.method == 'POST':
         try:
             uname = request.data.get('username')
@@ -57,7 +73,18 @@ def userpk(request):
 @api_view(['POST'])
 @authentication_classes([TokenAuthentication])
 def registerUser(request):
-    '''Register a new user. Exception handling for invalid user details or already existing user'''
+    '''
+    Input:  username (not null)
+            password (not null)
+            email
+            image (url)
+            first_name
+            last_name
+
+    Register a new user. Exception handling for invalid user details or already existing user
+    
+    Return: Details of the user added
+    '''
     if request.method == 'POST':
         username = request.data.get('username')
         password = request.data.get('password')
@@ -102,7 +129,15 @@ def registerUser(request):
 @api_view(['POST'])
 @authentication_classes([TokenAuthentication])
 def login_user(request):
-    '''Login user with the given credentials, exceptions handling for invalid credentials'''
+    '''
+    Input:  username (not null)
+            password (not null)
+
+    Login user with the given credentials, exceptions handling for invalid credentials
+    
+    Return: seccess token
+    '''
+
     username = request.data.get("username")
     password = request.data.get("password")
     
@@ -123,7 +158,13 @@ def login_user(request):
     return JsonResponse({'error': ['Invalid User']}, status=HTTP_404_NOT_FOUND)
 
 class image(APIView):
-    '''File upload API. Multipart parser is used to parse the uploaded file and generate an url after storing it to the assigned directory'''
+    '''
+    Input: Multipart file (image here)
+    
+    File upload API. Multipart parser is used to parse the uploaded file and generate an url after storing it to the assigned directory
+
+    Return: Generated link to the file
+    '''
     parser_class = [FileUploadParser, DjangoMultiPartParser, MultiPartParser]
     
     def post(self, request, format=None):
