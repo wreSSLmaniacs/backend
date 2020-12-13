@@ -132,6 +132,8 @@ Input Constraints:
 username - Format: [a-zA-Z0-9]+, not NULL 
 dirk - Format: [a-zA-Z0-9/_ ]+, NULL possible
 
+Returns success token and output of code
+
 Compiles relevant code inside a docker container
 
 Docker support for each language.
@@ -212,6 +214,8 @@ After execution of the code the container is stopped and deleted (-rm flag).
 
 Requests - GET, DELETE
 
+Returns filename and content of file
+
 Input Constraints: 
 username - Format: [a-zA-Z0-9]+, not NULL 
 dirk - Format: [a-zA-Z0-9/_ ]+, NULL possible
@@ -254,6 +258,11 @@ file - Format: [a-zA-Z0-9_ ]+.[a-zA-Z0-9_ ]+, not NULL
 
 Requests - GET, POST, DELETE
 
+Returns: 
+GET - List of files with filecontent and folders in immediate subdirectory
+POST - Reqest data of file
+DELETE - Success Token
+
 Input Constraints: 
 username - Format: [a-zA-Z0-9]+, not NULL 
 dirk - Format: [a-zA-Z0-9/_ ]+, NULL possible
@@ -294,6 +303,8 @@ dirk - Format: [a-zA-Z0-9/_ ]+, NULL possible
 <pre class="fragment">Method created to rename input file or folder and update information in database
 
 Requests - POST
+
+Returns request data
 
 Input Constraints: 
 username - Format: [a-zA-Z0-9]+, not NULL 

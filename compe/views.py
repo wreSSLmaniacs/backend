@@ -30,7 +30,12 @@ def pointsfromtime(t1,t2,t3):
 @api_view(['GET'])
 @authentication_classes([TokenAuthentication])
 def runboard(request):
-    """View queries the Contests table for contests running at time of request"""
+    """View queries the Contests table for contests running at time of request
+
+    Requests - GET
+
+    Returns list of contests which are currently running
+    """
     if request.method=='GET':
         try:
             ## __lte and __gte methods filter the correct contests
@@ -43,7 +48,12 @@ def runboard(request):
 @api_view(['GET'])
 @authentication_classes([TokenAuthentication])
 def upboard(request):
-    """View queries the Contests table for contests yet to start at time of request"""
+    """View queries the Contests table for contests yet to start at time of request
+
+    Requests - GET
+
+    Returns list of upcoming contests
+    """
     if request.method=='GET':
         try:
             contests = Contest.objects.filter(starttime__gte = datetime.now(timezone.utc))
@@ -55,7 +65,12 @@ def upboard(request):
 @api_view(['GET'])
 @authentication_classes([TokenAuthentication])
 def pastboard(request):
-    """View queries the Contests table for contests which are over at time of request"""
+    """View queries the Contests table for contests which are over at time of request
+
+    Requests - GET
+
+    Returns list of past contests
+    """
     if request.method=='GET':
         try:
             contests = Contest.objects.filter(endtime__lte = datetime.now(timezone.utc))
@@ -67,7 +82,12 @@ def pastboard(request):
 @api_view(['POST'])
 @authentication_classes([TokenAuthentication])
 def newcontest(request):
-    """View accepts new competitions into the Contests table"""
+    """View accepts new competitions into the Contests table
+
+    Request - POST
+
+    Returns success token
+    """
     if request.method=='POST':
         title = request.data.get('title')
         problem = request.data.get('problem_st')
@@ -88,7 +108,14 @@ def newcontest(request):
 @api_view(['GET'])
 @authentication_classes([TokenAuthentication])
 def getcontest(request,id):
-    """View to query the contest table by contest ID"""
+    """View to query the contest table by contest ID
+
+    Request - GET
+
+    Returns detauls of contest with given contest id
+
+    Input Constaints:
+    id - integer representing contest id"""
     if request.method=='GET':
         try:
             contest = Contest.objects.get(id=id)
@@ -106,7 +133,14 @@ def getcontest(request,id):
 @api_view(['POST'])
 @authentication_classes([TokenAuthentication])
 def runcode(request,id):
-    """View receives code as a string through the editor and runs it, update points on a first successful submission"""
+    """View receives code as a string through the editor and runs it, update points on a first successful submission
+
+    Request - POST
+
+    Returns status of code - error, incorrect or successful
+
+    Input Constaints:
+    id - integer representing contest id"""
     if request.method=='POST':
         
         user = request.data.get('username')
@@ -195,7 +229,14 @@ def runcode(request,id):
 @api_view(['POST'])
 @authentication_classes([TokenAuthentication])
 def runfile(request,id):
-    """View receives file and language, runs it, update points on a first successful submission"""
+    """View receives file and language, runs it, update points on a first successful submission
+
+    Request - POST
+
+    Returns status of submitted file - error, incorrect or successful
+
+    Input Constaints:
+    id - integer representing contest id"""
     if request.method=='POST':
         
         user = request.data.get('username')
@@ -281,7 +322,14 @@ def runfile(request,id):
 @api_view(['GET'])
 @authentication_classes([TokenAuthentication])
 def getpoints(request,user):
-    """View to query for points of a user, when non existent, it creates an entry with 0 points. Used by the profile page."""
+    """View to query for points of a user, when non existent, it creates an entry with 0 points. Used by the profile page.
+
+    Request - GET
+
+    Returns total points of a user
+
+    Input Constaints:
+    user - alphanumeric string for username"""
     if request.method=='GET':
         try:
             ptable = PointsTable.objects.get(username=user)
@@ -293,7 +341,14 @@ def getpoints(request,user):
 @api_view(['GET'])
 @authentication_classes([TokenAuthentication])
 def isrunning(request,id):
-    """A lightweight view to check if a contest is running, used by the lifecycle hook on a contest's main page."""
+    """A lightweight view to check if a contest is running, used by the lifecycle hook on a contest's main page.
+
+    Request - GET
+
+    Returns success token
+
+    Input Constaints:
+    id - integer representing contest id"""
     if request.method=='GET':
         try:
             contest = Contest.objects.get(id=id)
@@ -307,7 +362,15 @@ def isrunning(request,id):
 @api_view(['GET'])
 @authentication_classes([TokenAuthentication])
 def passedpoints(request,user,id):
-    """A lightweight view to query a user's points in a particular contest. Used by the contest and pastcontest pages."""
+    """A lightweight view to query a user's points in a particular contest. Used by the contest and pastcontest pages.
+
+    Request - GET
+
+    Returns points scored in given contest
+
+    Input Constaints:
+    id - integer representing contest id
+    user - alphanumeric string for username"""
     if request.method=='GET':
         try:
             contest = Contest.objects.get(id=id)

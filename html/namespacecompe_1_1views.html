@@ -71,6 +71,9 @@ $(function() {
 <div class="title">compe.views Namespace Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p>All classes authenticated with Token Authentication provided by Django REST Framework TokenAuth.  
+<a href="namespacecompe_1_1views.html#details">More...</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
@@ -78,7 +81,6 @@ Functions</h2></td></tr>
 <tr class="memdesc:a29dfe0b4731f69d192d2da5395e2b33c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Point Evaluator, currently hyperbolic, we plan to change this to a Gompertz function in a patch.  <a href="namespacecompe_1_1views.html#a29dfe0b4731f69d192d2da5395e2b33c">More...</a><br /></td></tr>
 <tr class="separator:a29dfe0b4731f69d192d2da5395e2b33c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac5d25de391425d58ff00543a884157b3"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacecompe_1_1views.html#ac5d25de391425d58ff00543a884157b3">runboard</a> (request)</td></tr>
-<tr class="memdesc:ac5d25de391425d58ff00543a884157b3"><td class="mdescLeft">&#160;</td><td class="mdescRight">All classes authenticated with Token Authentication provided by Django REST Framework TokenAuth.  <a href="namespacecompe_1_1views.html#ac5d25de391425d58ff00543a884157b3">More...</a><br /></td></tr>
 <tr class="separator:ac5d25de391425d58ff00543a884157b3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:acc094cd78237186048bd4c84afc1caf1"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacecompe_1_1views.html#acc094cd78237186048bd4c84afc1caf1">upboard</a> (request)</td></tr>
 <tr class="separator:acc094cd78237186048bd4c84afc1caf1"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -99,7 +101,9 @@ Functions</h2></td></tr>
 <tr class="memitem:aa76a47a9644a0399f2c321d358053d82"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacecompe_1_1views.html#aa76a47a9644a0399f2c321d358053d82">passedpoints</a> (request, user, id)</td></tr>
 <tr class="separator:aa76a47a9644a0399f2c321d358053d82"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Function Documentation</h2>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>All classes authenticated with Token Authentication provided by Django REST Framework TokenAuth. </p>
+</div><h2 class="groupheader">Function Documentation</h2>
 <a id="ad7a8c0388c3629182f82e657aaf54fb1"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ad7a8c0388c3629182f82e657aaf54fb1">&#9670;&nbsp;</a></span>getcontest()</h2>
 
@@ -125,7 +129,14 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<pre class="fragment">View to query the contest table by contest ID</pre> 
+<pre class="fragment">View to query the contest table by contest ID
+
+Request - GET
+
+Returns detauls of contest with given contest id
+
+Input Constaints:
+id - integer representing contest id</pre> 
 </div>
 </div>
 <a id="a3c039492cb9b22e772d960932fd2f964"></a>
@@ -153,7 +164,14 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<pre class="fragment">View to query for points of a user, when non existent, it creates an entry with 0 points. Used by the profile page.</pre> 
+<pre class="fragment">View to query for points of a user, when non existent, it creates an entry with 0 points. Used by the profile page.
+
+Request - GET
+
+Returns total points of a user
+
+Input Constaints:
+user - alphanumeric string for username</pre> 
 </div>
 </div>
 <a id="a1c9848e366df9723e4acd3f2afd2f8b4"></a>
@@ -181,7 +199,14 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<pre class="fragment">A lightweight view to check if a contest is running, used by the lifecycle hook on a contest's main page.</pre> 
+<pre class="fragment">A lightweight view to check if a contest is running, used by the lifecycle hook on a contest's main page.
+
+Request - GET
+
+Returns success token
+
+Input Constaints:
+id - integer representing contest id</pre> 
 </div>
 </div>
 <a id="aa335f9680fc08e1277c256201bdd425e"></a>
@@ -199,7 +224,12 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<pre class="fragment">View accepts new competitions into the Contests table</pre> 
+<pre class="fragment">View accepts new competitions into the Contests table
+
+Request - POST
+
+Returns success token
+</pre> 
 </div>
 </div>
 <a id="aa76a47a9644a0399f2c321d358053d82"></a>
@@ -233,7 +263,15 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<pre class="fragment">A lightweight view to query a user's points in a particular contest. Used by the contest and pastcontest pages.</pre> 
+<pre class="fragment">A lightweight view to query a user's points in a particular contest. Used by the contest and pastcontest pages.
+
+Request - GET
+
+Returns points scored in given contest
+
+Input Constaints:
+id - integer representing contest id
+user - alphanumeric string for username</pre> 
 </div>
 </div>
 <a id="ac290a9583f3f221bb9f6c407f813f4fb"></a>
@@ -251,7 +289,12 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<pre class="fragment">View queries the Contests table for contests which are over at time of request</pre> 
+<pre class="fragment">View queries the Contests table for contests which are over at time of request
+
+Requests - GET
+
+Returns list of past contests
+</pre> 
 </div>
 </div>
 <a id="a29dfe0b4731f69d192d2da5395e2b33c"></a>
@@ -305,9 +348,12 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<pre class="fragment">View queries the Contests table for contests running at time of request
 
-<p>All classes authenticated with Token Authentication provided by Django REST Framework TokenAuth. </p>
-<pre class="fragment">View queries the Contests table for contests running at time of request</pre> 
+Requests - GET
+
+Returns list of contests which are currently running
+</pre> 
 </div>
 </div>
 <a id="afadcb734c2201ff735cd7fe5f9640bc3"></a>
@@ -335,7 +381,14 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<pre class="fragment">View receives code as a string through the editor and runs it, update points on a first successful submission</pre> 
+<pre class="fragment">View receives code as a string through the editor and runs it, update points on a first successful submission
+
+Request - POST
+
+Returns status of code - error, incorrect or successful
+
+Input Constaints:
+id - integer representing contest id</pre> 
 </div>
 </div>
 <a id="ad8f07c9fb0ae169f85a7151886061ab2"></a>
@@ -363,7 +416,14 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<pre class="fragment">View receives file and language, runs it, update points on a first successful submission</pre> 
+<pre class="fragment">View receives file and language, runs it, update points on a first successful submission
+
+Request - POST
+
+Returns status of submitted file - error, incorrect or successful
+
+Input Constaints:
+id - integer representing contest id</pre> 
 </div>
 </div>
 <a id="acc094cd78237186048bd4c84afc1caf1"></a>
@@ -381,7 +441,12 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<pre class="fragment">View queries the Contests table for contests yet to start at time of request</pre> 
+<pre class="fragment">View queries the Contests table for contests yet to start at time of request
+
+Requests - GET
+
+Returns list of upcoming contests
+</pre> 
 </div>
 </div>
 </div><!-- contents -->
