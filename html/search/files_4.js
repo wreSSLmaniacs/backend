@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['serializers_2epy_276',['serializers.py',['../compe_2serializers_8py.html',1,'(Global Namespace)'],['../projects_2serializers_8py.html',1,'(Global Namespace)'],['../users_2serializers_8py.html',1,'(Global Namespace)']]],
-  ['settings_2epy_277',['settings.py',['../settings_8py.html',1,'']]]
+  ['requirements_2etxt_240',['requirements.txt',['../requirements_8txt.html',1,'']]],
+  ['run_2ddocker_2etxt_241',['run-docker.txt',['../run-docker_8txt.html',1,'']]]
 ];

@@ -45,7 +45,8 @@ def renameDir(userId, filepath, newPath):
 
 # Create your views here.
 
-## All classes authenticated with Token Authentication provided by Django REST Framework TokenAuth
+## @package projects.views
+# All classes authenticated with Token Authentication provided by Django REST Framework TokenAuth
 
 @api_view(['POST'])
 @authentication_classes([TokenAuthentication])
@@ -53,17 +54,13 @@ def compile(request, username, dirk):
 	'''
     Compiles code (language: c++, python, ruby)
 
-    Input: 
-    username - 
-        Username
-        string type
-        Format: [a-zA-Z0-9]+
-        not NULL 
-    dirk - 
-        Directory Path
-        string type
-        Format: [a-zA-Z0-9/_ ]+
-        NULL possible
+    Requests - POST
+
+    Input Constraints: 
+    username - Format: [a-zA-Z0-9]+, not NULL 
+    dirk - Format: [a-zA-Z0-9/_ ]+, NULL possible
+
+    Returns success token and output of code
 
     Compiles relevant code inside a docker container
 
@@ -176,17 +173,13 @@ def rename(request, username, dirk):
     '''
     Method created to rename input file or folder and update information in database
 
-    Input:
-    username - 
-        Username
-        string type
-        Format: [a-zA-Z0-9]+
-        not NULL 
-    dirk - 
-        Directory Path
-        string type
-        Format: [a-zA-Z0-9/_ ]+
-        NULL possible
+    Requests - POST
+
+    Returns request data
+
+    Input Constraints: 
+    username - Format: [a-zA-Z0-9]+, not NULL 
+    dirk - Format: [a-zA-Z0-9/_ ]+, NULL possible
     '''
     if dirk == "":
         dirk = "."
@@ -224,25 +217,15 @@ def rename(request, username, dirk):
 def display(request, dirk, username, file):
     '''
     Request Operations for a file
-        Get File contents
-        Delete File
+
+    Requests - GET, DELETE
+
+    Returns filename and content of file
     
-    Input:
-    username - 
-        Username
-        string type
-        Format: [a-zA-Z0-9]+
-        not NULL 
-    dirk - 
-        Directory Path
-        string type
-        Format: [a-zA-Z0-9/_ ]+
-        NULL possible
-    file - 
-        Filename 
-        string type 
-        Format: [a-zA-Z0-9_ ]+.[a-zA-Z0-9_ ]+
-        not NULL
+    Input Constraints: 
+    username - Format: [a-zA-Z0-9]+, not NULL 
+    dirk - Format: [a-zA-Z0-9/_ ]+, NULL possible
+    file - Format: [a-zA-Z0-9_ ]+.[a-zA-Z0-9_ ]+, not NULL
     '''
     if dirk == "" or dirk is None:
         dirk = "."
@@ -270,21 +253,17 @@ def display(request, dirk, username, file):
 def displayAll(request, dirk, username):
     '''
     Request Operations for a directory
-        Get list of names of Folders and File in directory
-        Post file inside Folder - add new file or update existing
-        Delete Direcotory
+
+    Requests - GET, POST, DELETE
+
+    Returns: 
+    GET - List of files with filecontent and folders in immediate subdirectory
+    POST - Reqest data of file
+    DELETE - Success Token
     
-    Input:
-    username - 
-        Username
-        string type
-        Format: [a-zA-Z0-9]+
-        not NULL 
-    dirk - 
-        Directory Path
-        string type
-        Format: [a-zA-Z0-9/_ ]+
-        NULL possible
+    Input Constraints: 
+    username - Format: [a-zA-Z0-9]+, not NULL 
+    dirk - Format: [a-zA-Z0-9/_ ]+, NULL possible
     '''
     if dirk == "":
         dirk = "."

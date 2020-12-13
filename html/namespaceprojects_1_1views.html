@@ -71,6 +71,9 @@ $(function() {
 <div class="title">projects.views Namespace Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p>All classes authenticated with Token Authentication provided by Django REST Framework TokenAuth.  
+<a href="namespaceprojects_1_1views.html#details">More...</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
@@ -79,7 +82,6 @@ Functions</h2></td></tr>
 <tr class="memitem:a846febfaa8f90d97cf9ec8f0e205a1e2"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceprojects_1_1views.html#a846febfaa8f90d97cf9ec8f0e205a1e2">renameDir</a> (userId, filepath, newPath)</td></tr>
 <tr class="separator:a846febfaa8f90d97cf9ec8f0e205a1e2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abdb3ee51e4cb3c4db59a74bc1cc908ef"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceprojects_1_1views.html#abdb3ee51e4cb3c4db59a74bc1cc908ef">compile</a> (request, <a class="el" href="api_8txt.html#a86b47cca8d76d7556477b4d5171b15ab">username</a>, dirk)</td></tr>
-<tr class="memdesc:abdb3ee51e4cb3c4db59a74bc1cc908ef"><td class="mdescLeft">&#160;</td><td class="mdescRight">All classes authenticated with Token Authentication provided by Django REST Framework TokenAuth.  <a href="namespaceprojects_1_1views.html#abdb3ee51e4cb3c4db59a74bc1cc908ef">More...</a><br /></td></tr>
 <tr class="separator:abdb3ee51e4cb3c4db59a74bc1cc908ef"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aec3fe936acb92966267026b7f6513fcd"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceprojects_1_1views.html#aec3fe936acb92966267026b7f6513fcd">rename</a> (request, <a class="el" href="api_8txt.html#a86b47cca8d76d7556477b4d5171b15ab">username</a>, dirk)</td></tr>
 <tr class="separator:aec3fe936acb92966267026b7f6513fcd"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -88,7 +90,9 @@ Functions</h2></td></tr>
 <tr class="memitem:adb4d45f191fd14b1e22f1b04a8e9dd85"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceprojects_1_1views.html#adb4d45f191fd14b1e22f1b04a8e9dd85">displayAll</a> (request, dirk, <a class="el" href="api_8txt.html#a86b47cca8d76d7556477b4d5171b15ab">username</a>)</td></tr>
 <tr class="separator:adb4d45f191fd14b1e22f1b04a8e9dd85"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Function Documentation</h2>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>All classes authenticated with Token Authentication provided by Django REST Framework TokenAuth. </p>
+</div><h2 class="groupheader">Function Documentation</h2>
 <a id="abdb3ee51e4cb3c4db59a74bc1cc908ef"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#abdb3ee51e4cb3c4db59a74bc1cc908ef">&#9670;&nbsp;</a></span>compile()</h2>
 
@@ -120,23 +124,21 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>All classes authenticated with Token Authentication provided by Django REST Framework TokenAuth. </p>
 <pre class="fragment">Compiles code (language: c++, python, ruby)
 
-Input: 
-username - 
-    Username
-    string type
-    Format: [a-zA-Z0-9]+
-    not NULL 
-dirk - 
-    Directory Path
-    string type
-    Format: [a-zA-Z0-9/_ ]+
-    NULL possible
+Requests - POST
+
+Input Constraints: 
+username - Format: [a-zA-Z0-9]+, not NULL 
+dirk - Format: [a-zA-Z0-9/_ ]+, NULL possible
 
 Compiles relevant code inside a docker container
+
+Docker support for each language.
+For each language a container is created in the directory of the user with the help of pre-built images.
+If there is an existing container we remove the container.
+After creation we execute the container and execute the script using the '-c' flag in the container and run the command.
+After execution of the code the container is stopped and deleted (-rm flag).
 </pre> 
 </div>
 </div>
@@ -207,25 +209,13 @@ Compiles relevant code inside a docker container
       </table>
 </div><div class="memdoc">
 <pre class="fragment">Request Operations for a file
-    Get File contents
-    Delete File
 
-Input:
-username - 
-    Username
-    string type
-    Format: [a-zA-Z0-9]+
-    not NULL 
-dirk - 
-    Directory Path
-    string type
-    Format: [a-zA-Z0-9/_ ]+
-    NULL possible
-file - 
-    Filename 
-    string type 
-    Format: [a-zA-Z0-9_ ]+.[a-zA-Z0-9_ ]+
-    not NULL
+Requests - GET, DELETE
+
+Input Constraints: 
+username - Format: [a-zA-Z0-9]+, not NULL 
+dirk - Format: [a-zA-Z0-9/_ ]+, NULL possible
+file - Format: [a-zA-Z0-9_ ]+.[a-zA-Z0-9_ ]+, not NULL
 </pre> 
 </div>
 </div>
@@ -261,21 +251,12 @@ file -
       </table>
 </div><div class="memdoc">
 <pre class="fragment">Request Operations for a directory
-    Get list of names of Folders and File in directory
-    Post file inside Folder - add new file or update existing
-    Delete Direcotory
 
-Input:
-username - 
-    Username
-    string type
-    Format: [a-zA-Z0-9]+
-    not NULL 
-dirk - 
-    Directory Path
-    string type
-    Format: [a-zA-Z0-9/_ ]+
-    NULL possible
+Requests - GET, POST, DELETE
+
+Input Constraints: 
+username - Format: [a-zA-Z0-9]+, not NULL 
+dirk - Format: [a-zA-Z0-9/_ ]+, NULL possible
 </pre> 
 </div>
 </div>
@@ -312,17 +293,11 @@ dirk -
 </div><div class="memdoc">
 <pre class="fragment">Method created to rename input file or folder and update information in database
 
-Input:
-username - 
-    Username
-    string type
-    Format: [a-zA-Z0-9]+
-    not NULL 
-dirk - 
-    Directory Path
-    string type
-    Format: [a-zA-Z0-9/_ ]+
-    NULL possible
+Requests - POST
+
+Input Constraints: 
+username - Format: [a-zA-Z0-9]+, not NULL 
+dirk - Format: [a-zA-Z0-9/_ ]+, NULL possible
 </pre> 
 </div>
 </div>

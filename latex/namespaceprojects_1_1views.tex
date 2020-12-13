@@ -1,5 +1,10 @@
 \hypertarget{namespaceprojects_1_1views}{}\doxysection{projects.\+views Namespace Reference}
 \label{namespaceprojects_1_1views}\index{projects.views@{projects.views}}
+
+
+All classes authenticated with Token Authentication provided by Django R\+E\+ST Framework Token\+Auth.  
+
+
 \doxysubsection*{Functions}
 \begin{DoxyCompactItemize}
 \item 
@@ -8,7 +13,7 @@ def \mbox{\hyperlink{namespaceprojects_1_1views_af64444bf5df85637271a2be2df2b33c
 def \mbox{\hyperlink{namespaceprojects_1_1views_a846febfaa8f90d97cf9ec8f0e205a1e2}{rename\+Dir}} (user\+Id, filepath, new\+Path)
 \item 
 def \mbox{\hyperlink{namespaceprojects_1_1views_abdb3ee51e4cb3c4db59a74bc1cc908ef}{compile}} (request, \mbox{\hyperlink{api_8txt_a86b47cca8d76d7556477b4d5171b15ab}{username}}, dirk)
-\begin{DoxyCompactList}\small\item\em All classes authenticated with Token Authentication provided by Django R\+E\+ST Framework Token\+Auth. \end{DoxyCompactList}\item 
+\item 
 def \mbox{\hyperlink{namespaceprojects_1_1views_aec3fe936acb92966267026b7f6513fcd}{rename}} (request, \mbox{\hyperlink{api_8txt_a86b47cca8d76d7556477b4d5171b15ab}{username}}, dirk)
 \item 
 def \mbox{\hyperlink{namespaceprojects_1_1views_ad650c39ce6beac5a2eb5cf12bc9ecf2e}{display}} (request, dirk, \mbox{\hyperlink{api_8txt_a86b47cca8d76d7556477b4d5171b15ab}{username}}, file)
@@ -17,6 +22,9 @@ def \mbox{\hyperlink{namespaceprojects_1_1views_adb4d45f191fd14b1e22f1b04a8e9dd8
 \end{DoxyCompactItemize}
 
 
+\doxysubsection{Detailed Description}
+All classes authenticated with Token Authentication provided by Django R\+E\+ST Framework Token\+Auth. 
+
 \doxysubsection{Function Documentation}
 \mbox{\Hypertarget{namespaceprojects_1_1views_abdb3ee51e4cb3c4db59a74bc1cc908ef}\label{namespaceprojects_1_1views_abdb3ee51e4cb3c4db59a74bc1cc908ef}} 
 \index{projects.views@{projects.views}!compile@{compile}}
@@ -24,25 +32,21 @@ def \mbox{\hyperlink{namespaceprojects_1_1views_adb4d45f191fd14b1e22f1b04a8e9dd8
 \doxysubsubsection{\texorpdfstring{compile()}{compile()}}
 {\footnotesize\ttfamily def projects.\+views.\+compile (\begin{DoxyParamCaption}\item[{}]{request,  }\item[{}]{username,  }\item[{}]{dirk }\end{DoxyParamCaption})}
 
-
-
-All classes authenticated with Token Authentication provided by Django R\+E\+ST Framework Token\+Auth. 
-
 \begin{DoxyVerb}Compiles code (language: c++, python, ruby)
 
-Input: 
-username - 
-    Username
-    string type
-    Format: [a-zA-Z0-9]+
-    not NULL 
-dirk - 
-    Directory Path
-    string type
-    Format: [a-zA-Z0-9/_ ]+
-    NULL possible
+Requests - POST
+
+Input Constraints: 
+username - Format: [a-zA-Z0-9]+, not NULL 
+dirk - Format: [a-zA-Z0-9/_ ]+, NULL possible
 
 Compiles relevant code inside a docker container
+
+Docker support for each language.
+For each language a container is created in the directory of the user with the help of pre-built images.
+If there is an existing container we remove the container.
+After creation we execute the container and execute the script using the '-c' flag in the container and run the command.
+After execution of the code the container is stopped and deleted (-rm flag).
 \end{DoxyVerb}
  \mbox{\Hypertarget{namespaceprojects_1_1views_af64444bf5df85637271a2be2df2b33c5}\label{namespaceprojects_1_1views_af64444bf5df85637271a2be2df2b33c5}} 
 \index{projects.views@{projects.views}!delDir@{delDir}}
@@ -59,25 +63,13 @@ Compiles relevant code inside a docker container
 {\footnotesize\ttfamily def projects.\+views.\+display (\begin{DoxyParamCaption}\item[{}]{request,  }\item[{}]{dirk,  }\item[{}]{username,  }\item[{}]{file }\end{DoxyParamCaption})}
 
 \begin{DoxyVerb}Request Operations for a file
-    Get File contents
-    Delete File
 
-Input:
-username - 
-    Username
-    string type
-    Format: [a-zA-Z0-9]+
-    not NULL 
-dirk - 
-    Directory Path
-    string type
-    Format: [a-zA-Z0-9/_ ]+
-    NULL possible
-file - 
-    Filename 
-    string type 
-    Format: [a-zA-Z0-9_ ]+.[a-zA-Z0-9_ ]+
-    not NULL
+Requests - GET, DELETE
+
+Input Constraints: 
+username - Format: [a-zA-Z0-9]+, not NULL 
+dirk - Format: [a-zA-Z0-9/_ ]+, NULL possible
+file - Format: [a-zA-Z0-9_ ]+.[a-zA-Z0-9_ ]+, not NULL
 \end{DoxyVerb}
  \mbox{\Hypertarget{namespaceprojects_1_1views_adb4d45f191fd14b1e22f1b04a8e9dd85}\label{namespaceprojects_1_1views_adb4d45f191fd14b1e22f1b04a8e9dd85}} 
 \index{projects.views@{projects.views}!displayAll@{displayAll}}
@@ -86,21 +78,12 @@ file -
 {\footnotesize\ttfamily def projects.\+views.\+display\+All (\begin{DoxyParamCaption}\item[{}]{request,  }\item[{}]{dirk,  }\item[{}]{username }\end{DoxyParamCaption})}
 
 \begin{DoxyVerb}Request Operations for a directory
-    Get list of names of Folders and File in directory
-    Post file inside Folder - add new file or update existing
-    Delete Direcotory
 
-Input:
-username - 
-    Username
-    string type
-    Format: [a-zA-Z0-9]+
-    not NULL 
-dirk - 
-    Directory Path
-    string type
-    Format: [a-zA-Z0-9/_ ]+
-    NULL possible
+Requests - GET, POST, DELETE
+
+Input Constraints: 
+username - Format: [a-zA-Z0-9]+, not NULL 
+dirk - Format: [a-zA-Z0-9/_ ]+, NULL possible
 \end{DoxyVerb}
  \mbox{\Hypertarget{namespaceprojects_1_1views_aec3fe936acb92966267026b7f6513fcd}\label{namespaceprojects_1_1views_aec3fe936acb92966267026b7f6513fcd}} 
 \index{projects.views@{projects.views}!rename@{rename}}
@@ -110,17 +93,11 @@ dirk -
 
 \begin{DoxyVerb}Method created to rename input file or folder and update information in database
 
-Input:
-username - 
-    Username
-    string type
-    Format: [a-zA-Z0-9]+
-    not NULL 
-dirk - 
-    Directory Path
-    string type
-    Format: [a-zA-Z0-9/_ ]+
-    NULL possible
+Requests - POST
+
+Input Constraints: 
+username - Format: [a-zA-Z0-9]+, not NULL 
+dirk - Format: [a-zA-Z0-9/_ ]+, NULL possible
 \end{DoxyVerb}
  \mbox{\Hypertarget{namespaceprojects_1_1views_a846febfaa8f90d97cf9ec8f0e205a1e2}\label{namespaceprojects_1_1views_a846febfaa8f90d97cf9ec8f0e205a1e2}} 
 \index{projects.views@{projects.views}!renameDir@{renameDir}}

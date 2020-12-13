@@ -24,7 +24,8 @@ def pointsfromtime(t1,t2,t3):
 
 # Create your views here.
 
-## All classes authenticated with Token Authentication provided by Django REST Framework TokenAuth
+## @package compe.views
+# All classes authenticated with Token Authentication provided by Django REST Framework TokenAuth
 
 @api_view(['GET'])
 @authentication_classes([TokenAuthentication])

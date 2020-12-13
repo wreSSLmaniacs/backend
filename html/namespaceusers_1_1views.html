@@ -107,7 +107,13 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<pre class="fragment">Login user with the given credentials, exceptions handling for invalid credentials</pre> 
+<pre class="fragment">Input:  username (not null)
+        password (not null)
+
+Login user with the given credentials, exceptions handling for invalid credentials
+
+Return: seccess token
+</pre> 
 </div>
 </div>
 <a id="aec72b620b1c9be64030e716fc418df25"></a>
@@ -125,7 +131,17 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<pre class="fragment">Register a new user. Exception handling for invalid user details or already existing user</pre> 
+<pre class="fragment">Input:  username (not null)
+        password (not null)
+        email
+        image (url)
+        first_name
+        last_name
+
+Register a new user. Exception handling for invalid user details or already existing user
+
+Return: Details of the user added
+</pre> 
 </div>
 </div>
 <a id="aff78a39ba19f4792c00eb7d3e2d7cd34"></a>
@@ -153,7 +169,12 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<pre class="fragment">Returns details of the user, given userid (primary key)</pre> 
+<pre class="fragment">Requests: GET 
+
+Input: userid (primary key)
+
+Return: details of the user
+</pre> 
 </div>
 </div>
 <a id="a02daa8d6070b4c84f2bb4a43a4a9eec8"></a>
@@ -171,7 +192,10 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<pre class="fragment">Returns list of all the registered users</pre> 
+<pre class="fragment">Requests: GET, PUT
+
+Returns list of all the registered users
+</pre> 
 </div>
 </div>
 <a id="ab552f1443a45bad328fdecf5e751e669"></a>
@@ -189,7 +213,12 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<pre class="fragment">Returns details of the user, given username</pre> 
+<pre class="fragment">Requests: POST
+
+Input: username
+
+Return: details of the user
+</pre> 
 </div>
 </div>
 </div><!-- contents -->

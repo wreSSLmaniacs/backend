@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['requirements_2etxt_274',['requirements.txt',['../requirements_8txt.html',1,'']]],
-  ['run_2ddocker_2etxt_275',['run-docker.txt',['../run-docker_8txt.html',1,'']]]
+  ['manage_2epy_238',['manage.py',['../manage_8py.html',1,'']]],
+  ['models_2epy_239',['models.py',['../compe_2models_8py.html',1,'(Global Namespace)'],['../projects_2models_8py.html',1,'(Global Namespace)'],['../users_2models_8py.html',1,'(Global Namespace)']]]
 ];

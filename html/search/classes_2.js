@@ -1,7 +1,8 @@
 var searchData=
 [
-  ['compeconfig_211',['CompeConfig',['../classcompe_1_1apps_1_1_compe_config.html',1,'compe::apps']]],
-  ['contest_212',['Contest',['../classcompe_1_1models_1_1_contest.html',1,'compe.models.Contest'],['../classmodels_1_1_contest.html',1,'models.Contest']]],
-  ['contestserializer_213',['ContestSerializer',['../classcompe_1_1serializers_1_1_contest_serializer.html',1,'compe::serializers']]],
-  ['contestuser_214',['ContestUser',['../classcompe_1_1models_1_1_contest_user.html',1,'compe.models.ContestUser'],['../classmodels_1_1_contest_user.html',1,'models.ContestUser']]]
+  ['dateinfoserializer_184',['DateInfoSerializer',['../classcompe_1_1serializers_1_1_date_info_serializer.html',1,'compe::serializers']]],
+  ['djangoadminlog_185',['DjangoAdminLog',['../classusers_1_1models_1_1_django_admin_log.html',1,'users::models']]],
+  ['djangocontenttype_186',['DjangoContentType',['../classusers_1_1models_1_1_django_content_type.html',1,'users::models']]],
+  ['djangomigrations_187',['DjangoMigrations',['../classusers_1_1models_1_1_django_migrations.html',1,'users::models']]],
+  ['djangosession_188',['DjangoSession',['../classusers_1_1models_1_1_django_session.html',1,'users::models']]]
 ];
